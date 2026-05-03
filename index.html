@@ -1,0 +1,2666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KT Portal — Aishwarya Bramma</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Noto+Serif+Tamil&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --saffron: #E8670A;
+  --saffron-light: #F5A044;
+  --saffron-pale: #FEF3EA;
+  --burgundy: #6B1E2E;
+  --burgundy-dark: #3E0F1A;
+  --burgundy-light: #9B3347;
+  --cream: #FAF6EF;
+  --cream-dark: #F0E8D8;
+  --ink: #1A1208;
+  --ink-soft: #4A3728;
+  --muted: #8B7355;
+  --gold: #C9973A;
+  --gold-light: #E8BF6A;
+  --white: #FFFFFF;
+  --shadow-hover: 0 8px 40px rgba(107, 30, 46, 0.15);
+}
+
+html { scroll-behavior: smooth; }
+body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--ink); line-height: 1.7; overflow-x: hidden; }
+
+/* ─── SEARCH OVERLAY ─── */
+#search-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(20,6,10,0.93);
+  z-index: 1000;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 12vh;
+}
+#search-overlay.active { display: flex; }
+.search-box { width: 100%; max-width: 600px; padding: 0 1.5rem; }
+.search-input-wrap { display: flex; align-items: center; background: var(--white); border-radius: 4px; overflow: hidden; margin-bottom: 1rem; }
+#search-input { flex: 1; border: none; outline: none; padding: 1rem 1.25rem; font-family: 'DM Sans', sans-serif; font-size: 1.1rem; color: var(--ink); background: transparent; }
+.search-close-btn { background: none; border: none; padding: 1rem 1.25rem; cursor: pointer; font-size: 1.2rem; color: var(--muted); }
+#search-results { display: flex; flex-direction: column; gap: 0.5rem; max-height: 50vh; overflow-y: auto; }
+.search-result-item { background: rgba(255,255,255,0.07); border: 1px solid rgba(201,151,58,0.2); border-radius: 4px; padding: 0.85rem 1.25rem; cursor: pointer; display: flex; flex-direction: column; gap: 0.15rem; transition: background 0.15s; text-decoration: none; }
+.search-result-item:hover { background: rgba(232,103,10,0.2); border-color: var(--saffron); }
+.search-result-name { font-size: 0.95rem; font-weight: 500; color: var(--gold-light); }
+.search-result-cat { font-size: 0.75rem; color: rgba(232,191,106,0.5); letter-spacing: 0.05em; }
+.search-no-results { color: rgba(232,191,106,0.4); font-size: 0.9rem; padding: 0.5rem 0; }
+
+/* ─── HEADER ─── */
+header { position: relative; background: var(--burgundy-dark); overflow: hidden; min-height: 100vh; display: flex; flex-direction: column; }
+.header-pattern { position: absolute; inset: 0; opacity: 0.06; background-image: repeating-linear-gradient(45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%), repeating-linear-gradient(-45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%); background-size: 30px 30px; }
+.header-border-top { height: 5px; background: linear-gradient(90deg, var(--saffron), var(--gold), var(--saffron-light), var(--gold), var(--saffron)); flex-shrink: 0; }
+
+/* ─── NAV ─── */
+nav { position: relative; z-index: 200; padding: 1.25rem 3rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(201,151,58,0.2); flex-shrink: 0; }
+.nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 300; color: var(--gold-light); letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; }
+.nav-right { display: flex; align-items: center; gap: 0.5rem; }
+.nav-search-btn { background: rgba(255,255,255,0.06); border: 1px solid rgba(201,151,58,0.25); color: rgba(232,191,106,0.7); padding: 0.45rem 0.9rem; border-radius: 3px; font-size: 0.75rem; letter-spacing: 0.08em; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+.nav-search-btn:hover { background: rgba(255,255,255,0.1); color: var(--gold-light); border-color: rgba(201,151,58,0.5); }
+nav ul { list-style: none; display: flex; gap: 0.25rem; align-items: center; }
+.nav-item { position: relative; display: flex; align-items: center; }
+.nav-link { font-size: 0.78rem; font-weight: 400; color: rgba(232,191,106,0.7); text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; padding: 0.5rem 0.75rem; border-radius: 3px; display: flex; align-items: center; gap: 0.3rem; cursor: pointer; background: none; border: none; font-family: 'DM Sans', sans-serif; }
+.nav-link:hover { color: var(--gold-light); background: rgba(255,255,255,0.05); }
+.nav-link .chevron { font-size: 0.55rem; opacity: 0.6; transition: transform 0.2s; }
+.nav-item:hover .chevron { transform: rotate(180deg); }
+.nav-dropdown { display: none; position: absolute; top: 100%; left: 0; background: #2a0c15; border: 1px solid rgba(201,151,58,0.25); border-radius: 4px; min-width: 200px; padding: 0.5rem 0; z-index: 300; box-shadow: 0 12px 40px rgba(0,0,0,0.5); margin-top: -1px; }
+.nav-item:hover .nav-dropdown { display: block; }
+.nav-item::after { content: ''; position: absolute; top: 100%; left: 0; right: 0; height: 8px; }
+.nav-dropdown a { display: block; padding: 0.55rem 1.1rem; font-size: 0.8rem; color: rgba(232,191,106,0.65); text-decoration: none; letter-spacing: 0.04em; transition: all 0.15s; white-space: nowrap; }
+.nav-dropdown a:hover { background: rgba(232,103,10,0.12); color: var(--gold-light); padding-left: 1.4rem; }
+.nav-dropdown-divider { height: 1px; background: rgba(201,151,58,0.12); margin: 0.35rem 0; }
+
+/* ─── HERO ─── */
+.header-hero { position: relative; z-index: 5; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 5rem 2rem 4rem; }
+.hero-ornament { width: 60px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 0 auto 2rem; }
+.hero-eyebrow { font-size: 0.75rem; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase; color: var(--saffron-light); margin-bottom: 1.5rem; }
+h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 300; line-height: 1.1; color: var(--cream); margin-bottom: 0.5rem; letter-spacing: -0.01em; }
+h1 em { font-style: italic; color: var(--gold-light); }
+.hero-subtitle { font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 2.5vw, 1.4rem); font-weight: 300; font-style: italic; color: rgba(240,232,216,0.6); margin-top: 0.75rem; margin-bottom: 3rem; }
+.hero-desc { max-width: 580px; font-size: 0.95rem; font-weight: 300; color: rgba(240,232,216,0.75); line-height: 1.9; margin-bottom: 3.5rem; }
+.hero-cta-row { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+.btn-primary { background: var(--saffron); color: var(--white); padding: 0.8rem 2rem; border-radius: 2px; font-size: 0.8rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: background 0.2s, transform 0.1s; display: inline-block; }
+.btn-primary:hover { background: var(--saffron-light); transform: translateY(-1px); }
+.btn-ghost { border: 1px solid rgba(201,151,58,0.4); color: var(--gold-light); padding: 0.8rem 2rem; border-radius: 2px; font-size: 0.8rem; font-weight: 400; letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; transition: border-color 0.2s, color 0.2s; display: inline-block; }
+.btn-ghost:hover { border-color: var(--gold-light); color: var(--white); }
+.hero-scroll { margin-top: 4rem; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; color: rgba(232,191,106,0.4); font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; animation: float 2.5s ease-in-out infinite; }
+.hero-scroll-line { width: 1px; height: 40px; background: linear-gradient(180deg, rgba(201,151,58,0.6), transparent); }
+@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(6px); } }
+
+/* ─── GRATITUDE STRIP ─── */
+.gratitude-strip { background: var(--saffron); padding: 2.5rem 3rem; text-align: center; }
+.gratitude-strip blockquote { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.1rem, 2.5vw, 1.5rem); font-weight: 300; font-style: italic; color: var(--white); max-width: 700px; margin: 0 auto; line-height: 1.8; }
+.gratitude-strip cite { display: block; margin-top: 1rem; font-family: 'DM Sans', sans-serif; font-style: normal; font-size: 0.8rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.65); }
+
+/* ─── MAIN ─── */
+main { max-width: 1200px; margin: 0 auto; padding: 5rem 2rem; }
+
+/* ─── TEACHER PROFILE ─── */
+.teacher-profile { display: grid; grid-template-columns: auto 1fr; gap: 2.5rem; align-items: center; background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; padding: 2.5rem; margin-bottom: 3rem; }
+.teacher-photo { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; display: block; border: 3px solid var(--cream-dark); }
+.teacher-photo-placeholder { width: 140px; height: 140px; border-radius: 50%; background: var(--cream-dark); border: 3px dashed rgba(201,151,58,0.4); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.4rem; cursor: pointer; transition: border-color 0.2s, background 0.2s; overflow: hidden; position: relative; }
+.teacher-photo-placeholder:hover { border-color: var(--saffron); background: var(--saffron-pale); }
+.teacher-photo-placeholder input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.photo-icon { font-size: 1.5rem; }
+.photo-hint { font-size: 0.65rem; color: var(--muted); text-align: center; letter-spacing: 0.05em; line-height: 1.4; }
+.teacher-name { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 600; color: var(--burgundy-dark); margin-bottom: 0.15rem; }
+.teacher-role { font-size: 0.85rem; font-weight: 500; color: var(--saffron); letter-spacing: 0.06em; margin-bottom: 0.1rem; }
+.teacher-school { font-size: 0.8rem; color: var(--muted); margin-bottom: 1rem; }
+.teacher-bio { font-size: 0.9rem; color: var(--ink-soft); line-height: 1.75; max-width: 560px; }
+
+/* ─── SECTION STRUCTURE ─── */
+.section-header { margin-bottom: 3rem; display: flex; align-items: baseline; gap: 1.5rem; }
+.section-number { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 300; color: var(--cream-dark); line-height: 1; }
+.section-title-group { flex: 1; }
+.section-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--saffron); margin-bottom: 0.25rem; }
+h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 400; color: var(--burgundy-dark); line-height: 1.2; }
+.divider { width: 100%; height: 1px; background: linear-gradient(90deg, var(--gold-light), transparent); margin-bottom: 3rem; }
+
+/* ─── CATEGORY GRID ─── */
+.category-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2px; background: var(--cream-dark); border: 2px solid var(--cream-dark); border-radius: 4px; overflow: hidden; margin-bottom: 5rem; }
+.category-card { background: var(--white); padding: 2rem; transition: background 0.2s; cursor: pointer; text-decoration: none; color: inherit; display: block; position: relative; overflow: hidden; }
+.category-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--saffron); transform: scaleY(0); transition: transform 0.2s; transform-origin: bottom; }
+.category-card:hover { background: var(--saffron-pale); }
+.category-card:hover::before { transform: scaleY(1); }
+.card-icon { font-size: 1.5rem; margin-bottom: 0.75rem; display: block; }
+.card-category { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--saffron); margin-bottom: 0.5rem; }
+.card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 600; color: var(--burgundy-dark); margin-bottom: 0.5rem; line-height: 1.2; }
+.card-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.6; margin-bottom: 1rem; }
+.card-tags { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.tag { background: var(--cream-dark); color: var(--ink-soft); font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 2px; letter-spacing: 0.05em; }
+.category-card:hover .tag { background: rgba(232,103,10,0.1); }
+.card-arrow { position: absolute; bottom: 1.5rem; right: 1.5rem; width: 28px; height: 28px; border: 1px solid var(--cream-dark); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; color: var(--muted); transition: all 0.2s; }
+.category-card:hover .card-arrow { background: var(--saffron); border-color: var(--saffron); color: white; transform: translate(2px, -2px); }
+
+/* ─── QUICK ACCESS ─── */
+.quick-access { background: var(--burgundy-dark); padding: 3rem; border-radius: 4px; margin-bottom: 5rem; position: relative; overflow: hidden; }
+.quick-access::before { content: ''; position: absolute; right: -2rem; top: -2rem; width: 200px; height: 200px; border-radius: 50%; border: 40px solid rgba(201,151,58,0.06); }
+.quick-access-label { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.25em; text-transform: uppercase; color: var(--saffron-light); margin-bottom: 1rem; }
+.quick-access h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300; color: var(--cream); margin-bottom: 2rem; }
+.quick-links { display: flex; flex-wrap: wrap; gap: 0.75rem; }
+.quick-link { background: rgba(255,255,255,0.06); border: 1px solid rgba(201,151,58,0.2); color: var(--gold-light); padding: 0.6rem 1.2rem; border-radius: 2px; font-size: 0.8rem; font-weight: 400; letter-spacing: 0.05em; text-decoration: none; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; }
+.quick-link:hover { background: var(--saffron); border-color: var(--saffron); color: white; transform: translateY(-2px); }
+.quick-link-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--saffron); flex-shrink: 0; }
+.quick-link:hover .quick-link-dot { background: white; }
+
+/* ─── APP CARDS ─── */
+.section-block { margin-bottom: 5rem; }
+.apps-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem; }
+.app-card { background: var(--white); border: 1px solid var(--cream-dark); border-radius: 4px; padding: 1.5rem; transition: all 0.2s; }
+.app-card:hover { border-color: var(--saffron-light); box-shadow: var(--shadow-hover); transform: translateY(-3px); }
+.app-name { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: var(--burgundy); margin-bottom: 0.25rem; }
+.app-type { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--saffron); margin-bottom: 0.75rem; }
+.app-desc { font-size: 0.85rem; color: var(--muted); line-height: 1.7; }
+
+/* ─── GRATITUDE SECTION ─── */
+.gratitude-section { background: linear-gradient(180deg, rgba(255, 250, 238, 0.95), rgba(255, 245, 223, 0.95)); padding: 4rem 3rem; border-radius: 18px; border: 1px solid rgba(201, 151, 58, 0.16); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.06); text-align: left; margin-bottom: 5rem; position: relative; overflow: hidden; }
+.gratitude-section::before { content: 'நன்றி'; font-family: 'Noto Serif Tamil', serif; font-size: 6rem; opacity: 0.04; position: absolute; top: 45%; left: 50%; transform: translate(-50%, -50%); color: var(--burgundy-dark); white-space: nowrap; }
+.gratitude-icon { font-size: 2.2rem; margin-bottom: 1.5rem; display: inline-flex; padding: 0.6rem 1rem; background: rgba(232, 191, 106, 0.15); border-radius: 999px; }
+.gratitude-section h2 { margin-bottom: 1rem; font-size: clamp(2rem, 2.5vw, 2.6rem); line-height: 1.05; }
+.gratitude-text { max-width: 840px; margin: 0 0 1.5rem; font-size: 1.05rem; color: var(--ink-soft); line-height: 1.9; }
+.signature { margin-top: 2.5rem; font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; font-style: italic; color: var(--burgundy); text-align: right; }
+@media (max-width: 900px) {
+  .gratitude-section { padding: 3rem 2rem; }
+  .gratitude-section::before { font-size: 5rem; }
+  .gratitude-text { max-width: 100%; }
+}
+@media (max-width: 768px) {
+  .gratitude-section { text-align: left; }
+  .gratitude-icon { margin-left: 0; }
+}
+
+
+/* ─── SLAMS DETAIL ─── */
+.slams-detail-block { background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; padding: 2.5rem; margin-bottom: 5rem; }
+.slams-hero { display: grid; grid-template-columns: 1fr auto; gap: 3rem; margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--cream-dark); }
+.slams-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 600; color: var(--burgundy-dark); line-height: 1; margin-bottom: 0.25rem; }
+.slams-fullname { font-size: 0.9rem; font-weight: 500; color: var(--saffron); letter-spacing: 0.05em; margin-bottom: 0.15rem; }
+.slams-school { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.05em; margin-bottom: 1rem; }
+.slams-tagline { font-size: 0.95rem; color: var(--ink-soft); line-height: 1.7; max-width: 480px; margin-bottom: 1.5rem; }
+.slams-access-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--burgundy-dark); color: var(--gold-light); padding: 0.75rem 1.5rem; border-radius: 3px; font-size: 0.85rem; font-weight: 500; text-decoration: none; letter-spacing: 0.03em; transition: background 0.2s; margin-bottom: 0.5rem; }
+.slams-access-btn:hover { background: var(--burgundy); }
+.slams-btn-icon { font-size: 0.9rem; }
+.slams-btn-arrow { font-size: 0.75rem; opacity: 0.7; }
+.slams-access-note { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.03em; }
+.slams-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-content: start; }
+.slams-stat { background: var(--cream); border: 1px solid var(--cream-dark); border-radius: 4px; padding: 1rem 1.25rem; text-align: center; min-width: 100px; }
+.slams-stat-num { display: block; font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 600; color: var(--burgundy); line-height: 1; margin-bottom: 0.25rem; }
+.slams-stat-label { font-size: 0.7rem; font-weight: 400; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
+.slams-flow { background: var(--burgundy-dark); border-radius: 4px; padding: 1.75rem 2rem; margin-bottom: 2.5rem; }
+.slams-flow-label { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--saffron-light); margin-bottom: 1.25rem; }
+.slams-flow-steps { display: flex; align-items: center; flex-wrap: wrap; gap: 0.75rem; }
+.slams-flow-step { display: flex; align-items: center; gap: 0.75rem; flex: 1; min-width: 160px; }
+.slams-flow-num { width: 32px; height: 32px; border-radius: 50%; background: var(--saffron); color: white; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.slams-flow-text { font-size: 0.8rem; color: rgba(240,232,216,0.75); line-height: 1.4; }
+.slams-flow-arrow { color: var(--gold); font-size: 1.2rem; opacity: 0.5; flex-shrink: 0; }
+.slams-section-label { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--saffron); margin-bottom: 1rem; }
+.slams-features { margin-bottom: 2.5rem; }
+.slams-feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; }
+.slams-feature-card { background: var(--cream); border: 1px solid var(--cream-dark); border-radius: 4px; padding: 1.25rem; transition: border-color 0.2s; }
+.slams-feature-card:hover { border-color: var(--saffron-light); }
+.slams-feature-icon { font-size: 1.25rem; margin-bottom: 0.6rem; }
+.slams-feature-card h4 { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600; color: var(--burgundy); margin-bottom: 0.5rem; }
+.slams-feature-card p { font-size: 0.82rem; color: var(--muted); line-height: 1.65; }
+.slams-settings { margin-bottom: 2.5rem; }
+.slams-settings-grid { border: 1px solid var(--cream-dark); border-radius: 4px; overflow: hidden; }
+.slams-setting-row { display: grid; grid-template-columns: 180px 1fr; gap: 1.5rem; padding: 0.85rem 1.25rem; border-bottom: 1px solid var(--cream-dark); font-size: 0.85rem; align-items: center; }
+.slams-setting-row:last-child { border-bottom: none; }
+.slams-setting-header { background: var(--cream-dark); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.slams-setting-name { font-weight: 500; color: var(--burgundy); font-size: 0.85rem; }
+.slams-badge-on { background: #d4edda; color: #2d6a4f; font-size: 0.7rem; font-weight: 500; padding: 0.15rem 0.5rem; border-radius: 2px; }
+.slams-badge-off { background: var(--cream-dark); color: var(--muted); font-size: 0.7rem; font-weight: 500; padding: 0.15rem 0.5rem; border-radius: 2px; }
+.slams-bottom-row { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 2rem; }
+.slams-sheet-list { display: flex; flex-direction: column; gap: 0.75rem; }
+.slams-sheet { display: flex; align-items: flex-start; gap: 0.75rem; background: var(--cream); border: 1px solid var(--cream-dark); border-radius: 4px; padding: 0.85rem 1rem; }
+.slams-sheet-icon { font-size: 1rem; flex-shrink: 0; }
+.slams-sheet-name { display: block; font-weight: 500; font-size: 0.85rem; color: var(--burgundy); margin-bottom: 0.1rem; }
+.slams-sheet-desc { font-size: 0.78rem; color: var(--muted); }
+.slams-trouble-list { display: flex; flex-direction: column; gap: 0.6rem; }
+.slams-trouble-item { display: grid; grid-template-columns: auto 1fr; gap: 1rem; align-items: start; background: var(--cream); border: 1px solid var(--cream-dark); border-radius: 4px; padding: 0.75rem 1rem; }
+.slams-trouble-issue { font-size: 0.8rem; font-weight: 500; color: var(--burgundy-light); white-space: nowrap; }
+.slams-trouble-fix { font-size: 0.8rem; color: var(--muted); }
+.slams-security { background: var(--saffron-pale); border: 1px solid rgba(232,103,10,0.2); border-radius: 4px; padding: 1rem 1.25rem; display: flex; align-items: flex-start; gap: 0.75rem; font-size: 0.83rem; color: var(--ink-soft); line-height: 1.6; }
+.slams-security-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+.slams-roles { margin-bottom: 2.5rem; }
+.slams-roles-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; }
+.slams-role-card { background: var(--white); border: 1px solid var(--cream-dark); border-radius: 4px; padding: 1.5rem; transition: border-color 0.2s, box-shadow 0.2s; }
+.slams-role-card:hover { border-color: var(--saffron-light); box-shadow: 0 4px 12px rgba(232,103,10,0.1); }
+.slams-role-icon { font-size: 2rem; margin-bottom: 0.75rem; }
+.slams-role-title { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: var(--burgundy-dark); margin-bottom: 1rem; }
+.slams-role-duties { font-size: 0.85rem; color: var(--ink-soft); line-height: 1.7; }
+.slams-role-duties p { margin-bottom: 0.75rem; font-weight: 500; color: var(--burgundy); }
+.slams-role-duties p strong { color: var(--burgundy-dark); }
+.slams-role-duties ul { list-style: none; padding: 0; margin-bottom: 1rem; }
+.slams-role-duties li { padding-left: 1.5rem; margin-bottom: 0.5rem; position: relative; }
+.slams-role-duties li::before { content: '▪'; position: absolute; left: 0; color: var(--saffron); font-weight: bold; }
+.slams-role-duties p:last-child { margin-bottom: 0; background: var(--cream-dark); padding: 0.65rem 0.85rem; border-radius: 3px; border-left: 3px solid var(--saffron); }
+
+/* ─── FOOTER ─── */
+footer { background: var(--burgundy-dark); color: rgba(240,232,216,0.5); text-align: center; padding: 3rem 2rem; font-size: 0.8rem; font-weight: 300; letter-spacing: 0.05em; }
+footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-style: italic; color: var(--gold-light); display: block; margin-bottom: 0.5rem; }
+.footer-line { width: 40px; height: 1px; background: rgba(201,151,58,0.3); margin: 1.5rem auto; }
+
+/* ─── ANIMATIONS ─── */
+.fade-up { opacity: 0; transform: translateY(20px); animation: fadeUp 0.7s ease forwards; }
+@keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+.delay-1 { animation-delay: 0.1s; }
+.delay-2 { animation-delay: 0.25s; }
+.delay-3 { animation-delay: 0.4s; }
+.delay-4 { animation-delay: 0.55s; }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 768px) {
+  nav { padding: 1rem 1.5rem; }
+  nav ul { display: none; }
+  .header-hero { padding: 3rem 1.5rem; }
+  main { padding: 3rem 1.5rem; }
+  .gratitude-strip { padding: 2rem 1.5rem; }
+  .quick-access { padding: 2rem 1.5rem; }
+  .gratitude-section { padding: 3rem 1.5rem; }
+  .section-header { flex-direction: column; gap: 0.5rem; }
+  .section-number { font-size: 2rem; }
+  .teacher-profile { grid-template-columns: 1fr; text-align: center; }
+  .teacher-photo-wrap { display: flex; justify-content: center; }
+  .slams-hero { grid-template-columns: 1fr; gap: 1.5rem; }
+  .slams-stat-grid { grid-template-columns: repeat(4, 1fr); }
+  .slams-bottom-row { grid-template-columns: 1fr; }
+  .slams-detail-block { padding: 1.5rem; }
+  .slams-setting-row { grid-template-columns: 1fr; gap: 0.25rem; }
+}
+
+/* Floating Back-to-Top Button */
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+  50% {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), 0 0 0 8px rgba(var(--color-accent-rgb), 0.1);
+  }
+  100% {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+}
+
+@keyframes float-pulse {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.back-to-top-btn {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 55px;
+  height: 55px;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-dark));
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  cursor: pointer;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  color: #111;
+  font-weight: bold;
+  text-shadow: 0 1px 2px rgba(255,255,255,0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 999;
+  transition: all 0.3s ease;
+}
+
+.back-to-top-btn:hover {
+  transform: translateY(-8px) scale(1.1);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}
+
+.back-to-top-btn:active {
+  transform: translateY(-4px) scale(0.95);
+}
+
+.back-to-top-btn.show {
+  display: flex;
+  animation: float-pulse 2s ease-in-out;
+}
+
+/* Tooltip */
+.back-to-top-btn::after {
+  content: 'Back to Top';
+  position: absolute;
+  bottom: 70px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+}
+
+.back-to-top-btn::before {
+  content: '';
+  position: absolute;
+  bottom: 65px;
+  right: 18px;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid rgba(0, 0, 0, 0.8);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.back-to-top-btn:hover::after,
+.back-to-top-btn:hover::before {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .back-to-top-btn {
+    width: 50px;
+    height: 50px;
+    bottom: 20px;
+    right: 20px;
+    font-size: 20px;
+  }
+  
+  .back-to-top-btn::after {
+    font-size: 11px;
+    bottom: 65px;
+  }
+  
+  .back-to-top-btn::before {
+    bottom: 60px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Floating Back-to-Top Button -->
+<button class="back-to-top-btn" id="back-to-top-btn" onclick="scrollToTop()">↑</button>
+
+<!-- ─── SEARCH OVERLAY ─── -->
+<div id="search-overlay">
+  <div class="search-box">
+    <div class="search-input-wrap">
+      <input type="text" id="search-input" placeholder="Search systems, tools, sessions…" autocomplete="off">
+      <button class="search-close-btn" onclick="closeSearch()">✕</button>
+    </div>
+    <div id="search-results"></div>
+  </div>
+</div>
+
+<!-- ─── HEADER ─── -->
+<header>
+  <div class="header-border-top"></div>
+  <div class="header-pattern"></div>
+
+  <nav>
+    <a href="#" class="nav-logo">KT Portal</a>
+
+    <ul>
+      <li class="nav-item">
+        <span class="nav-link">Systems <span class="chevron">▾</span></span>
+        <div class="nav-dropdown">
+          <a href="#slams-detail">SLAMS — Late Arrival</a>
+          <a href="#substitution-detail">Substitution System</a>
+          <a href="#timetable-detail">Teacher Timetable Viewer</a>
+          <a href="#assembly-detail">Live Assembly</a>
+          <a href="#elections-detail">Digital Elections System</a>
+          <a href="#certificate-detail">Certificate Generator</a>
+          <a href="#kee">KEE</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <span class="nav-link">Chinmaya Computing Club <span class="chevron">▾</span></span>
+        <div class="nav-dropdown">
+          <a href="#mannin">Mannin Marangal</a>
+          <a href="#gita">Chinmaya Gita</a>
+          <a href="#bebras">Bebras</a>
+          <a href="#robotics">Robotics Workshop</a>
+          <a href="#poorna">Poorna Utsav</a>
+          <a href="#ccc-docs">Docs about CCC</a>
+        </div>
+      </li>
+      <li class="nav-item">
+        <span class="nav-link">Teacher Resources <span class="chevron">▾</span></span>
+        <div class="nav-dropdown">
+          <a href="#website-building">Website building</a>
+          <a href="#task-automation">Task Automation</a>
+          <a href="#canva-designing">Canva Designing</a>
+          <a href="#upskill">Upskill yourself</a>
+        </div>
+      </li>
+    </ul>
+
+    <div class="nav-right">
+      <button class="nav-search-btn" onclick="openSearch()">🔍 Search</button>
+    </div>
+  </nav>
+
+  <div class="header-hero">
+    <div class="hero-ornament"></div>
+    <p class="hero-eyebrow fade-up">Knowledge Transition Portal</p>
+    <h1 class="fade-up delay-1">Built with Care.<br><em>Left with Love.</em></h1>
+    <p class="hero-subtitle fade-up delay-2">From the desk of a teacher who loved every bit of it</p>
+    <p class="hero-desc fade-up delay-3">
+      This portal holds everything I built, taught, and learned during my years at Chinmaya Vidyalaya.
+      Each system here was created to make life a little easier for teachers, students, and the school as a whole.
+      They are yours now — use them, improve them, and carry the work forward.
+    </p>
+    <div class="hero-cta-row fade-up delay-4">
+      <a href="#systems" class="btn-primary">Explore Systems</a>
+      <a href="#gratitude" class="btn-ghost">My Farewell Note</a>
+    </div>
+    <div class="hero-scroll">
+      <div class="hero-scroll-line"></div>
+      Scroll to explore
+    </div>
+  </div>
+</header>
+
+<!-- ─── STRIP ─── -->
+<div class="gratitude-strip">
+  <blockquote>
+    “What you see here comes from a habit of using technology to make work simpler, encouraged by an environment where such ideas could flourish.”
+    <cite>— Aishwarya S Bramma</cite>
+  </blockquote>
+</div>
+
+<!-- ─── MAIN ─── -->
+<main>
+
+  <!-- Teacher Profile -->
+  <div class="teacher-profile">
+    <div class="teacher-photo-wrap">
+      <div class="teacher-photo-placeholder" id="photo-placeholder" title="Click to add your photo" style="display:none;">
+        <input type="file" accept="image/*" onchange="handlePhoto(event)">
+        <span class="photo-icon">📷</span>
+        <span class="photo-hint">Add your<br>photograph</span>
+      </div>
+      <img id="teacher-img" class="teacher-photo" src="aishu.jpg" alt="Aishwarya Bramma">
+    </div>
+    <div class="teacher-info">
+      <h3 class="teacher-name">Aishwarya S Bramma</h3>
+      <p class="teacher-role">Computer Science Teacher</p>
+      <p class="teacher-school">Chinmaya Vidyalaya Sr. Sec. School</p>
+      <p class="teacher-bio">
+        During my tenure here, I had the privilege of not just teaching Computer Science, but of building the digital infrastructure that supports this school's day-to-day operations. From digital elections to automation systems, each project was an opportunity to blend technology with the values this school stands for. This portal is my way of ensuring that none of that work is lost when I leave — and that whoever comes next can hit the ground running.
+      </p>
+    </div>
+  </div>
+
+  
+
+  <!-- Apps & Systems -->
+  <div class="section-block" id="systems">
+    <div class="section-header">
+      <span class="section-number">01</span>
+      <div class="section-title-group">
+        <p class="section-label">Apps & Systems</p>
+        <h2>Core Platforms</h2>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="category-grid">
+      <a href="#slams-detail" class="category-card" id="slams">
+        <span class="card-icon">🕐</span>
+        <p class="card-category">Attendance System</p>
+        <h3 class="card-title">SLAMS</h3>
+        <p class="card-desc">Smart Late Arrival Management System — records, monitors, and communicates student late entries with automated parent alerts and daily principal reports.</p>
+        <div class="card-tags"><span class="tag">Web App</span><span class="tag">Google Sheets</span><span class="tag">Automation</span></div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a href="#substitution-detail" class="category-card">
+        <span class="card-icon">📋</span>
+        <p class="card-category">Substitution System</p>
+        <h3 class="card-title">Substitution System</h3>
+        <p class="card-desc">Google Apps Script web app that generates substitution charts for any date — showing available free teachers and co-teachers for each period.</p>
+        <div class="card-tags"><span class="tag">Web App</span><span class="tag">Google Sheets</span><span class="tag">Apps Script</span></div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a href="#timetable-detail" class="category-card">
+        <span class="card-icon">📅</span>
+        <p class="card-category">Timetable Lookup</p>
+        <h3 class="card-title">Teacher Timetable Viewer</h3>
+        <p class="card-desc">Public web app that lets staff look up any teacher's full weekly timetable, see free periods at a glance, and instantly find who is free at the current moment.</p>
+        <div class="card-tags"><span class="tag">Web App</span><span class="tag">Google Sheets</span><span class="tag">Apps Script</span><span class="tag">No login</span></div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a href="#assembly-detail" class="category-card">
+        <span class="card-icon">📺</span>
+        <p class="card-category">Daily Operations</p>
+        <h3 class="card-title">Live Assembly</h3>
+        <p class="card-desc">Real-time display system for the daily school assembly — morning news ticker, thought for the day, and schedule board on the main screen.</p>
+        <div class="card-tags"><span class="tag">Microsoft Teams</span><span class="tag">Display System</span><span class="tag">Daily</span></div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a href="#elections-detail" class="category-card">
+        <span class="card-icon">🗳️</span>
+        <p class="card-category">Digital Elections</p>
+        <h3 class="card-title">Digital Elections System</h3>
+        <p class="card-desc">Secure, admin-controlled voting platform for Student Pupil Leader elections, built with Flask and SQLite.</p>
+        <div class="card-tags"><span class="tag">Web App</span><span class="tag">Flask</span><span class="tag">SQLite</span><span class="tag">Voting</span></div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a href="#certificate-detail" class="category-card">
+        <span class="card-icon">🏆</span>
+        <p class="card-category">Automation Tool</p>
+        <h3 class="card-title">eCertificate Generator</h3>
+        <p class="card-desc">Bulk certificate generation for competitions, events, and achievements — PDF-ready, batch processed, and personalised for every student.</p>
+        <div class="card-tags"><span class="tag">Python</span><span class="tag">Automation</span><span class="tag">Certificates</span></div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a href="#kee" class="category-card">
+        <span class="card-icon">⚙️</span>
+        <p class="card-category">Smartboard Classroom</p>
+        <h3 class="card-title">KEE</h3>
+        <p class="card-desc">Knowledge Excellence Engine — a teacher-driven smartboard toolkit that turns classroom displays into interactive lesson environments.</p>
+        <div class="card-tags"><span class="tag">Smartboard</span><span class="tag">Classroom</span></div>
+        <div class="card-arrow">→</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- SLAMS Detail -->
+  <div class="section-block slams-detail-block" id="slams-detail">
+    <div class="slams-hero">
+      <div class="slams-hero-left">
+        <p class="section-label">Apps & Systems — Full Documentation</p>
+        <h2 class="slams-title">SLAMS</h2>
+        <p class="slams-fullname">Smart Late Arrival Management System</p>
+        <p class="slams-school">Chinmaya Vidyalaya Sr. Sec. School</p>
+        <p class="slams-tagline">Automates the logging, reporting, and communication of student late arrivals — replacing paper registers with a fast, transparent digital workflow.</p>
+        <a href="https://tinyurl.com/slamsforcvv" target="_blank" class="slams-access-btn">
+          <span class="slams-btn-icon">🔐</span> Access SLAMS System <span class="slams-btn-arrow">↗</span>
+        </a>
+        <p class="slams-access-note">Login details are provided in the SLAMS google sheets under TeachersDB tab.</p>
+      </div>
+      <div class="slams-hero-right">
+        <div class="slams-stat-grid">
+          <div class="slams-stat"><span class="slams-stat-num">4</span><span class="slams-stat-label">Features</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">4</span><span class="slams-stat-label">Data Sheets</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">4</span><span class="slams-stat-label">Reset Modes</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">∞</span><span class="slams-stat-label">Entries</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="slams-flow">
+      <p class="slams-flow-label">How It Works</p>
+      <div class="slams-flow-steps">
+        <div class="slams-flow-step"><div class="slams-flow-num">1</div><p class="slams-flow-text">Teacher logs late entry with admission number</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">2</div><p class="slams-flow-text">System checks past records based on reset mode</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">3</div><p class="slams-flow-text">If threshold exceeded, parent email is triggered</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">4</div><p class="slams-flow-text">Daily report sent automatically to Principal</p></div>
+      </div>
+    </div>
+    <div class="slams-features">
+      <p class="slams-section-label">Main Features</p>
+      <div class="slams-feature-grid">
+        <div class="slams-feature-card"><div class="slams-feature-icon">📝</div><h4>Record Late Entry</h4><p>Enter an admission number — SLAMS auto-fetches student name, class, and section. Add the reason and submit. Entry saved instantly, count updated automatically.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">⚠️</div><h4>Automatic Alerts</h4><p>When a student's late count exceeds the configured threshold, a parent email is automatically triggered (if the toggle is enabled in Settings).</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">📅</div><h4>Daily Report</h4><p>Every day, the system auto-generates a report of all late students and sends it to the Principal's email. Optional copy to Teacher-in-Charge.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">⚙️</div><h4>Settings Panel</h4><p>Authorised users can configure late threshold, principal email, reset mode, custom reset date, and toggle parent email notifications on or off.</p></div>
+      </div>
+    </div>
+    <div class="slams-settings">
+      <p class="slams-section-label">Settings Panel Reference</p>
+      <div class="slams-settings-grid">
+        <div class="slams-setting-row slams-setting-header"><span>Setting</span><span>Description</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Late Threshold</span><span>Number of allowed late entries before action triggers. E.g. set to 3 → alert fires on the 4th late.</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Principal Email</span><span>Receives the auto-generated daily late arrival report every morning. Additional recipients (such as the teacher-in-charge) can be included by entering multiple email addresses separated by commas.</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Reset Mode</span><span><strong>All Time</strong> — never resets · <strong>Monthly</strong> — resets each month · <strong>Quarterly</strong> — every 3 months · <strong>Custom</strong> — from a chosen date</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Custom Reset Date</span><span>Used when Reset Mode is Custom. Typically the start of a new term.</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Parent Email Toggle</span><span><span class="slams-badge-on">ON</span> — emails sent after threshold &nbsp;|&nbsp; <span class="slams-badge-off">OFF</span> — no emails sent</span></div>
+      </div>
+    </div>
+    <div class="slams-roles">
+      <p class="slams-section-label">SLAMS Custodians</p>
+      <div class="slams-roles-grid">
+        <div class="slams-role-card">
+          <div class="slams-role-icon">👤</div>
+          <h4 class="slams-role-title">Student In Charge</h4>
+          <div class="slams-role-duties">
+            <p><strong>Name:</strong> R Anand</p>
+            <p>R Anand is the student custodian from Chinmaya Computing Club, mentored by Aishwarya to develop the SLAMS app. His contribution is appreciated as the key student support for the system.</p>
+          </div>
+        </div>
+        <div class="slams-role-card">
+          <div class="slams-role-icon">👩‍🏫</div>
+          <h4 class="slams-role-title">Teacher In Charge</h4>
+          <div class="slams-role-duties">
+            <p><strong>Name:</strong> Smt. A.V. Nandhini</p>
+            <p>Nandhini is the teacher responsible for SLAMS. Each new year she must download the latest student details from CAMU, remove unnecessary fields, and paste the cleaned data into the StudentsDB tab so the app can use the current student list.
+              <br>She will also manage the official Google account (cvvlatemanagementsystem@gmail.com
+), through which all automated reports are sent.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slams-bottom-row">
+      <div class="slams-data">
+        <p class="slams-section-label">Data Structure</p>
+        <div class="slams-sheet-list">
+          <div class="slams-sheet"><span class="slams-sheet-icon">🗂</span><div><span class="slams-sheet-name">StudentsDB</span><span class="slams-sheet-desc">All student records and admission numbers</span></div></div>
+          <div class="slams-sheet"><span class="slams-sheet-icon">📋</span><div><span class="slams-sheet-name">LateLogs</span><span class="slams-sheet-desc">All late entry records with dates and reasons</span></div></div>
+          <div class="slams-sheet"><span class="slams-sheet-icon">👩‍🏫</span><div><span class="slams-sheet-name">TeachersDB</span><span class="slams-sheet-desc">Login credentials for authorised staff</span></div></div>
+          <div class="slams-sheet"><span class="slams-sheet-icon">⚙️</span><div><span class="slams-sheet-name">Settings</span><span class="slams-sheet-desc">System configuration and thresholds</span></div></div>
+        </div>
+      </div>
+      <div class="slams-troubleshoot">
+        <p class="slams-section-label">Troubleshooting</p>
+        <div class="slams-trouble-list">
+          <div class="slams-trouble-item"><span class="slams-trouble-issue">Student not found</span><span class="slams-trouble-fix">Double-check the Admission Number</span></div>
+          <div class="slams-trouble-item"><span class="slams-trouble-issue">Email not sent</span><span class="slams-trouble-fix">Settings → Parent Email Toggle must be ON</span></div>
+          <div class="slams-trouble-item"><span class="slams-trouble-issue">Data not updating</span><span class="slams-trouble-fix">Refresh the page and check your connection</span></div>
+          <div class="slams-trouble-item"><span class="slams-trouble-issue">Wrong count</span><span class="slams-trouble-fix">Verify which Reset Mode is currently active</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="slams-security">
+      <span class="slams-security-icon">🔐</span>
+      <p><strong>Security reminder:</strong> Do not share login credentials. Only authorised staff should access the Settings panel. Avoid editing the backend sheets manually — all changes affect the entire system immediately.</p>
+    </div>
+  </div>
+
+  <!-- KEE Detail -->
+  <div class="section-block slams-detail-block" id="kee">
+    <div class="slams-hero">
+      <div class="slams-hero-left">
+        <p class="section-label">Apps & Systems — Full Documentation</p>
+        <h2 class="slams-title">KEE</h2>
+        <p class="slams-fullname">Knowledge Excellence Engine</p>
+        <p class="slams-school">Chinmaya Vidyalaya Sr. Sec. School</p>
+        <p class="slams-tagline">A browser-based smartboard suite that empowers teachers to create interactive, customised classroom experiences without installing software.</p>
+        <a href="https://canva.link/q8n7j29m9zs1evh" target="_blank" class="slams-access-btn">
+          <span class="slams-btn-icon">📎</span> View KEE Presentation <span class="slams-btn-arrow">↗</span>
+        </a>
+        <a href="https://tinyurl.com/excellenceengine" target="_blank" class="slams-access-btn" style="margin-top: 0.75rem; background: var(--burgundy-dark);">
+          <span class="slams-btn-icon">🟢</span> Access KEE App <span class="slams-btn-arrow">↗</span>
+        </a>
+        <p class="slams-access-note">Teacher-controlled Google Sheets drive every module, so updates appear instantly in the classroom app. Use the access link above for the live KEE dashboard.</p>
+      </div>
+      <div class="slams-hero-right">
+        <div class="slams-stat-grid">
+          <div class="slams-stat"><span class="slams-stat-num">4</span><span class="slams-stat-label">App Types</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">100%</span><span class="slams-stat-label">Teacher Customizable</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">0</span><span class="slams-stat-label">Install Required</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">∞</span><span class="slams-stat-label">Smartboard Sessions</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="slams-flow">
+      <p class="slams-flow-label">How It Works</p>
+      <div class="slams-flow-steps">
+        <div class="slams-flow-step"><div class="slams-flow-num">1</div><p class="slams-flow-text">Teacher opens the KEE browser dashboard on the smartboard.</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">2</div><p class="slams-flow-text">Selects a module and the app fetches the latest Google Sheets data.</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">3</div><p class="slams-flow-text">The UI renders live classroom activities, quizzes, and teaching tools.</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">4</div><p class="slams-flow-text">Teacher controls the pace and content in real time, making learning active and adaptive.</p></div>
+      </div>
+    </div>
+    <div class="slams-features">
+      <p class="slams-section-label">Key Features</p>
+      <div class="slams-feature-grid">
+        <div class="slams-feature-card"><div class="slams-feature-icon">📚</div><h4>Literacy Builders</h4><p>Sight words, Word of the Day, idioms, and video-based learning tools designed for active language practice.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">🔢</div><h4>Numeracy Builders</h4><p>Mental math challenges and fast-paced calculation activities that turn the classroom into a high-energy practice zone.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">🎯</div><h4>Engagement Tools</h4><p>Quizzes, interactive activities, team challenges, and spin-the-wheel games that boost participation and classroom energy.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">🤖</div><h4>AI Assistance</h4><p>Integrated Zoko AI support helps guide activities and keeps lessons dynamic without adding complexity for teachers.</p></div>
+      </div>
+    </div>
+    <div class="slams-settings">
+      <p class="slams-section-label">Teacher Customization</p>
+      <div class="slams-settings-grid">
+        <div class="slams-setting-row slams-setting-header"><span>Capability</span><span>How It Works</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Google Sheets Content</span><span>All lesson content is managed in Sheets. Teachers can add, edit or customise tasks without coding.</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Difficulty Control</span><span>Adjust task difficulty and classroom level directly from the sheet, with instant reflection in the app.</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Multi-Language Support</span><span>Content supports Tamil, English and other languages for literacy modules.</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">No Installation</span><span>Runs entirely in the browser, using Google Apps Script and google.script.run to fetch sheet data.</span></div>
+      </div>
+    </div>
+    <div class="slams-roles">
+      <p class="slams-section-label">KEE Custodians</p>
+      <div class="slams-roles-grid">
+        <div class="slams-role-card">
+          <div class="slams-role-icon">👩‍🏫</div>
+          <h4 class="slams-role-title">Teacher In Charge</h4>
+          <div class="slams-role-duties">
+            <p><strong>Name:</strong> Mrs. A.V. Nadhini</p>
+            <p>Mrs. Nadhini leads the KEE rollout, reviews teacher content, and ensures the smartboard tools are helpful in the classroom.</p>
+          </div>
+        </div>
+        <div class="slams-role-card">
+          <div class="slams-role-icon">👨‍💻</div>
+          <h4 class="slams-role-title">Student In Charge</h4>
+          <div class="slams-role-duties">
+            <p><strong>Names:</strong> Gaurav Gadin, Anand &amp; Mayurarajan</p>
+            <p>Gaurav and Mayurarajan support the app's operation, test content updates, and help teachers run KEE sessions smoothly.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slams-security">
+      <span class="slams-security-icon">🧠</span>
+      <p><strong>Note:</strong> KEE is built to make smartboards teacher-driven instead of content-driven. Teachers update Google Sheets and the browser app automatically reflects the latest classroom activities.</p>
+    </div>
+  </div>
+
+  <!-- Substitution System Detail -->
+  <div class="section-block slams-detail-block" id="substitution-detail">
+    <div class="slams-hero">
+      <div class="slams-hero-left">
+        <p class="section-label">Apps & Systems — Full Documentation</p>
+        <h2 class="slams-title">Substitution System</h2>
+        <p class="slams-fullname">Teacher Substitution Chart Generator</p>
+        <p class="slams-school">Chinmaya Vidyalaya Sr. Sec. School</p>
+        <p class="slams-tagline">Generates substitution charts for any date — showing available free teachers and co-teachers for each period, for every teacher on leave that day.</p>
+        <a href="https://tinyurl.com/substitutionforcvv" target="_blank" class="slams-access-btn">
+          <span class="slams-btn-icon">📋</span> Access Substitution System <span class="slams-btn-arrow">↗</span>
+        </a>
+        <p class="slams-access-note">Access the web app to generate substitution charts for teachers on leave.</p>
+      </div>
+      <div class="slams-hero-right">
+        <div class="slams-stat-grid">
+          <div class="slams-stat"><span class="slams-stat-num">6</span><span class="slams-stat-label">Features</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">1</span><span class="slams-stat-label">Data Sheet</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">5</span><span class="slams-stat-label">Steps</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">∞</span><span class="slams-stat-label">Charts</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="slams-flow">
+      <p class="slams-flow-label">How It Works</p>
+      <div class="slams-flow-steps">
+        <div class="slams-flow-step"><div class="slams-flow-num">1</div><p class="slams-flow-text">Select the date for the substitution chart</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">2</div><p class="slams-flow-text">Type and select each teacher on leave that day</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">3</div><p class="slams-flow-text">System shows free teachers and co-teachers per period</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">4</div><p class="slams-flow-text">Choose a substitute from the dropdown for each period</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">5</div><p class="slams-flow-text">Print the completed chart for the Principal's signature</p></div>
+      </div>
+    </div>
+    <div class="slams-features">
+      <p class="slams-section-label">Main Features</p>
+      <div class="slams-feature-grid">
+        <div class="slams-feature-card"><div class="slams-feature-icon">📅</div><h4>Date Selection</h4><p>Choose any date — the system automatically identifies the day of the week and loads the correct timetable columns.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">🔍</div><h4>Teacher Autocomplete</h4><p>Start typing a teacher's name and matching names from the sheet appear instantly — no need to scroll a list.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">🔁</div><h4>Co-teacher Detection</h4><p>If another teacher is assigned the exact same class in the same period, they appear first as a co-teacher option.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">✅</div><h4>Free Period Skip</h4><p>Periods where the absent teacher has no class show a dash automatically — no substitute is needed or shown.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">📊</div><h4>Free Period Count</h4><p>Each substitute teacher in the dropdown shows how many free periods they have that day — for fair distribution.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">🖨️</div><h4>Print-ready Output</h4><p>The chart prints clean on A4 landscape — dropdowns become plain text, with the school name and a Principal signature line.</p></div>
+      </div>
+    </div>
+    <div class="slams-settings">
+      <p class="slams-section-label">Data Structure Reference</p>
+      <div class="slams-settings-grid">
+        <div class="slams-setting-row slams-setting-header"><span>Sheet / Element</span><span>Description</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Column A — Teacher</span><span>Full name of every teacher, one per row. This is the master list used for autocomplete.</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Columns B onwards — Day_Period</span><span>Headers follow the format <strong>Monday_P1</strong>, <strong>Monday_P2</strong> … <strong>Saturday_P9</strong>. Each cell holds the class assigned (e.g. X D, IV C GS) or a dash if the teacher is free.</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Class Naming</span><span>Class names must be consistent — "X D" and "X D GS" are treated as the same base class for co-teacher matching. "X D" and "IX D" are treated as different classes.</span></div>
+      </div>
+    </div>
+    <div class="slams-bottom-row">
+      <div class="slams-sheet-list">
+        <div class="slams-sheet">
+          <span class="slams-sheet-icon">📋</span>
+          <div>
+            <div class="slams-sheet-name">Timetable Sheet</div>
+            <div class="slams-sheet-desc">Google Sheet containing the complete teacher timetable with classes assigned to each period for every day of the week.</div>
+          </div>
+        </div>
+      </div>
+      <div class="slams-trouble-list">
+        <div class="slams-trouble-item"><span class="slams-trouble-issue">Teacher name not appearing</span><span class="slams-trouble-fix">Check that the name is in column A of the sheet, spelled exactly as it should appear. No extra spaces.</span></div>
+        <div class="slams-trouble-item"><span class="slams-trouble-issue">Wrong teacher as co-teacher</span><span class="slams-trouble-fix">The class names in the sheet must match exactly. Check for extra spaces, inconsistent spelling, or different abbreviations.</span></div>
+        <div class="slams-trouble-item"><span class="slams-trouble-issue">All periods showing dash</span><span class="slams-trouble-fix">The selected date's day of week may not have any entries in the sheet — for example, if Saturday columns are empty.</span></div>
+        <div class="slams-trouble-item"><span class="slams-trouble-issue">Print layout not fitting</span><span class="slams-trouble-fix">Use browser's print dialog with A4 paper size and Landscape orientation. Disable headers and footers.</span></div>
+        <div class="slams-trouble-item"><span class="slams-trouble-issue">Timetable not reflecting changes</span><span class="slams-trouble-fix">Contact Ms. Angala Parameshwari to update the Google Sheet. The web app reads the sheet live.</span></div>
+      </div>
+    </div>
+    <div class="slams-roles">
+      <p class="slams-section-label">Substitution System Custodians</p>
+      <div class="slams-roles-grid">
+        <div class="slams-role-card">
+          <div class="slams-role-icon">👩‍🏫</div>
+          <h4 class="slams-role-title">Day-to-day Operator</h4>
+          <div class="slams-role-duties">
+            <p><strong>Name:</strong> Smt. Meera</p>
+            <p>Smt. Meera is the teacher responsible for operating the substitution system on a daily basis. The Google Sheet containing the timetable will be shared with her. She opens the web app, enters the teachers on leave each morning, selects substitutes for each period, and prints the completed chart for the Principal's approval.</p>
+          </div>
+        </div>
+        <div class="slams-role-card">
+          <div class="slams-role-icon">👩‍🏫</div>
+          <h4 class="slams-role-title">Timetable Custodian</h4>
+          <div class="slams-role-duties">
+            <p><strong>Name:</strong> Ms. Angala Parameshwari</p>
+            <p>Ms. Angala Parameshwari is responsible for maintaining the accuracy of the timetable in the Google Sheet. At the start of each term, or whenever the timetable changes, she must update the sheet to reflect the current schedule. The substitution system's correctness depends entirely on the timetable data being up to date.</p>
+            <p class="slams-role-duties" style="background: var(--cream-dark); padding: 0.65rem 0.85rem; border-radius: 3px; border-left: 3px solid var(--saffron); margin-top: 1rem;">
+              <strong>Critical:</strong> Timetable accuracy is essential. If the sheet is not updated at the start of each term, the substitution suggestions will be based on the old schedule and may be incorrect. Ms. Angala Parameshwari must review and update the sheet before the first working day of every new term.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Teacher Timetable Viewer Detail -->
+  <div class="section-block slams-detail-block" id="timetable-detail">
+    <div class="slams-hero">
+      <div class="slams-hero-left">
+        <p class="section-label">Apps & Systems — Full Documentation</p>
+        <h2 class="slams-title">Teacher Timetable Viewer</h2>
+        <p class="slams-fullname">Public Timetable Lookup App</p>
+        <p class="slams-school">Chinmaya Vidyalaya Sr. Sec. School</p>
+        <p class="slams-tagline">A public-facing web app that lets the Principal and staff look up any teacher's full weekly timetable, see free periods at a glance, and instantly find out who is free at the current moment or at any period on any day.</p>
+        <a href="https://tinyurl.com/timetableforcvv" target="_blank" class="slams-access-btn">
+          <span class="slams-btn-icon">🔓</span> Access Timetable Viewer <span class="slams-btn-arrow">↗</span>
+        </a>
+        <p class="slams-access-note">No login needed — share this link with all staff. It works on any device.</p>
+      </div>
+      <div class="slams-hero-right">
+        <div class="slams-stat-grid">
+          <div class="slams-stat"><span class="slams-stat-num">6</span><span class="slams-stat-label">Features</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">2</span><span class="slams-stat-label">Modes</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">9</span><span class="slams-stat-label">Periods</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">∞</span><span class="slams-stat-label">Queries</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="slams-flow">
+      <p class="slams-flow-label">Two Ways to Use It</p>
+      <div class="slams-flow-steps">
+        <div class="slams-flow-step"><div class="slams-flow-num">1</div><p class="slams-flow-text">Search a teacher by name to see their full week timetable</p></div>
+        <div class="slams-flow-arrow">or</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">2</div><p class="slams-flow-text">Open "Who is Free?" to see all teachers free at this moment</p></div>
+        <div class="slams-flow-arrow">›</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">Result</div><p class="slams-flow-text">Free periods shown in green, classes shown in blue, today flagged in amber</p></div>
+      </div>
+    </div>
+    <div class="slams-features">
+      <p class="slams-section-label">Main Features</p>
+      <div class="slams-feature-grid">
+        <div class="slams-feature-card"><div class="slams-feature-icon">🔍</div><h4>Teacher Search</h4><p>Type any part of a teacher's name to find them instantly. Their full Monday–Saturday timetable loads in a colour-coded table.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">✅</div><h4>Who is Free Now?</h4><p>A dedicated view lists every teacher who is free during the current period right now — updated live based on the time of day.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">📅</div><h4>Today Highlighted</h4><p>The current day's row is automatically highlighted in the timetable so the viewer can focus on what's relevant today.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">🕐</div><h4>Period-aware Display</h4><p>Each period column shows its time slot (e.g. P1: 8:20–9:00) so staff can cross-check availability against the clock.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">🌐</div><h4>No Login Needed</h4><p>The app is publicly accessible via a short link. Anyone with the link — Principal, teachers, office staff — can use it without signing in.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">📱</div><h4>Works on Any Device</h4><p>Accessible from a phone, tablet, or desktop browser. Designed to be usable quickly — even in the middle of a busy school day.</p></div>
+      </div>
+    </div>
+    <div class="slams-settings">
+      <p class="slams-section-label">Data Source</p>
+      <div class="slams-settings-grid">
+        <div class="slams-setting-row slams-setting-header"><span>Element</span><span>Details</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Source sheet</span><span>The same Google Sheet that powers the Substitution System — one sheet, two apps reading from it. Any timetable update automatically reflects in both apps.</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Column A</span><span>Teacher names — the master list for the search feature.</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Columns B onwards</span><span>Day_Period headers (Monday_P1 … Saturday_P9). Each cell holds the class assigned or a dash for free periods.</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Period timings</span><span>Hardcoded in the app: P1 8:20–9:00, P2 9:00–9:40, P3 9:50–10:30, P4 10:30–11:10, P5 11:10–11:50, P6 12:20–1:00, P7 1:00–1:40, P8 1:50–2:30, P9 2:30–3:10.</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Access link</span><span>tinyurl.com/timetableforcvv — share this link with staff. It redirects to the deployed Apps Script web app URL.</span></div>
+      </div>
+    </div>
+    <div class="slams-bottom-row">
+      <div class="slams-sheet-list">
+        <div class="slams-sheet">
+          <span class="slams-sheet-icon">📋</span>
+          <div>
+            <div class="slams-sheet-name">Shared Data Source</div>
+            <div class="slams-sheet-desc">This app and the Substitution System use the same data but from different sheets
+            Updates are to be made in both the google sheets. The google sheets are shared with both the principal and the teacher incharge - Ms. Angala Parameshwari, Mrs. Meera and Mrs. Indira.</div>
+          </div>
+        </div>
+      </div>
+      <div class="slams-trouble-list">
+        <div class="slams-trouble-item"><span class="slams-trouble-issue">Teacher not found</span><span class="slams-trouble-fix">The name must be in column A exactly as typed. Check for extra spaces or spelling differences.</span></div>
+        <div class="slams-trouble-item"><span class="slams-trouble-issue">"Who is Free?" showing wrong</span><span class="slams-trouble-fix">Ensure the device time is correct. The app determines the current period from the device's clock.</span></div>
+        <div class="slams-trouble-item"><span class="slams-trouble-issue">Today not highlighted</span><span class="slams-trouble-fix">The app determines today from the browser's date. If the device date is wrong, the highlight appears on the wrong day.</span></div>
+        <div class="slams-trouble-item"><span class="slams-trouble-issue">Period times incorrect</span><span class="slams-trouble-fix">Period start and end times are hardcoded in the script. If the school's bell schedule changes, the Apps Script code must be updated.</span></div>
+        <div class="slams-trouble-item"><span class="slams-trouble-issue">Link not working</span><span class="slams-trouble-fix">If the Apps Script is redeployed with a new URL, the tinyurl must be updated to point to the new address.</span></div>
+      </div>
+    </div>
+    <div class="slams-roles">
+      <p class="slams-section-label">Timetable Custodian</p>
+      <div class="slams-roles-grid">
+        <div class="slams-role-card">
+          <div class="slams-role-icon">👩‍🏫</div>
+          <h4 class="slams-role-title">Timetable Custodian</h4>
+          <div class="slams-role-duties">
+            <p><strong>Name:</strong> Ms. Angala Parameshwari</p>
+            <p>Ms. Angala Parameshwari is responsible for keeping the underlying Google Sheet accurate.  She must review and update the sheet at the start of every year, and whenever the timetable changes at all.</p>
+           
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Live Assembly Detail -->
+  <div class="section-block slams-detail-block" id="assembly-detail">
+    <div class="slams-hero">
+      <div class="slams-hero-left">
+        <p class="section-label">Apps & Systems — Full Documentation</p>
+        <h2 class="slams-title">Live Assembly</h2>
+        <p class="slams-fullname">Daily Assembly Display System</p>
+        <p class="slams-school">Chinmaya Vidyalaya Sr. Sec. School</p>
+        <p class="slams-tagline">Real-time display system for the daily school assembly — morning news ticker, thought for the day, and schedule board on the main screen.</p>
+        <a href="https://tinyurl.com/chinmayaassembly" target="_blank" class="slams-access-btn">
+          <span class="slams-btn-icon">📺</span> Access Live Assembly <span class="slams-btn-arrow">↗</span>
+        </a>
+        <p class="slams-access-note">Join from the smart board without login. In-charge teacher logs into Teams app first.</p>
+      </div>
+      <div class="slams-hero-right">
+        <div class="slams-stat-grid">
+          <div class="slams-stat"><span class="slams-stat-num">3</span><span class="slams-stat-label\">Components</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">1</span><span class="slams-stat-label\">Login Required</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">Daily</span><span class="slams-stat-label\">Usage</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">∞</span><span class="slams-stat-label\">Students</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="slams-flow">
+      <p class="slams-flow-label">How It Works</p>
+      <div class="slams-flow-steps">
+        <div class="slams-flow-step"><div class="slams-flow-num">1</div><p class="slams-flow-text">In-charge teacher logs into Teams app on their device</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">2</div><p class="slams-flow-text">Others join from smart board without login</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">3</div><p class="slams-flow-text">Place mobile phone on tripod after starting meeting</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">4</div><p class="slams-flow-text">Mute audio while covering video — sound through PA system only</p></div>
+      </div>
+    </div>
+    <div class="slams-features">
+      <p class="slams-section-label">Key Features</p>
+      <div class="slams-feature-grid">
+        <div class="slams-feature-card"><div class="slams-feature-icon">🔐</div><h4>Teams Security</h4><p>Microsoft Teams requires at least one authenticated user per meeting. The in-charge teacher logs in first, then others can join without authentication.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">📱</div><h4>Mobile Setup</h4><p>Use a tripod to position the mobile phone after starting the meeting. This provides stable video feed for the assembly display.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">🔇</div><h4>Audio Management</h4><p>Mute the Teams audio while covering the video. Sound is delivered exclusively through the school's public announcement system for better quality.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">📺</div><h4>Smart Board Access</h4><p>Participants joining from the smart board do not need to log in. Once the in-charge teacher has authenticated, the meeting becomes accessible to all.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">📅</div><h4>Daily Routine</h4><p>Used every school day for the morning assembly, displaying news, thoughts, and schedules to the entire student body.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">🎯</div><h4>Real-time Display</h4><p>Provides live visual content during assembly including morning news ticker, thought for the day, and schedule information.</p></div>
+      </div>
+    </div>
+    <div class="slams-settings">
+      <p class="slams-section-label">Setup Instructions</p>
+      <div class="slams-settings-grid">
+        <div class="slams-setting-row slams-setting-header"><span>Step</span><span>Action</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Authentication</span><span>In-charge teacher logs into Microsoft Teams app on their device first. This authenticates the meeting session.</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Join Meeting</span><span>Others can now join from the smart board without needing to log in. The Teams security allows multiple participants once authenticated.</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Position Device</span><span>After starting the meeting, place the mobile phone on a tripod for stable video positioning.</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Audio Control</span><span>Mute the Teams audio completely. Video continues while audio is handled through the public announcement system only.</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Access Link</span><span>Use tinyurl.com/chinmayaassembly to join the meeting. This short link redirects to the Teams meeting.</span></div>
+      </div>
+    </div>
+    <div class="slams-bottom-row">
+      <div class="slams-sheet-list">
+        <div class="slams-sheet">
+          <span class="slams-sheet-icon">📺</span>
+          <div>
+            <div class="slams-sheet-name">Microsoft Teams Meeting</div>
+            <div class="slams-sheet-desc">Daily assembly conducted through Microsoft Teams with video display and audio through the school's PA system.</div>
+          </div>
+        </div>
+      </div>
+      <div class="slams-trouble-list">
+        <div class="slams-trouble-item"><span class="slams-trouble-issue">Cannot join meeting</span><span class="slams-trouble-fix">Ensure the in-charge teacher has logged into Teams first. The meeting requires at least one authenticated participant.</span></div>
+        <div class="slams-trouble-item"><span class="slams-trouble-issue">Audio not working</span><span class="slams-trouble-fix">Mute Teams audio completely. Sound should come only through the public announcement system.</span></div>
+        <div class="slams-trouble-item"><span class="slams-trouble-issue">Video unstable</span><span class="slams-trouble-fix">Use a tripod to stabilize the mobile phone. Avoid holding the device during the assembly.</span></div>
+        <div class="slams-trouble-item"><span class="slams-trouble-issue">Login required</span><span class="slams-trouble-fix">Only the in-charge teacher needs to log in. Others joining from smart board don't need authentication.</span></div>
+        <div class="slams-trouble-item"><span class="slams-trouble-issue">Link not working</span><span class="slams-trouble-fix">Check that tinyurl.com/chinmayaassembly is redirecting correctly. Contact IT if the Teams meeting link has changed.</span></div>
+      </div>
+    </div>
+    <div class="slams-security">
+      <span class="slams-security-icon">🔐</span>
+      <p><strong>Security note:</strong> Microsoft Teams requires at least one authenticated user per meeting for security purposes. The in-charge teacher provides this authentication, allowing others to join without individual logins. Always ensure proper authentication before allowing participants to join.</p>
+    </div>
+  </div>
+
+  
+
+  <!-- Digital Elections System Detail -->
+  <div class="section-block slams-detail-block" id="elections-detail">
+    <div class="slams-hero">
+      <div class="slams-hero-left">
+        <p class="section-label">Systems & Execution — Full Documentation</p>
+        <h2 class="slams-title">Digital Elections System</h2>
+        <p class="slams-fullname">Student Pupil Leader Elections</p>
+        <p class="slams-school">Chinmaya Vidyalaya Sr. Sec. School</p>
+        <p class="slams-tagline">Secure, admin-controlled digital elections for Student Pupil leadership — now part of the core Systems portfolio.</p>
+        <a href="https://cvvchennai-my.sharepoint.com/:f:/g/personal/aishwaryabramma_cvvsss_chinmayavidyalayaschennai_edu_in/IgCJ4swqTgNUSLx1SglsqFobAaEXsG3E4825ltRbq2p5pcw?e=rANHUS" target="_blank" class="slams-access-btn">
+          <span class="slams-btn-icon">🗳️</span> Access Digital Elections Project<span class="slams-btn-arrow">↗</span>
+        </a>
+        <p class="slams-access-note">Flask web application with SQLite database for secure voting.</p>
+      </div>
+      <div class="slams-hero-right">
+        <div class="slams-stat-grid">
+          <div class="slams-stat"><span class="slams-stat-num">2</span><span class="slams-stat-label">Categories</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">3</span><span class="slams-stat-label">Interfaces</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">1</span><span class="slams-stat-label">Database</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">∞</span><span class="slams-stat-label">Voters</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="slams-flow">
+      <p class="slams-flow-label">How It Works</p>
+      <div class="slams-flow-steps">
+        <div class="slams-flow-step"><div class="slams-flow-num">1</div><p class="slams-flow-text">Admin enables voting for a student by entering their registration number</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">2</div><p class="slams-flow-text">Student accesses voting interface and casts votes for Boys and/or Girls SPL</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">3</div><p class="slams-flow-text">Votes are recorded and student's voting status is marked as cast</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">4</div><p class="slams-flow-text">Password-protected results show live vote counts for both categories</p></div>
+      </div>
+    </div>
+    <div class="slams-features">
+      <p class="slams-section-label">Key Features</p>
+      <div class="slams-feature-grid">
+        <div class="slams-feature-card"><div class="slams-feature-icon">🔐</div><h4>Controlled Access</h4><p>Admin panel controls which student can vote at any time. Only one student can vote at a time to prevent multiple simultaneous access.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">📊</div><h4>Dual Categories</h4><p>Separate voting for Boys SPL and Girls SPL categories. Students can vote in both categories if enabled by admin.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">🛡️</div><h4>Vote Integrity</h4><p>Once a vote is cast in a category, the student's status changes to 'cast' preventing duplicate votes in that category.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">�️</div><h4>Voter Anonymity</h4><p>Votes are counted without storing the student's choice. The database tracks candidate vote totals, not who voted for whom.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">�📈</div><h4>Live Results</h4><p>Password-protected results page shows real-time vote counts for all candidates in both Boys and Girls categories.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">👁️</div><h4>Admin Monitoring</h4><p>Dedicated monitor page shows all registered voters and their current voting status for both categories.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">⏱️</div><h4>Timestamp Tracking</h4><p>All votes are timestamped when cast, providing an audit trail of voting activity.</p></div>
+      </div>
+    </div>
+    <div class="slams-settings">
+      <p class="slams-section-label">Database Structure</p>
+      <div class="slams-settings-grid">
+        <div class="slams-setting-row slams-setting-header"><span>Table</span><span>Structure & Purpose</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">voters</span><span><strong>id</strong> (PRIMARY KEY), <strong>regno</strong> (UNIQUE TEXT), <strong>boys_status</strong> (TEXT: 'enabled'/'cast'), <strong>girls_status</strong> (TEXT: 'enabled'/'cast'). Stores voter registration and voting status.</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">votes</span><span><strong>id</strong> (PRIMARY KEY), <strong>candidate</strong> (TEXT), <strong>category</strong> (TEXT: 'Boys'/'Girls'), <strong>timestamp</strong> (DATETIME). Records each vote with candidate, category, and time.</span></div>
+      </div>
+    </div>
+    <div class="slams-bottom-row">
+      <div class="slams-sheet-list">
+        <div class="slams-sheet">
+          <span class="slams-sheet-icon">🗳️</span>
+          <div>
+            <div class="slams-sheet-name">Election Database</div>
+            <div class="slams-sheet-desc">SQLite database with voters and votes tables. Stores registration numbers, voting status, and vote records while keeping individual ballot choices anonymous.</div>
+          </div>
+        </div>
+      </div>
+      <div class="slams-trouble-list">
+        <div class="slams-trouble-item"><span class="slams-trouble-issue">Student cannot vote</span><span class="slams-trouble-fix">Admin must first enable voting for that registration number in the admin panel.</span></div>
+        <div class="slams-trouble-item"><span class="slams-trouble-issue">Already voted message</span><span class="slams-trouble-fix">Student has already cast a vote in that category. Status shows as 'cast' in database.</span></div>
+        <div class="slams-trouble-item"><span class="slams-trouble-issue">Results not updating</span><span class="slams-trouble-fix">Ensure correct password is entered. Results show live data from votes table.</span></div>
+        <div class="slams-trouble-item"><span class="slams-trouble-issue">Multiple students voting</span><span class="slams-trouble-fix">Only one student can have 'enabled' status at a time. Admin controls access sequentially.</span></div>
+        <div class="slams-trouble-item"><span class="slams-trouble-issue">Database connection error</span><span class="slams-trouble-fix">Ensure election.db file exists and Flask app has proper database permissions.</span></div>
+      </div>
+    </div>
+    <div class="slams-roles">
+      <p class="slams-section-label">Election Administration</p>
+      <div class="slams-roles-grid">
+        <div class="slams-role-card">
+          <div class="slams-role-icon">�‍💼</div>
+          <h4 class="slams-role-title">Election Administrator</h4>
+          <div class="slams-role-duties">
+            <p><strong>Administrator:</strong> Mrs. Indira</p>
+            <p><strong>Pre-Election Setup:</strong></p>
+            <ul style="margin: 0.5rem 0; padding-left: 1.2rem;">
+              <li>Purge previous years' data and ensure database is clean</li>
+              <li>The Contestants name and photos are updated in the vote.html file</li>
+              <li>Arrange demonstration with contestants to showcase the voting process</li>
+              <li>Verify system readiness and test all interfaces viz - the admin Interface, the voters Interface, the monitor Interface and the result Interface.</li>
+            </ul>
+            <p><strong>Election Day Operations:</strong></p>
+            <ul style="margin: 0.5rem 0; padding-left: 1.2rem;">
+              <li>Control voting access by enabling students one at a time</li>
+              <li>Monitor voting progress through the monitor page</li>
+              <li>Ensure orderly voting sequence and prevent multiple simultaneous access</li>
+            </ul>
+            <p><strong>Results Generation:</strong></p>
+            <ul style="margin: 0.5rem 0; padding-left: 1.2rem;">
+              <li>When all votes are cast, generate results in presence of Principal and Election Committee</li>
+              <li>Use embedded password (accessible only to administrator) to access results</li>
+              <li>Present live vote counts for both Boys and Girls SPL categories</li>
+            </ul>
+            <p class="slams-role-duties" style="background: var(--cream-dark); padding: 0.65rem 0.85rem; border-radius: 3px; border-left: 3px solid var(--saffron); margin-top: 1rem;">
+              <strong>Security Note:</strong> Results password is embedded in the application code and accessible only to the designated administrator. Database maintains complete audit trail with timestamps.
+            </p>
+          </div>
+        </div>
+        <div class="slams-role-card">
+          <div class="slams-role-icon">👩‍🎓</div>
+          <h4 class="slams-role-title">Student Voters</h4>
+          <div class="slams-role-duties">
+            <p><strong>Process:</strong></p>
+            <p>Wait for admin to enable voting access. Access voting interface when enabled. Cast votes for Boys SPL and/or Girls SPL as permitted. Votes are recorded immediately and status updated to prevent duplicate voting.</p>
+            <p class="slams-role-duties" style="background: var(--cream-dark); padding: 0.65rem 0.85rem; border-radius: 3px; border-left: 3px solid var(--saffron); margin-top: 1rem;">
+              <strong>Security:</strong> Each student can only vote once per category. System prevents multiple voting through status tracking.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Certificate Detail -->
+  <div class="section-block slams-detail-block" id="certificate-detail">
+    <div class="slams-hero">
+      <div class="slams-hero-left">
+        <p class="section-label">Apps & Systems — Full Documentation</p>
+        <h2 class="slams-title">eCertificate Generator</h2>
+        <p class="slams-fullname">Python-based Bulk Certificate Generation System</p>
+        <p class="slams-school">Chinmaya Vidyalaya Sr. Sec. School</p>
+        <p class="slams-tagline">A Python-based automation system that creates personalized certificates in bulk using an Excel sheet and a certificate template. Instead of manually editing each certificate, enter student details once, run the script, and certificates are generated automatically.</p>
+        <a href="https://cvvchennai-my.sharepoint.com/:f:/g/personal/aishwaryabramma_cvvsss_chinmayavidyalayaschennai_edu_in/IgBSMkJxOffZSa9oT70cw7NjAUDR2k84wbjLgR1w0QuuEDY?e=NytFVX" target="_blank" class="slams-access-btn">
+          <span class="slams-btn-icon">📁</span> Access Project Files <span class="slams-btn-arrow">↗</span>
+        </a>
+        <p class="slams-access-note">All required files are available in the shared folder. Download the entire folder to your system first before running scripts.</p>
+      </div>
+      <div class="slams-hero-right">
+        <div class="slams-stat-grid">
+          <div class="slams-stat"><span class="slams-stat-num">5</span><span class="slams-stat-label">Files</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">3</span><span class="slams-stat-label">Libraries</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">2</span><span class="slams-stat-label">Scripts</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">∞</span><span class="slams-stat-label">Certificates</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="slams-flow">
+      <p class="slams-flow-label">How It Works</p>
+      <div class="slams-flow-steps">
+        <div class="slams-flow-step"><div class="slams-flow-num">1</div><p class="slams-flow-text">Reads student data from Excel</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">2</div><p class="slams-flow-text">Opens certificate template</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">3</div><p class="slams-flow-text">Places text dynamically</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">4</div><p class="slams-flow-text">Saves certificate as image</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">5</div><p class="slams-flow-text">(Optional) Converts to PDF</p></div>
+      </div>
+    </div>
+    <div class="slams-features">
+      <p class="slams-section-label">Key Features</p>
+      <div class="slams-feature-grid">
+        <div class="slams-feature-card"><div class="slams-feature-icon">📄</div><h4>Excel Integration</h4><p>The file student_details.xlsx must have columns: Student Name, Prize, Event. First row = headings, data starts from row 2.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">🖼</div><h4>Template Setup</h4><p>Use a high-resolution certificate image (template.png) with proper spacing for name, prize, and event placement.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">⚙️</div><h4>Dynamic Text Placement</h4><p>Text placement is controlled using pixel coordinates. Adjust rect_x1, rect_y1, rect_x2, rect_y2 values to position text accurately.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">🔧</div><h4>Font Customization</h4><p>Configure font files and sizes using ImageFont.truetype. Change font file path and size parameters for different styles.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">📁</div><h4>Batch Processing</h4><p>Process hundreds of certificates automatically. Generated certificates saved in organized output folders.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">📕</div><h4>PDF Conversion</h4><p>Optional PDF conversion using reportlab. Convert PNG certificates to PDF format for professional distribution.</p></div>
+      </div>
+    </div>
+    <div class="slams-settings">
+      <p class="slams-section-label">Setup & Configuration</p>
+      <div class="slams-settings-grid">
+        <div class="slams-setting-row slams-setting-header"><span>Step</span><span>Details</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Folder Setup</span><span>Place the folder in a simple path like D:\Certificates\</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">File Paths</span><span>Update paths in script.py: workbook, template_path, output_folder</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Text Positioning</span><span>Control placement using pixel coordinates (rect_x1, rect_y1, etc.)</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Fonts</span><span>Configure font files and sizes (impact.ttf, sizes 38/27)</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Requirements</span><span>Install required libraries: pip install openpyxl pillow reportlab</span></div>
+      </div>
+    </div>
+    <div class="slams-roles">
+      <p class="slams-section-label">Teacher In-charge</p>
+      <div class="slams-roles-grid">
+        <div class="slams-role-card">
+          <div class="slams-role-icon">👩‍🏫</div>
+          <h4 class="slams-role-title">A.V. Nandhini</h4>
+          <div class="slams-role-duties">
+            <p>A.V. Nandhini is responsible for maintaining and using this system. She will update the student data, manage the template, and ensure the scripts are correctly configured before generating certificates.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slams-bottom-row">
+      <div class="slams-data">
+        <p class="slams-section-label">Project Files</p>
+        <div class="slams-sheet-list">
+          <div class="slams-sheet"><span class="slams-sheet-icon">📄</span><div><span class="slams-sheet-name">student_details.xlsx</span><span class="slams-sheet-desc">Student data with Name, Prize, Event columns</span></div></div>
+          <div class="slams-sheet"><span class="slams-sheet-icon">🖼</span><div><span class="slams-sheet-name">template.png</span><span class="slams-sheet-desc">Certificate design template image</span></div></div>
+          <div class="slams-sheet"><span class="slams-sheet-icon">🐍</span><div><span class="slams-sheet-name">script.py</span><span class="slams-sheet-desc">Main certificate generation script</span></div></div>
+          <div class="slams-sheet"><span class="slams-sheet-icon">🐍</span><div><span class="slams-sheet-name">convert_to_pdf.py</span><span class="slams-sheet-desc">PNG to PDF conversion script</span></div></div>
+        </div>
+      </div>
+      <div class="slams-troubleshoot">
+        <p class="slams-section-label">Common Issues & Fixes</p>
+        <div class="slams-trouble-list">
+          <div class="slams-trouble-item"><span class="slams-trouble-issue">Font error</span><span class="slams-trouble-fix">Ensure font file exists</span></div>
+          <div class="slams-trouble-item"><span class="slams-trouble-issue">Text misaligned</span><span class="slams-trouble-fix">Adjust coordinates in script</span></div>
+          <div class="slams-trouble-item"><span class="slams-trouble-issue">Excel not loading</span><span class="slams-trouble-fix">Check path and format</span></div>
+          <div class="slams-trouble-item"><span class="slams-trouble-issue">No output generated</span><span class="slams-trouble-fix">Verify template path and run with python script.py</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="slams-security">
+      <span class="slams-security-icon">📜</span>
+      <p><strong>Best Practices:</strong> Test with 2–3 entries first. Finalize template before bulk generation. Keep backup of Excel file. Use consistent naming. This system transforms repetitive manual work into a fast, scalable workflow.</p>
+    </div>
+  </div>
+
+  <!-- Computing Club Projects -->
+  <div class="section-block" id="ccc-projects">
+    <div class="section-header">
+      <span class="section-number">02</span>
+      <div class="section-title-group">
+        <p class="section-label">Student Initiatives</p>
+        <h2>Chinmaya Computing Club Projects</h2>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="category-grid">
+      <a href="#mannin" class="category-card">
+        <span class="card-icon">🌱</span>
+        <p class="card-category">AI & Environment</p>
+        <h3 class="card-title">Mannin Marangal</h3>
+        <p class="card-desc">Our Native Trees — an AI-powered leaf scanning app that identifies tree species and reveals whether they are native to our region, promoting biodiversity and ecological balance.</p>
+        <div class="card-tags"><span class="tag">AI</span><span class="tag">Web App</span><span class="tag">Environment</span></div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a href="#gita" class="category-card">
+        <span class="card-icon">📖</span>
+        <p class="card-category">AI & Spirituality</p>
+        <h3 class="card-title">Chinmaya Gita</h3>
+        <p class="card-desc">Ask Gita — an AI-powered chatbot featuring Pujya Gurudev Swami Chinmayananda's commentary on the Bhagavad Gita, offering personalized spiritual guidance for modern seekers.</p>
+        <div class="card-tags"><span class="tag">AI</span><span class="tag">Chatbot</span><span class="tag">Spirituality</span></div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a href="#bebras" class="category-card">
+        <span class="card-icon">🧩</span>
+        <p class="card-category">Computational Thinking</p>
+        <h3 class="card-title">Bebras Challenge</h3>
+        <p class="card-desc">International computational thinking challenge celebrating problem-solving and logical reasoning through engaging puzzles and real-world scenarios.</p>
+        <div class="card-tags"><span class="tag">Contest</span><span class="tag">Puzzle</span><span class="tag">Thinking</span></div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a href="#robotics" class="category-card">
+        <span class="card-icon">🤖</span>
+        <p class="card-category">Electronics & Engineering</p>
+        <h3 class="card-title">Robotics Workshop</h3>
+        <p class="card-desc">Hands-on electronics and robotics workshop introducing circuit design, breadboards, soldering, and motor control through practical experimentation.</p>
+        <div class="card-tags"><span class="tag">Workshop</span><span class="tag">Electronics</span><span class="tag">Hands-on</span></div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a href="#poorna" class="category-card">
+        <span class="card-icon">🎉</span>
+        <p class="card-category">Recognition & Culture</p>
+        <h3 class="card-title">Poorna Utsav</h3>
+        <p class="card-desc">Annual valedictory celebration recognizing student contributions, awarding achievements, and building a culture of ownership and pride.</p>
+        <div class="card-tags"><span class="tag">Event</span><span class="tag">Recognition</span><span class="tag">Culture</span></div>
+        <div class="card-arrow">→</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Mannin Marangal Detail -->
+  <div class="section-block slams-detail-block" id="mannin">
+    <div class="slams-hero">
+      <div class="slams-hero-left">
+        <p class="section-label">Chinmaya Computing Club — Project Documentation</p>
+        <h2 class="slams-title">Mannin Marangal</h2>
+        <p class="slams-fullname">Our Native Trees</p>
+        <p class="slams-school">AI-powered Leaf Scanning & Tree Identification App</p>
+        <p class="slams-tagline">An intelligent application that identifies trees from leaf images and reveals whether the species is native to our region, promoting environmental awareness and biodiversity conservation.</p>
+        <a href="https://aishugithub.github.io/manninmarangal/" target="_blank" class="slams-access-btn">
+          <span class="slams-btn-icon">🌿</span> Open Mannin Marangal App <span class="slams-btn-arrow">↗</span>
+        </a>
+        <p class="slams-access-note">Use your camera or upload leaf images to identify trees. Instant results show species name and nativity status.</p>
+      </div>
+      <div class="slams-hero-right">
+        <div class="slams-stat-grid">
+          <div class="slams-stat"><span class="slams-stat-num">2</span><span class="slams-stat-label">Student Leads</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">100+</span><span class="slams-stat-label">Leaf Images</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">50+</span><span class="slams-stat-label">Tree Species</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">∞</span><span class="slams-stat-label">Impact</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="slams-flow">
+      <p class="slams-flow-label">How It Works</p>
+      <div class="slams-flow-steps">
+        <div class="slams-flow-step"><div class="slams-flow-num">1</div><p class="slams-flow-text">User captures or uploads a leaf image</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">2</div><p class="slams-flow-text">AI model analyzes the image</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">3</div><p class="slams-flow-text">Returns tree species identification</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">4</div><p class="slams-flow-text">Displays native status and ecological role</p></div>
+      </div>
+    </div>
+    <div class="slams-features">
+      <p class="slams-section-label">Project Purpose & Goals</p>
+      <div class="slams-feature-grid">
+        <div class="slams-feature-card"><div class="slams-feature-icon">🌍</div><h4>Environmental Awareness</h4><p>Create awareness about the nativity of trees and why native species are crucial for soil health, biodiversity, and ecological balance.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">🍃</div><h4>Promote Native Trees</h4><p>Encourage planting of native trees over exotic ornamental ones to enrich soil with native microbes, support local wildlife, and preserve the natural food web.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">🤖</div><h4>AI Learning</h4><p>Provide students hands-on experience in creating AI datasets, training image classification models, and deploying intelligent applications for real-world impact.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">📱</div><h4>Interactive & Accessible</h4><p>Make tree identification interactive and educational through a user-friendly web app that works on any device with a camera.</p></div>
+      </div>
+    </div>
+    <div class="slams-settings">
+      <p class="slams-section-label">Development & Launch Timeline</p>
+      <div class="slams-settings-grid">
+        <div class="slams-setting-row slams-setting-header"><span>Phase</span><span>Details</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Data Collection</span><span>Students collected hundreds of photographs of leaves, branches, and trees from campus and local areas over several weeks.</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Dataset Preparation</span><span>Images were categorized, labeled, and processed into a dataset suitable for AI training. Students learned importance of data quality and diversity.</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Model Training</span><span>AI model trained for image classification of tree species with focus on nativity detection.</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Web Integration</span><span>Trained model embedded into a web application for public access and real-time predictions.</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Official Launch</span><span>Launched on World Environment Day (June 5, 2025) by the school Principal with assembly awareness program.</span></div>
+      </div>
+    </div>
+    <div class="slams-roles">
+      <p class="slams-section-label">Team Composition & Leadership</p>
+      <div class="slams-roles-grid">
+        <div class="slams-role-card">
+          <div class="slams-role-icon">👩‍🏫</div>
+          <h4 class="slams-role-title">Project Mentor</h4>
+          <div class="slams-role-duties">
+            <p><strong>Name:</strong> Mrs. Aishwarya Bramma</p>
+            <p>Teacher – Computer Science, guiding the vision and technical implementation of the project, integrating AI with environmental stewardship.</p>
+          </div>
+        </div>
+        <div class="slams-role-card">
+          <div class="slams-role-icon">👤</div>
+          <h4 class="slams-role-title">Lead Developer & Coordinator</h4>
+          <div class="slams-role-duties">
+            <p><strong>Name:</strong> Yashaswini</p>
+            <p>Leading the development effort, coordinating team activities, managing dataset compilation, and overseeing the web application deployment.</p>
+          </div>
+        </div>
+        <div class="slams-role-card">
+          <div class="slams-role-icon">👤</div>
+          <h4 class="slams-role-title">AI & Environment Advocate</h4>
+          <div class="slams-role-duties">
+            <p><strong>Name:</strong> Tharish</p>
+            <p>Driving the environmental aspect of the project, educating peers about native species importance, and advocating for sustainable tree planting practices.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slams-bottom-row">
+      <div class="slams-data">
+        <p class="slams-section-label">Key Features of the App</p>
+        <div class="slams-sheet-list">
+          <div class="slams-sheet"><span class="slams-sheet-icon">📷</span><div><span class="slams-sheet-name">Instant Recognition</span><span class="slams-sheet-desc">Scan a leaf to identify tree species in seconds</span></div></div>
+          <div class="slams-sheet"><span class="slams-sheet-icon">🌿</span><div><span class="slams-sheet-name">Native Focus</span><span class="slams-sheet-desc">Shows whether the plant is native to our region</span></div></div>
+          <div class="slams-sheet"><span class="slams-sheet-icon">📚</span><div><span class="slams-sheet-name">Educational Info</span><span class="slams-sheet-desc">Description and ecological role of each species</span></div></div>
+          <div class="slams-sheet"><span class="slams-sheet-icon">🤝</span><div><span class="slams-sheet-name">Community Input</span><span class="slams-sheet-desc">Users contribute images to expand the dataset</span></div></div>
+        </div>
+      </div>
+      <div class="slams-troubleshoot">
+        <p class="slams-section-label">Learning Outcomes for Students</p>
+        <div class="slams-trouble-list">
+          <div class="slams-trouble-item"><span class="slams-trouble-issue">Creating AI Datasets</span><span class="slams-trouble-fix">Learned data collection, labeling, and organization practices</span></div>
+          <div class="slams-trouble-item"><span class="slams-trouble-issue">Training Models</span><span class="slams-trouble-fix">Hands-on experience with image classification and model accuracy</span></div>
+          <div class="slams-trouble-item"><span class="slams-trouble-issue">Web Integration</span><span class="slams-trouble-fix">Embedding trained models into functional applications</span></div>
+          <div class="slams-trouble-item"><span class="slams-trouble-issue">Environmental Advocacy</span><span class="slams-trouble-fix">Deeper appreciation for native species and ecological balance</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="slams-security">
+      <span class="slams-security-icon">🌱</span>
+      <p><strong>Future Vision:</strong> Expand dataset to cover more species across Tamil Nadu and India, improve prediction accuracy, add language options and AR-based learning, and partner with local ecological bodies. Mannin Marangal is more than a school project—it's a step toward combining AI literacy with environmental stewardship and inspiring students to innovate for nature.</p>
+    </div>
+  </div>
+
+  <!-- Chinmaya Gita Detail -->
+  <div class="section-block slams-detail-block" id="gita">
+    <div class="slams-hero">
+      <div class="slams-hero-left">
+        <p class="section-label">Chinmaya Computing Club — Spiritual AI Project</p>
+        <h2 class="slams-title">Chinmaya Gita</h2>
+        <p class="slams-fullname">Ask Gita — AI-Powered Spiritual Guidance</p>
+        <p class="slams-school">Chinmaya Vidyalaya Sr. Sec. School</p>
+        <p class="slams-tagline">Where AI meets divine wisdom — an advanced chatbot programmed with Pujya Gurudev Swami Chinmayananda's luminous commentary on the Bhagavad Gita, offering personalized spiritual guidance for modern seekers.</p>
+        <a href="https://cvvchennai-my.sharepoint.com/:v:/g/personal/aishwaryabramma_cvvsss_chinmayavidyalayaschennai_edu_in/IQAu1Ihvk-7ETI_peHhTIBX6AakVP5V4waVkUfppUmu90PU?e=ntR1WD" target="_blank" class="slams-access-btn">
+          <span class="slams-btn-icon">🎥</span> Watch Project Demo <span class="slams-btn-arrow">↗</span>
+        </a>
+        <p class="slams-access-note">Experience the AI chatbot in action with sample questions and responses from Gurudev's teachings.</p>
+      </div>
+      <div class="slams-hero-right">
+        <div class="slams-stat-grid">
+          <div class="slams-stat"><span class="slams-stat-num">3</span><span class="slams-stat-label">Student Developers</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">RAG</span><span class="slams-stat-label">Technology</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">∞</span><span class="slams-stat-label">Spiritual Guidance</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">75</span><span class="slams-stat-label">Years of Wisdom</span></div>
+        </div>
+      </div>
+    </div>
+
+    
+
+    <div class="slams-flow">
+      <p class="slams-flow-label">The Vision & Mission</p>
+      <div class="slams-flow-steps">
+        <div class="slams-flow-step"><div class="slams-flow-num">1</div><p class="slams-flow-text">Chant Gita, Learn Gita, Know Gita, Live Gita</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">2</div><p class="slams-flow-text">AI meets divine wisdom for today's youth</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">3</div><p class="slams-flow-text">Personalized spiritual guidance for modern seekers</p></div>
+        <div class="slams-flow-arrow">→</div>
+        <div class="slams-flow-step"><div class="slams-flow-num">4</div><p class="slams-flow-text">Technology becomes vessel for eternal guidance</p></div>
+      </div>
+    </div>
+    <div class="slams-features">
+      <p class="slams-section-label">Complete Feature Suite</p>
+      <div class="slams-feature-grid">
+        <div class="slams-feature-card"><div class="slams-feature-icon">🤖</div><h4>Ask Gita Chatbot</h4><p>Advanced AI chatbot with Pujya Gurudev's commentary. Ask life questions, moral dilemmas, career confusion, relationship troubles, or spiritual doubts — receive divine guidance tailored for modern seekers.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">✨</div><h4>Today's Inspiration</h4><p>Daily spiritual wisdom to start your day with Gurudev's teachings, providing fresh insights and motivation for daily living.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">📚</div><h4>Explore the Gita</h4><p>Comprehensive learning experience with original sloka, English transliteration, Gurudev's profound explanation, and practical tips to integrate wisdom into daily life.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">🔒</div><h4>Authentic & Reliable</h4><p>Powered by RAG technology ensuring every response is grounded in authentic teachings. No hallucinations — only Gurudev's eternal wisdom refined for modern understanding.</p></div>
+      </div>
+    </div>
+    <div class="slams-settings">
+      <p class="slams-section-label">Technology & Development</p>
+      <div class="slams-settings-grid">
+        <div class="slams-setting-row slams-setting-header"><span>Technology</span><span>Implementation</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">AI Technology</span><span>RAG (Retrieval Augmented Generation) for authentic, hallucination-free responses</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Knowledge Base</span><span>Meticulously curated verses and commentary from Pujya Gurudev's Holy Gita</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">NLP Processing</span><span>Refines and polishes explanations in Gurudev's compassionate tone</span></div>
+        <div class="slams-setting-row"><span class="slams-setting-name">Spiritual Accuracy</span><span>Every response grounded in authentic teachings, never fabricated</span></div>
+      </div>
+    </div>
+    <div class="slams-roles">
+      <p class="slams-section-label">The Creative Force Behind Chinmaya Gita</p>
+      <div class="slams-roles-grid">
+        <div class="slams-role-card">
+          <div class="slams-role-icon">👩‍🏫</div>
+          <h4 class="slams-role-title">Project Mentor</h4>
+          <div class="slams-role-duties">
+            <p><strong>Name:</strong> Mrs. Aishwarya Bramma</p>
+            <p>Teacher – Computer Science, providing inspiring mentorship and technical guidance to blend innovation with devotion.</p>
+          </div>
+        </div>
+        <div class="slams-role-card">
+          <div class="slams-role-icon">👤</div>
+          <h4 class="slams-role-title">Student Developers</h4>
+          <div class="slams-role-duties">
+            <p><strong>Names:</strong> Visvesh, Yashaswini, Haritha</p>
+            <p>Dedicated team of tech enthusiasts who transformed from passionate learners into creators of meaningful spiritual technology.</p>
+          </div>
+        </div>
+        <div class="slams-role-card">
+          <div class="slams-role-icon">👩‍🏫</div>
+          <h4 class="slams-role-title">Principal Guidance</h4>
+          <div class="slams-role-duties">
+            <p><strong>Name:</strong> Mrs. Elavarasi</p>
+            <p>Esteemed principal providing wise guidance and embodying the perfect fusion of technical skills with spiritual values.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="slams-bottom-row">
+      <div class="slams-data">
+        <p class="slams-section-label">Project Significance</p>
+        <div class="slams-sheet-list">
+          <div class="slams-sheet"><span class="slams-sheet-icon">🕉️</span><div><span class="slams-sheet-name">75 Years</span><span class="slams-sheet-desc">Celebrating Chinmaya Mission's glorious anniversary</span></div></div>
+          <div class="slams-sheet"><span class="slams-sheet-icon">🌍</span><div><span class="slams-sheet-name">Global Reach</span><span class="slams-sheet-desc">Timeless Gita message to millions of seekers worldwide</span></div></div>
+          <div class="slams-sheet"><span class="slams-sheet-name">Digital Bridge</span><span class="slams-sheet-desc">Connecting ancient wisdom with modern digital generation</span></div>
+          <div class="slams-sheet"><span class="slams-sheet-name">Youth Gift</span><span class="slams-sheet-desc">Revolutionary offering for today's spiritual seekers</span></div>
+        </div>
+      </div>
+      <div class="slams-troubleshoot">
+        <p class="slams-section-label">The Vision Realized</p>
+        <div class="slams-trouble-list">
+          <div class="slams-trouble-item"><span class="slams-trouble-issue">Accessibility</span><span class="slams-trouble-fix">Made Gita accessible to every curious mind with questions</span></div>
+          <div class="slams-trouble-item"><span class="slams-trouble-issue">Personalization</span><span class="slams-trouble-fix">From ancient seekers to modern questioners, eternal wisdom flows digitally</span></div>
+          <div class="slams-trouble-item"><span class="slams-trouble-issue">Authenticity</span><span class="slams-trouble-fix">Gurudev's own insights respond to deepest queries personally</span></div>
+          <div class="slams-trouble-item"><span class="slams-trouble-issue">Innovation</span><span class="slams-trouble-fix">Technology serves as vessel for spiritual elevation and service</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="slams-security">
+      <span class="slams-security-icon">🙏</span>
+      <p><strong>Sacred Dedication:</strong> This extraordinary project is humbly offered at the sacred lotus feet of our beloved Pujya Gurudev Swami Chinmayananda — a humble offering of gratitude for his infinite grace and timeless teachings that continue to illuminate countless souls across the world. "May this digital offering serve as a bridge between ancient wisdom and modern seekers, bringing the light of the Gita to every heart that yearns for truth."</p>
+    </div>
+  </div>
+
+  <!-- Bebras Section -->
+  <div class="slams-detail-block" id="bebras">
+    <div class="slams-detail-header">
+      
+      <div class="slams-detail-title">
+                <h2 class="slams-title">Bebras Computational Thinking Challenge</h2>
+
+      
+        <p class="slams-detail-subtitle">International Informatics Competition for Young Minds</p>
+      </div>
+    </div>
+    <div class="slams-detail-content">
+      <div class="slams-hero">
+        <div class="slams-hero-left">
+          <p class="slams-hero-desc">Bebras is an international initiative that promotes computational thinking among school students. Through engaging, puzzle-based challenges, students develop problem-solving skills, logical reasoning, and algorithmic thinking — essential skills for the digital age.</p><br><br>
+          <div class="slams-access">
+            <a href="https://bebras.cspathshala.org/" target="_blank" class="slams-access-btn">
+              <span class="slams-btn-icon">🌐</span> Visit Bebras Website <span class="slams-btn-arrow">↗</span>
+            </a>
+            <p class="slams-access-note">Access the official Bebras Computational Thinking Challenge website for registration and participation details.</p>
+          </div>
+        </div>
+        <div class="slams-hero-right">
+          <div class="slams-stat-grid">
+            <div class="slams-stat"><span class="slams-stat-num">50+</span><span class="slams-stat-label">Countries</span></div>
+            <div class="slams-stat"><span class="slams-stat-num">4M+</span><span class="slams-stat-label">Students</span></div>
+            <div class="slams-stat"><span class="slams-stat-num">15</span><span class="slams-stat-label">Tasks per Challenge</span></div>
+            <div class="slams-stat"><span class="slams-stat-num">45</span><span class="slams-stat-label">Minutes</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="slams-features">
+        <p class="slams-section-label">Challenge Highlights</p>
+        <div class="slams-feature-grid">
+          <div class="slams-feature-card"><div class="slams-feature-icon">🧩</div><h4>Puzzle-Based Learning</h4><p>Fun, engaging tasks that teach computational concepts through interactive puzzles and scenarios.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">🌐</div><h4>Global Participation</h4><p>Join millions of students worldwide in this international competition celebrating computational thinking.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">📊</div><h4>Skill Development</h4><p>Develop logical reasoning, algorithmic thinking, and problem-solving skills essential for future careers.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">🏆</div><h4>Recognition</h4><p>Certificates and awards for participants, with special recognition for outstanding performance.</p></div>
+        </div>
+      </div>
+      <div class="slams-roles">
+        <p class="slams-section-label">Coordinator Responsibilities</p>
+        <div class="slams-roles-grid">
+          <div class="slams-role-card">
+            <div class="slams-role-icon">👩‍🏫</div>
+            <h4 class="slams-role-title">National Coordinator</h4>
+            <div class="slams-role-duties">
+              <p><strong>Name:</strong> Ms. Sonia Garcha</p>
+              <p><strong>Email:</strong> garchasonia70@gmail.com</p>
+              <p>National coordinator for Bebras India, managing school registrations and providing support for smooth challenge implementation.</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">📋</div>
+            <h4 class="slams-role-title">School Coordinator Tasks</h4>
+            <div class="slams-role-duties">
+              <p><strong>1. Registration:</strong> Contact Ms. Sonia Garcha to register as the school's Bebras coordinator</p>
+              <p><strong>2. Student Enrollment:</strong> Register participating students through the official portal</p>
+              <p><strong>3. Challenge Setup:</strong> Arrange computer lab access and ensure stable internet connectivity</p>
+              <p><strong>4. Administration:</strong> Supervise the 45-minute challenge session and maintain exam conditions</p>
+              <p><strong>5. Results:</strong> Collect certificates and feedback for participants</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slams-bottom-row">
+        <div class="slams-data">
+          <p class="slams-section-label">Challenge Structure</p>
+          <div class="slams-sheet-list">
+            <div class="slams-sheet"><span class="slams-sheet-icon">⏰</span><div><span class="slams-sheet-name">45 Minutes</span><span class="slams-sheet-desc">Time allocated for completing all tasks</span></div></div>
+            <div class="slams-sheet"><span class="slams-sheet-icon">📝</span><div><span class="slams-sheet-name">15 Tasks</span><span class="slams-sheet-desc">Carefully designed computational thinking challenges</span></div></div>
+            <div class="slams-sheet"><span class="slams-sheet-name">🎯</span><span class="slams-sheet-desc">Multiple choice questions with varying difficulty levels</span></div>
+            
+          </div>
+        </div>
+        <div class="slams-troubleshoot">
+          <p class="slams-section-label">Benefits for Students</p>
+          <div class="slams-trouble-list">
+            <div class="slams-trouble-item"><span class="slams-trouble-issue">Critical Thinking</span><span class="slams-trouble-fix">Develop analytical skills through puzzle-solving</span></div>
+            <div class="slams-trouble-item"><span class="slams-trouble-issue">Digital Literacy</span><span class="slams-trouble-fix">Build confidence in computational concepts</span></div>
+            <div class="slams-trouble-item"><span class="slams-trouble-issue">Global Awareness</span><span class="slams-trouble-fix">Connect with international peers through shared challenges</span></div>
+            <div class="slams-trouble-item"><span class="slams-trouble-issue">Future Readiness</span><span class="slams-trouble-fix">Essential skills for STEM careers and digital citizenship</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Robotics Workshops Section -->
+  <div class="slams-detail-block" id="robotics">
+    <div class="slams-detail-header">
+      
+      <div class="slams-detail-title">
+       <h2 class="slams-title">Electronics & Robotics Workshops</h2>
+        
+        <p class="slams-tagline">Hands-on Engineering Skills for Modern Innovators</p>
+      </div>
+    </div>
+    <div class="slams-detail-content">
+      <div class="slams-hero">
+        <div class="slams-hero-left">
+          <p class="slams-hero-desc">Electronics and Robotics Workshops provide students with hands-on experience in building circuits, understanding real-world systems, and developing engineering thinking. These collaborations with external institutions like engineering colleges create pathways for deep STEM learning beyond the classroom.<br><br></p>
+          <div class="slams-access">
+            <a href="https://srmeaswari.ac.in/robotics-and-automation-engineering/faculty/" target="_blank" class="slams-access-btn">
+              <span class="slams-btn-icon"></span> Visit Robotics Department of EEC <span class="slams-btn-arrow">↗</span>
+            </a>
+            <p class="slams-access-note">Reach out to Dr. Madhan at Easwari Engineering College to organize future workshops.</p>
+          </div>
+        </div>
+        <div class="slams-hero-right">
+          <div class="slams-stat-grid">
+            <div class="slams-stat"><span class="slams-stat-num">5</span><span class="slams-stat-label">Days Duration</span></div>
+            <div class="slams-stat"><span class="slams-stat-num">20</span><span class="slams-stat-label">Participants</span></div>
+            <div class="slams-stat"><span class="slams-stat-num">100%</span><span class="slams-stat-label">Engagement</span></div>
+            <div class="slams-stat"><span class="slams-stat-num">∞</span><span class="slams-stat-label">Opportunities</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slams-features">
+        <p class="slams-section-label">Why Electronics & Robotics Matter</p>
+        <div class="slams-feature-grid">
+          <div class="slams-feature-card"><div class="slams-feature-icon">⚙️</div><h4>Foundation Skills</h4><p>Understand how real-world systems work through circuits, breadboards, and hands-on experimentation with resistors, capacitors, and LEDs.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">🧠</div><h4>Engineering Thinking</h4><p>Develop systematic problem-solving, logical reasoning, and the ability to troubleshoot independently through real challenges.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">🚀</div><h4>Future Pathways</h4><p>Gateway to advanced STEM domains: AI, IoT, Embedded Systems, and Robotics competitions.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">💡</div><h4>Confidence Building</h4><p>Move from theory to creation—students experience the power of hands-on learning and independent experimentation.</p></div>
+        </div>
+      </div>
+
+      
+
+      <div class="slams-roles">
+        <p class="slams-section-label">How to Conduct Future Workshops</p>
+        <div class="slams-roles-grid">
+          <div class="slams-role-card">
+            <div class="slams-role-icon">📋</div>
+            <h4 class="slams-role-title">Step 1: Contact Resource Person</h4>
+            <div class="slams-role-duties">
+              <p><strong>Name:</strong> Dr. Madhan</p>
+              <p><strong>Position:</strong> Faculty, Robotics Department</p>
+              <p><strong>Institution:</strong> Easwari Engineering College</p>
+              <p><strong>Phone:</strong> +91 97893 19363</p>
+              <p>Discuss workshop request, preferred dates, duration, and number of participants.</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">🤝</div>
+            <h4 class="slams-role-title">Step 2: Coordinate with Institution</h4>
+            <div class="slams-role-duties">
+              <p><strong>Finalize:</strong> Workshop dates, duration (typically 3–5 days), and student batch size (15–25 students recommended)</p>
+              <p><strong>Decide:</strong> On-campus (at college) or Off-campus (at school) workshop</p>
+              <p><strong>Plan:</strong> Technical content, materials, and resource person availability</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">🎓</div>
+            <h4 class="slams-role-title">Step 3: Prepare Students</h4>
+            <div class="slams-role-duties">
+              <p><strong>Select:</strong> Interested students from Chinmaya Computing Club or general student body</p>
+              <p><strong>Brief:</strong> Students about workshop goals, expected learning outcomes, and importance of hands-on participation</p>
+              <p><strong>Set Expectations:</strong> This is experiential learning—come prepared to explore, question, and build</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">🔧</div>
+            <h4 class="slams-role-title">Step 4: Conduct Workshop</h4>
+            <div class="slams-role-duties">
+              <p><strong>Ensure:</strong> Proper supervision, safety protocols, and student engagement throughout</p>
+              <p><strong>Encourage:</strong> Hands-on participation, independent problem-solving, and curiosity-driven questioning</p>
+              <p><strong>Support:</strong> Resource persons with logistics and student mentorship</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">📊</div>
+            <h4 class="slams-role-title">Step 5: Follow-up & Extension</h4>
+            <div class="slams-role-duties">
+              <p><strong>Collect:</strong> Student feedback and identify those interested in deeper learning</p>
+              <p><strong>Document:</strong> Workshop outcomes, student achievements, and lessons learned</p>
+              <p><strong>Continue:</strong> Advanced activities—robotics club, IoT projects, or inter-school competitions</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slams-flow">
+        <p class="slams-flow-label">Workshop Pipeline Overview</p>
+        <div class="slams-flow-steps">
+          <div class="slams-flow-step"><div class="slams-flow-num">1</div><p class="slams-flow-text">Contact Dr. Madhan</p></div>
+          <div class="slams-flow-arrow">→</div>
+          <div class="slams-flow-step"><div class="slams-flow-num">2</div><p class="slams-flow-text">Finalize Details</p></div>
+          <div class="slams-flow-arrow">→</div>
+          <div class="slams-flow-step"><div class="slams-flow-num">3</div><p class="slams-flow-text">Select Students</p></div>
+          <div class="slams-flow-arrow">→</div>
+          <div class="slams-flow-step"><div class="slams-flow-num">4</div><p class="slams-flow-text">Conduct Workshop</p></div>
+          <div class="slams-flow-arrow">→</div>
+          <div class="slams-flow-step"><div class="slams-flow-num">5</div><p class="slams-flow-text">Continue Advanced Path</p></div>
+        </div>
+      </div>
+
+      <div class="slams-security">
+        <span class="slams-security-icon">🎯</span>
+        <p><strong>Vision for Continuity:</strong> These workshops are not one-time events—they are starting points for deeper engagement with technology. Students progress from learning concepts to creating solutions, moving naturally into robotics clubs, IoT projects, and inter-school competitions. This is how we can build a sustainable STEM ecosystem in our school.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Purnotsav Section -->
+  <div class="slams-detail-block" id="poorna">
+    <div class="slams-detail-header">
+      
+      <div class="slams-detail-title">
+        <h2 class="slams-title">Purna Utsav — Chinmaya Computing Club Valedictory</h2>
+        
+        <p class="slams-tagline">Celebrating student effort, achievement, and the culture of recognition</p>
+      </div>
+    </div>
+    <div class="slams-detail-content">
+      <div class="slams-hero">
+        <div class="slams-hero-left">
+          <p class="slams-hero-desc">Purnotsav is the annual valedictory function of the Chinmaya Computing Club, marking the culmination of a year of learning, creation, and contribution. It celebrates student talent, acknowledges contributions, and builds a culture of ownership and pride.</p>
+          <div class="slams-access">
+            <a href="https://canva.link/nzh16e5uik1u39s" target="_blank" class="slams-access-btn">
+              <span class="slams-btn-icon">🎓</span> Certificate Templates <span class="slams-btn-arrow">↗</span>
+            </a>
+            <a href="https://cvvchennai-my.sharepoint.com/:w:/g/personal/aishwaryabramma_cvvsss_chinmayavidyalayaschennai_edu_in/IQB6skpVCDagSoF7TATAMeEIAW1GHcgNEjHRJ2F7_AvJJ5o?e=MPjW9g" target="_blank" class="slams-access-btn" style="margin-top:0.75rem;">
+              <span class="slams-btn-icon">💰</span> Last Year Budget <span class="slams-btn-arrow">↗</span>
+            </a>
+            <p class="slams-access-note">Use the budget reference document and certificate templates together for event planning and award design.</p>
+          </div>
+        </div>
+        <div class="slams-hero-right">
+          <div class="slams-stat-grid">
+            <div class="slams-stat"><span class="slams-stat-num">1</span><span class="slams-stat-label">Annual Celebration</span></div>
+            <div class="slams-stat"><span class="slams-stat-num">4</span><span class="slams-stat-label">Recognition Dimensions</span></div>
+            <div class="slams-stat"><span class="slams-stat-num">100%</span><span class="slams-stat-label">Effort Acknowledged</span></div>
+            <div class="slams-stat"><span class="slams-stat-num">∞</span><span class="slams-stat-label">Legacy Value</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slams-features">
+        <p class="slams-section-label">Why Recognition Matters</p>
+        <div class="slams-feature-grid">
+          <div class="slams-feature-card"><div class="slams-feature-icon">💪</div><h4>Builds Confidence</h4><p>Recognition strengthens student motivation and helps them take pride in their achievements.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">🌱</div><h4>Encourages Consistency</h4><p>When effort is acknowledged, students remain committed to sustained learning and participation.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">🎯</div><h4>Reinforces Meaning</h4><p>Recognition turns work into purposeful contribution and inspires students to keep improving.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">✨</div><h4>Inspires Participation</h4><p>Visible appreciation draws more students into the club and fosters a strong community culture.</p></div>
+        </div>
+      </div>
+
+      <div class="slams-bottom-row">
+        <div class="slams-data">
+          <p class="slams-section-label">What is Recognised</p>
+          <div class="slams-sheet-list">
+            <div class="slams-sheet"><span class="slams-sheet-icon">🧠</span><div><span class="slams-sheet-name">Academic & Thinking Achievements</span><span class="slams-sheet-desc">Bebras winners and internal computational thinking competitions.</span></div></div>
+            <div class="slams-sheet"><span class="slams-sheet-icon">🛠️</span><div><span class="slams-sheet-name">System Contributions</span><span class="slams-sheet-desc">Tools and school systems built by students, including SLAMS and KEE.</span></div></div>
+            <div class="slams-sheet"><span class="slams-sheet-icon">🎨</span><div><span class="slams-sheet-name">Creative & Club Contributions</span><span class="slams-sheet-desc">Newsletter, backdrop design, and creative club projects.</span></div></div>
+            <div class="slams-sheet"><span class="slams-sheet-icon">🏆</span><div><span class="slams-sheet-name">Competition Winners</span><span class="slams-sheet-desc">Winners from club contests, technical challenges, and internal events.</span></div></div>
+          </div>
+        </div>
+        <div class="slams-troubleshoot">
+          <p class="slams-section-label">Purnotsav Purpose</p>
+          <div class="slams-trouble-list">
+            <div class="slams-trouble-item"><span class="slams-trouble-issue">Recognition</span><span class="slams-trouble-fix">Celebrate student talent and effort across academic, technical, and creative domains.</span></div>
+            <div class="slams-trouble-item"><span class="slams-trouble-issue">Motivation</span><span class="slams-trouble-fix">Use appreciation as a driver for future innovation and participation.</span></div>
+            <div class="slams-trouble-item"><span class="slams-trouble-issue">Ownership</span><span class="slams-trouble-fix">Build pride in student work and contribution to the school ecosystem.</span></div>
+            <div class="slams-trouble-item"><span class="slams-trouble-issue">Legacy</span><span class="slams-trouble-fix">Create a repeatable recognition culture for future club cohorts.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slams-roles">
+        <p class="slams-section-label">How to Organize Purnotsav</p>
+        <div class="slams-roles-grid">
+          <div class="slams-role-card">
+            <div class="slams-role-icon">📅</div>
+            <h4 class="slams-role-title">Step 1: Plan the Event</h4>
+            <div class="slams-role-duties">
+              <p>Decide date and venue.</p>
+              <p>Prepare award categories.</p>
+              <p>Finalize student achievements to recognize.</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">🎤</div>
+            <h4 class="slams-role-title">Step 2: Invite Chief Guest</h4>
+            <div class="slams-role-duties">
+              <p>Invite a special guest from academics, industry, or alumni.</p>
+              <p>Brief them on club activities and student contributions.</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">🖼️</div>
+            <h4 class="slams-role-title">Step 3: Showcase Student Work</h4>
+            <div class="slams-role-duties">
+              <p>Exhibit projects, designs, and systems built by students.</p>
+              <p>Create a visual display of student achievements.</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">🏆</div>
+            <h4 class="slams-role-title">Step 4: Certificate & Prize Distribution</h4>
+            <div class="slams-role-duties">
+              <p>Use Canva templates for certificates.</p>
+              <p>Have the chief guest distribute awards and certificates.</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">🎉</div>
+            <h4 class="slams-role-title">Step 5: Conduct the Event</h4>
+            <div class="slams-role-duties">
+              <p>Include welcome address, club overview, recognition ceremony, and guest speech.</p>
+              <p>Keep the program well-structured and time-bound.</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">📸</div>
+            <h4 class="slams-role-title">Step 6: Documentation</h4>
+            <div class="slams-role-duties">
+              <p>Take photographs and record event highlights.</p>
+              <p>Archive videos and images for future reference.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slams-flow">
+        <p class="slams-flow-label">Purnotsav Process</p>
+        <div class="slams-flow-steps">
+          <div class="slams-flow-step"><div class="slams-flow-num">1</div><p class="slams-flow-text">Plan the event</p></div>
+          <div class="slams-flow-arrow">→</div>
+          <div class="slams-flow-step"><div class="slams-flow-num">2</div><p class="slams-flow-text">Invite guest</p></div>
+          <div class="slams-flow-arrow">→</div>
+          <div class="slams-flow-step"><div class="slams-flow-num">3</div><p class="slams-flow-text">Showcase work</p></div>
+          <div class="slams-flow-arrow">→</div>
+          <div class="slams-flow-step"><div class="slams-flow-num">4</div><p class="slams-flow-text">Distribute awards</p></div>
+          <div class="slams-flow-arrow">→</div>
+          <div class="slams-flow-step"><div class="slams-flow-num">5</div><p class="slams-flow-text">Document and archive</p></div>
+        </div>
+      </div>
+
+      <div class="slams-security">
+        <span class="slams-security-icon">📜</span>
+        <p> Purnotsav is where the year comes full circle — where effort is seen, contributions are valued, and students are reminded that what they build truly matters.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Teacher Resources Section -->
+  <div class="section-block" id="teacher-resources-overview">
+    <div class="section-header">
+      <span class="section-number">03</span>
+      <div class="section-title-group">
+        <p class="section-label">Professional Growth</p>
+        <h2>Teacher Resources & Upskilling</h2>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="category-grid">
+      <a href="#website-building" class="category-card">
+        <span class="card-icon">🌐</span>
+        <p class="card-category">Web Development</p>
+        <h3 class="card-title">Website Building</h3>
+        <p class="card-desc">Learn to build and publish personal websites using GitHub Pages and static site generation — empowering you to create your digital presence.</p>
+        <div class="card-tags"><span class="tag">GitHub Pages</span><span class="tag">Web</span><span class="tag">Tech</span></div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a href="#task-automation" class="category-card">
+        <span class="card-icon">⚡</span>
+        <p class="card-category">Workflow Automation</p>
+        <h3 class="card-title">Task Automation</h3>
+        <p class="card-desc">Automate repetitive work using Python, Google Apps Script, and AI tools — save hours and work smarter with technology.</p>
+        <div class="card-tags"><span class="tag">Python</span><span class="tag">Google Apps Script</span><span class="tag">GenAI</span></div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a href="#canva-designing" class="category-card">
+        <span class="card-icon">🎨</span>
+        <p class="card-category">Design & Creativity</p>
+        <h3 class="card-title">Canva Designing</h3>
+        <p class="card-desc">Create engaging presentations, posters, videos, and infographics without design experience — make teaching visually impactful.</p>
+        <div class="card-tags"><span class="tag">Design Tool</span><span class="tag">Templates</span><span class="tag">Education</span></div>
+        <div class="card-arrow">→</div>
+      </a>
+      <a href="#upskill" class="category-card">
+        <span class="card-icon">🌱</span>
+        <p class="card-category">Mindset & Growth</p>
+        <h3 class="card-title">Upskill Yourself</h3>
+        <p class="card-desc">A mindset shift from "doing work" to "growing through work" — continuous learning, innovation, and professional transformation.</p>
+        <div class="card-tags"><span class="tag">Growth Mindset</span><span class="tag">Learning</span><span class="tag">Development</span></div>
+        <div class="card-arrow">→</div>
+      </a>
+    </div>
+  </div>
+
+  <!-- Website Building Section -->
+  <div class="slams-detail-block" id="website-building">
+    <div class="slams-detail-header">
+      
+      <div class="slams-detail-title">
+        <h2 class="slams-title">Building Your Own Website</h2>
+        <p class="slams-tagline">Empowering teachers to become creators, not just users</p>
+      </div>
+    </div>
+    <div class="slams-detail-content">
+      <div class="slams-hero">
+        <div class="slams-hero-left">
+          <p class="slams-hero-desc">This section guides teachers on how to create a simple personal or subject website and host it using GitHub Pages. A static website requires no server, no deep coding expertise, and can be built quickly with Gen AI tools.<br><br></p>
+          <div class="slams-access">
+            <a href="https://github.com" target="_blank" class="slams-access-btn">
+              <span class="slams-btn-icon">💻</span> GitHub Signup <span class="slams-btn-arrow">↗</span>
+            </a>
+            <p class="slams-access-note">Use GitHub Pages to host your website for free and make it accessible from anywhere.</p>
+          </div>
+        </div>
+        <div class="slams-hero-right">
+          <div class="slams-stat-grid">
+            <div class="slams-stat"><span class="slams-stat-num">0</span><span class="slams-stat-label">Server Required</span></div>
+            <div class="slams-stat"><span class="slams-stat-num">1</span><span class="slams-stat-label">Static Website</span></div>
+            <div class="slams-stat"><span class="slams-stat-num">2</span><span class="slams-stat-label">AI Tools</span></div>
+            <div class="slams-stat"><span class="slams-stat-num">∞</span><span class="slams-stat-label">Teacher Reach</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slams-features">
+        <p class="slams-section-label">Why Teachers Should Have a Website</p>
+        <div class="slams-feature-grid">
+          <div class="slams-feature-card"><div class="slams-feature-icon">📚</div><h4>Organize Materials</h4><p>Keep lesson notes, worksheets, and links in one accessible place for students.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">🌍</div><h4>Share Resources</h4><p>Make class resources available anytime, anywhere, and from any device.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">📝</div><h4>Maintain Content</h4><p>Update worksheets, announcements, and notes without complexity.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">✨</div><h4>Digital Companion</h4><p>Your website becomes a reliable teaching companion for students and parents.</p></div>
+        </div>
+      </div>
+
+      <div class="slams-bottom-row">
+        <div class="slams-data">
+          <p class="slams-section-label">What is a Static Website?</p>
+          <div class="slams-sheet-list">
+            <div class="slams-sheet"><span class="slams-sheet-icon">🧩</span><div><span class="slams-sheet-name">Simple HTML</span><span class="slams-sheet-desc">A website built with basic HTML pages and no backend.</span></div></div>
+            <div class="slams-sheet"><span class="slams-sheet-icon">⚡</span><div><span class="slams-sheet-name">Fast & Lightweight</span><span class="slams-sheet-desc">Quick to load and easy to maintain.</span></div></div>
+            <div class="slams-sheet"><span class="slams-sheet-name">No Database</span><span class="slams-sheet-desc">No server-side coding or database management required.</span></div>
+            <div class="slams-sheet"><span class="slams-sheet-name">Free Hosting</span><span class="slams-sheet-desc">Host the site using GitHub Pages at no cost.</span></div>
+          </div>
+        </div>
+        <div class="slams-troubleshoot">
+          <p class="slams-section-label">How Gen AI Helps</p>
+          <div class="slams-trouble-list">
+            <div class="slams-trouble-item"><span class="slams-trouble-issue">No Coding Needed</span><span class="slams-trouble-fix">Ask ChatGPT or Claude to generate ready-made HTML code.</span></div>
+            <div class="slams-trouble-item"><span class="slams-trouble-issue">Quick Start</span><span class="slams-trouble-fix">Describe your website and copy the generated code into index.html.</span></div>
+            <div class="slams-trouble-item"><span class="slams-trouble-issue">Easy Customization</span><span class="slams-trouble-fix">Modify headings, text, and images with simple edits.</span></div>
+            <div class="slams-trouble-item"><span class="slams-trouble-issue">Practical Example</span><span class="slams-trouble-fix">Mrs. Vanita created a website this way, proving it is achievable for any teacher.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slams-roles">
+        <p class="slams-section-label">How to Create Your Website</p>
+        <div class="slams-roles-grid">
+          <div class="slams-role-card">
+            <div class="slams-role-icon">🧠</div>
+            <h4 class="slams-role-title">Step 1: Plan Your Content</h4>
+            <div class="slams-role-duties">
+              <p>Decide what the website will include: subject notes, worksheets, announcements, and links.</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">🤖</div>
+            <h4 class="slams-role-title">Step 2: Generate Website Code</h4>
+            <div class="slams-role-duties">
+              <p>Ask ChatGPT or a similar tool to create a simple website with sections for notes, worksheets, and announcements.</p>
+              <p>Copy the generated HTML code.</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">💻</div>
+            <h4 class="slams-role-title">Step 3: Create a GitHub Account</h4>
+            <div class="slams-role-duties">
+              <p>Go to github.com and sign up for a free account.</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">📁</div>
+            <h4 class="slams-role-title">Step 4: Create a Repository</h4>
+            <div class="slams-role-duties">
+              <p>Click New Repository, name it (for example: math-resources), and make it Public.</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">📄</div>
+            <h4 class="slams-role-title">Step 5: Upload Your Website</h4>
+            <div class="slams-role-duties">
+              <p>Create a file named index.html, paste your HTML code, and save it.</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">🌍</div>
+            <h4 class="slams-role-title">Step 6: Enable GitHub Pages</h4>
+            <div class="slams-role-duties">
+              <p>Go to Settings → Pages, select Branch: main and Folder: /root.</p>
+              <p>Your site will be live at https://yourusername.github.io/repository-name.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slams-features">
+        <p class="slams-section-label">Support & Guidance</p>
+        <div class="slams-feature-grid">
+          <div class="slams-feature-card"><div class="slams-feature-icon">👩‍🏫</div><h4>Mrs. Vanita</h4><p>Experienced with GitHub Pages and teacher website creation.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">👩‍🏫</div><h4>Mrs. A.V. Nandhini</h4><p>Available to guide teachers through the website-building process.</p></div>
+        </div>
+      </div>
+
+      <div class="slams-security">
+        <span class="slams-security-icon">💡</span>
+        <p> A simple website created today can continue to support your students for years—accessible anytime, anywhere, and entirely under your control.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Task Automation Section -->
+  <div class="slams-detail-block" id="task-automation">
+    <div class="slams-detail-header">
+      
+      <div class="slams-detail-title">
+        <h2 class="slams-title">Task Automation</h2>
+        <p class="slams-tagline">Working smarter, not harder with technology</p>
+      </div>
+    </div>
+    <div class="slams-detail-content">
+      <div class="slams-hero">
+        <div class="slams-hero-left">
+          <p class="slams-hero-desc">Task automation means using technology to simplify repetitive, time-consuming work. The core philosophy: don't just finish work—improve the way the work is done. With tools like Excel, Python, Google Apps Script, and GenAI, any teacher can automate tasks without being a programmer.<br><br></p>
+          <div class="slams-access">
+            <a href="https://chat.openai.com" target="_blank" class="slams-access-btn">
+              <span class="slams-btn-icon">🤖</span> ChatGPT <span class="slams-btn-arrow">↗</span>
+            </a>
+            <p class="slams-access-note">Your instant assistant for learning how to automate any task or solve technical problems.</p>
+          </div>
+        </div>
+        <div class="slams-hero-right">
+          <div class="slams-stat-grid">
+            <div class="slams-stat"><span class="slams-stat-num">4</span><span class="slams-stat-label">Automation Levels</span></div>
+            <div class="slams-stat"><span class="slams-stat-num">0</span><span class="slams-stat-label">Programming Required</span></div>
+            <div class="slams-stat"><span class="slams-stat-num">∞</span><span class="slams-stat-label">Time Saved</span></div>
+            <div class="slams-stat"><span class="slams-stat-num">1</span><span class="slams-stat-label">Core Mindset</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slams-features">
+        <p class="slams-section-label">The Mindset (Most Important)</p>
+        <div class="slams-feature-grid">
+          <div class="slams-feature-card"><div class="slams-feature-icon">🧠</div><h4>Think Before Acting</h4><p>When faced with any task, pause and ask: "Can this be done in a better, faster way using technology?"</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">✨</div><h4>Work Smarter</h4><p>The goal is not to work harder, but to use technology strategically to simplify your effort.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">📚</div><h4>Learn by Doing</h4><p>Every automation task is an opportunity to learn something new and improve your skills.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">🚀</div><h4>Build Momentum</h4><p>Initial time investment pays dividends—next time that task takes 2 minutes instead of 15.</p></div>
+        </div>
+      </div>
+
+      <div class="slams-bottom-row">
+        <div class="slams-data">
+          <p class="slams-section-label">Automation Tools & Levels</p>
+          <div class="slams-sheet-list">
+            <div class="slams-sheet"><span class="slams-sheet-icon">📊</span><div><span class="slams-sheet-name">Level 1: Excel</span><span class="slams-sheet-desc">Formulas and functions. Start here. No prior knowledge needed.</span></div></div>
+            <div class="slams-sheet"><span class="slams-sheet-icon">🤖</span><div><span class="slams-sheet-name">Level 2: GenAI + Excel</span><span class="slams-sheet-desc">Upload files to ChatGPT for data modification and cleaning.</span></div></div>
+            <div class="slams-sheet"><span class="slams-sheet-name">Level 3: Python</span><span class="slams-sheet-desc">For large or complex data tasks. You don't write it—ChatGPT does.</span></div>
+            <div class="slams-sheet"><span class="slams-sheet-name">Level 4: Google Apps Script</span><span class="slams-sheet-desc">Automate workflows like sending emails or processing Google Sheets data.</span></div>
+          </div>
+        </div>
+        <div class="slams-troubleshoot">
+          <p class="slams-section-label">What You Actually Need</p>
+          <div class="slams-trouble-list">
+            <div class="slams-trouble-item"><span class="slams-trouble-issue">Programming Knowledge</span><span class="slams-trouble-fix">You don't need it. Ask ChatGPT to generate code.</span></div>
+            <div class="slams-trouble-item"><span class="slams-trouble-issue">Good Prompting</span><span class="slams-trouble-fix">Know how to describe your problem clearly to GenAI.</span></div>
+            <div class="slams-trouble-item"><span class="slams-trouble-issue">Copy-Paste Skills</span><span class="slams-trouble-fix">Copy code from ChatGPT and paste into Excel, Python, or Google Apps.</span></div>
+            <div class="slams-trouble-item"><span class="slams-trouble-issue">Willingness to Try</span><span class="slams-trouble-fix">Experiment without fear. Learning happens through doing.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slams-roles">
+        <p class="slams-section-label">When You Get a Task</p>
+        <div class="slams-roles-grid">
+          <div class="slams-role-card">
+            <div class="slams-role-icon">⏸️</div>
+            <h4 class="slams-role-title">Step 1: Pause</h4>
+            <div class="slams-role-duties">
+              <p>Don't start doing it manually. Take a moment and think.</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">🤔</div>
+            <h4 class="slams-role-title">Step 2: Ask Yourself</h4>
+            <div class="slams-role-duties">
+              <p>"Can this be automated? What tool can help?"</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">💬</div>
+            <h4 class="slams-role-title">Step 3: Consult ChatGPT</h4>
+            <div class="slams-role-duties">
+              <p>Describe your problem naturally. Use voice typing if it helps. Get step-by-step guidance.</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">🔧</div>
+            <h4 class="slams-role-title">Step 4: Try the Solution</h4>
+            <div class="slams-role-duties">
+              <p>Follow the guidance. Copy-paste code if needed. Execute and test.</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">📖</div>
+            <h4 class="slams-role-title">Step 5: Learn & Iterate</h4>
+            <div class="slams-role-duties">
+              <p>Understand what happened. Ask follow-up questions. Improve next time.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slams-features">
+        <p class="slams-section-label">Real-World Example</p>
+        <div class="slams-feature-grid">
+          <div class="slams-feature-card"><div class="slams-feature-icon">❌</div><h4>Manual Way</h4><p>You have names in lowercase. You type each one again in title case. Takes 10 minutes and is boring.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">✅</div><h4>Smart Way</h4><p>Use an Excel formula or ask ChatGPT. Takes 15 minutes first time, but you learn something new and next time it's 2 minutes.</p></div>
+        </div>
+      </div>
+
+      <div class="slams-flow">
+        <p class="slams-flow-label">Your Automation Journey</p>
+        <div class="slams-flow-steps">
+          <div class="slams-flow-step"><div class="slams-flow-num">1</div><p class="slams-flow-text">Start with Excel</p></div>
+          <div class="slams-flow-arrow">→</div>
+          <div class="slams-flow-step"><div class="slams-flow-num">2</div><p class="slams-flow-text">Use GenAI for Help</p></div>
+          <div class="slams-flow-arrow">→</div>
+          <div class="slams-flow-step"><div class="slams-flow-num">3</div><p class="slams-flow-text">Expand to Python</p></div>
+          <div class="slams-flow-arrow">→</div>
+          <div class="slams-flow-step"><div class="slams-flow-num">4</div><p class="slams-flow-text">Master Apps Script</p></div>
+          <div class="slams-flow-arrow">→</div>
+          <div class="slams-flow-step"><div class="slams-flow-num">5</div><p class="slams-flow-text">Automate Everything</p></div>
+        </div>
+      </div>
+
+      <div class="slams-security">
+        <span class="slams-security-icon">🎯</span>
+        <p> Every task is an opportunity to simplify, automate, and learn. Don't just finish the work—improve the way the work is done. This thinking model becomes your superpower.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Canva Designing Section -->
+  <div class="slams-detail-block" id="canva-designing">
+    <div class="slams-detail-header">
+      
+      <div class="slams-detail-title">
+        <h2 class="slams-title">Canva - Design & Creativity</h2>
+        <p class="slams-tagline">Making teaching more expressive, engaging, and visually impactful</p>
+      </div>
+    </div>
+    <div class="slams-detail-content">
+      <div class="slams-hero">
+        <div class="slams-hero-left">
+          <p class="slams-hero-desc">Canva is a powerful and easy-to-use design platform enabling teachers to create high-quality visual content—presentations, posters, videos, mind maps, and worksheets. With ready-made templates and drag-and-drop design, no design experience is needed. Transform teaching from text-heavy to visually engaging.<br><br></p>
+          <div class="slams-access">
+            <a href="https://www.canva.com/" target="_blank" class="slams-access-btn">
+              <span class="slams-btn-icon">🎨</span> Visit Canva <span class="slams-btn-arrow">↗</span>
+            </a>
+            <p class="slams-access-note">Contact Mrs. A.V. Nandhini to request access to the school's Canva for Education account.</p>
+          </div>
+        </div>
+        <div class="slams-hero-right">
+          <div class="slams-stat-grid">
+            <div class="slams-stat"><span class="slams-stat-num">1000s</span><span class="slams-stat-label">Templates</span></div>
+            <div class="slams-stat"><span class="slams-stat-num">0</span><span class="slams-stat-label">Design Skills</span></div>
+            <div class="slams-stat"><span class="slams-stat-num">5</span><span class="slams-stat-label">Minutes</span></div>
+            <div class="slams-stat"><span class="slams-stat-num">∞</span><span class="slams-stat-label">Possibilities</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slams-features">
+        <p class="slams-section-label">Why Teachers Should Use Canva</p>
+        <div class="slams-feature-grid">
+          <div class="slams-feature-card"><div class="slams-feature-icon">📊</div><h4>Engaging Presentations</h4><p>Create visually rich lesson slides and classroom materials that capture student attention.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">🎥</div><h4>Video Creation</h4><p>Design short educational videos, announcements, and event highlights with ease.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">🎉</div><h4>Event Design</h4><p>Make invitations, posters, and certificates for school events and celebrations.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">🧠</div><h4>Mind Maps & Infographics</h4><p>Organize concepts visually with ready-made mind map and infographic templates.</p></div>
+        </div>
+      </div>
+
+      <div class="slams-bottom-row">
+        <div class="slams-data">
+          <p class="slams-section-label">What You Can Create</p>
+          <div class="slams-sheet-list">
+            <div class="slams-sheet"><span class="slams-sheet-icon">📑</span><div><span class="slams-sheet-name">Classroom Presentations</span><span class="slams-sheet-desc">Lesson slides, visual explanations, interactive teaching materials.</span></div></div>
+            <div class="slams-sheet"><span class="slams-sheet-icon">📹</span><div><span class="slams-sheet-name">Video Content</span><span class="slams-sheet-desc">Educational videos, announcements, event highlights.</span></div></div>
+            <div class="slams-sheet"><span class="slams-sheet-name">Worksheets & Resources</span><span class="slams-sheet-desc">Flashcards, visual notes, infographics, study guides.</span></div>
+            <div class="slams-sheet"><span class="slams-sheet-name">Event Materials</span><span class="slams-sheet-desc">Posters, invitations, certificates, social media graphics.</span></div>
+          </div>
+        </div>
+        <div class="slams-troubleshoot">
+          <p class="slams-section-label">Canva Account & Access</p>
+          <div class="slams-trouble-list">
+            <div class="slams-trouble-item"><span class="slams-trouble-issue">Account Manager</span><span class="slams-trouble-fix">Mrs. A.V. Nandhini maintains the school's Canva for Education account.</span></div>
+            <div class="slams-trouble-item"><span class="slams-trouble-issue">How to Get Access</span><span class="slams-trouble-fix">Contact Mrs. A.V. Nandhini and request Canva access using school credentials.</span></div>
+            <div class="slams-trouble-item"><span class="slams-trouble-issue">No Cost</span><span class="slams-trouble-fix">Canva for Education is free for all teachers with school account.</span></div>
+            <div class="slams-trouble-item"><span class="slams-trouble-issue">Continuity</span><span class="slams-trouble-fix">Access and credentials are maintained for future teachers and cohorts.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slams-roles">
+        <p class="slams-section-label">How to Get Started</p>
+        <div class="slams-roles-grid">
+          <div class="slams-role-card">
+            <div class="slams-role-icon">🔐</div>
+            <h4 class="slams-role-title">Step 1: Request Access</h4>
+            <div class="slams-role-duties">
+              <p>Contact Mrs. A.V. Nandhini for Canva Educational account access.</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">📝</div>
+            <h4 class="slams-role-title">Step 2: Log In</h4>
+            <div class="slams-role-duties">
+              <p>Use your school credentials to log into the shared Canva for Education account.</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">🔍</div>
+            <h4 class="slams-role-title">Step 3: Search for Template</h4>
+            <div class="slams-role-duties">
+              <p>Search for what you need: "presentation", "poster", "mind map", "certificate".</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">✏️</div>
+            <h4 class="slams-role-title">Step 4: Customize</h4>
+            <div class="slams-role-duties">
+              <p>Edit text, images, colors, and layout. Start from template, not from scratch.</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">📥</div>
+            <h4 class="slams-role-title">Step 5: Download or Share</h4>
+            <div class="slams-role-duties">
+              <p>Download as PDF, image, or video. Present directly from Canva.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slams-features">
+        <p class="slams-section-label">Best Practices</p>
+        <div class="slams-feature-grid">
+          <div class="slams-feature-card"><div class="slams-feature-icon">✨</div><h4>Keep It Simple</h4><p>Use clean designs that support your message, not distract from it.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">🎯</div><h4>Consistency Matters</h4><p>Maintain similar colors, fonts, and styles across your designs.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">🖼️</div><h4>Visuals Support Learning</h4><p>Use images and graphics to reinforce concepts, not just decorate.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">🚀</div><h4>Experiment Freely</h4><p>Try different designs. Every design builds your confidence and creativity.</p></div>
+        </div>
+      </div>
+
+      <div class="slams-security">
+        <span class="slams-security-icon">💡</span>
+        <p> Canva is not just a design tool—it is a way to make teaching more expressive, engaging, and impactful. Thousands of templates mean you start from strength, not from scratch.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Upskill Yourself Section -->
+  <div class="slams-detail-block" id="upskill">
+    <div class="slams-detail-header">
+      
+      <div class="slams-detail-title">
+        <h2 class="slams-title">Upskill Yourself</h2>
+        <p class="slams-tagline"><h3>A mindset shift from "doing work" to "growing through work"</h3></p>
+      </div>
+    </div>
+    <div class="slams-detail-content">
+      <div class="slams-hero">
+        <div class="slams-hero-left">
+          <p class="slams-hero-desc">Upskilling means continuously learning, improving, and expanding your abilities beyond what is immediately required. It's not about doing your current work well—it's about <strong>becoming better than what your current role demands</strong>. Every task is an opportunity to learn something new. The best way to learn is by doing, experimenting, and building. When you grow, your work improves. When your work improves, your impact grows.</p><br><br>
+          <div class="slams-access">
+            <div class="slams-access-note">💡 Whenever a task is given, don't just complete it. Ask: "How can I improve this?" "Can I do this smarter?" That question alone leads to learning, innovation, and growth.</div>
+          </div>
+        </div>
+        <div class="slams-hero-right">
+          <div class="slams-stat-grid">
+            <div class="slams-stat"><span class="slams-stat-num">∞</span><span class="slams-stat-label">Growth</span></div>
+            <div class="slams-stat"><span class="slams-stat-num">1</span><span class="slams-stat-label">Mindset</span></div>
+            <div class="slams-stat"><span class="slams-stat-num">Daily</span><span class="slams-stat-label">Learning</span></div>
+            <div class="slams-stat"><span class="slams-stat-num">📈</span><span class="slams-stat-label">Impact</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slams-features">
+        <p class="slams-section-label">Key Principles of Upskilling</p>
+        <div class="slams-feature-grid">
+          <div class="slams-feature-card"><div class="slams-feature-icon">🔄</div><h4>Learn by Doing</h4><p>Learning comes from trying, experimenting, and building—not just reading or watching. Every attempt, even imperfect ones, is learning.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">🎯</div><h4>Work Smarter</h4><p>Use technology and new approaches to improve your processes. Explore different methods. Even small improvements matter.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">💡</div><h4>Own Your Curiosity</h4><p>Not all learning comes from assigned tasks. Some meaningful work comes from your own ideas and curiosity. Initiative drives growth.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">🧠</div><h4>Reflect Regularly</h4><p>Step out of the flow. Pause and analyze: What am I doing well? What can improve? What should I learn next?</p></div>
+        </div>
+      </div>
+
+      <div class="slams-bottom-row">
+        <div class="slams-data">
+          <p class="slams-section-label">Finding Your Growth Gap</p>
+          <div class="slams-sheet-list">
+            <div class="slams-sheet"><span class="slams-sheet-icon">🎯</span><div><span class="slams-sheet-name">Identify Direction</span><span class="slams-sheet-desc">Ask: Where do I see myself next? What skills do I need? What am I missing?</span></div></div>
+            <div class="slams-sheet"><span class="slams-sheet-icon">📚</span><div><span class="slams-sheet-name">Continuous Learning</span><span class="slams-sheet-desc">If not done with higher studies, consider it. If done, explore certifications, skill-based learning, and technology tools.</span></div></div>
+            <div class="slams-sheet"><span class="slams-sheet-icon">🌟</span><div><span class="slams-sheet-name">Build Value</span><span class="slams-sheet-desc">Aim to become someone who adds unique value—not by doing more work, but by doing work differently and better.</span></div></div>
+            <div class="slams-sheet"><span class="slams-sheet-icon">🚀</span><div><span class="slams-sheet-name">Leverage Environment</span><span class="slams-sheet-desc">You are in an environment that encourages learning and experimentation. Try new ideas, build new systems, explore new methods.</span></div></div>
+          </div>
+        </div>
+        <div class="slams-troubleshoot">
+          <p class="slams-section-label">Mindset to Keep</p>
+          <div class="slams-trouble-list">
+            <div class="slams-trouble-item"><span class="slams-trouble-issue">Be Curious</span><span class="slams-trouble-fix">Ask questions. Explore beyond your immediate role.</span></div>
+            <div class="slams-trouble-item"><span class="slams-trouble-issue">Be Open to Trying</span><span class="slams-trouble-fix">Experiment with new tools, approaches, and ideas without fear.</span></div>
+            <div class="slams-trouble-item"><span class="slams-trouble-issue">Be Okay with Mistakes</span><span class="slams-trouble-fix">Every attempt—even if imperfect—is learning. Mistakes are stepping stones.</span></div>
+            <div class="slams-trouble-item"><span class="slams-trouble-issue">Be Self-Driven</span><span class="slams-trouble-fix">Growth comes from within. You will be supported, but you must lead.</span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slams-roles">
+        <p class="slams-section-label">The Upskilling Journey</p>
+        <div class="slams-roles-grid">
+          <div class="slams-role-card">
+            <div class="slams-role-icon">📋</div>
+            <h4 class="slams-role-title">Accept the Task</h4>
+            <div class="slams-role-duties">
+              <p>Take on assigned work and responsibilities with openness.</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">❓</div>
+            <h4 class="slams-role-title">Ask Smart Questions</h4>
+            <div class="slams-role-duties">
+              <p>"How can I improve this?" "Can I do this smarter?" "What can I learn?"</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">🔨</div>
+            <h4 class="slams-role-title">Experiment & Build</h4>
+            <div class="slams-role-duties">
+              <p>Try new tools, approaches, and methods. Build solutions.</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">🎓</div>
+            <h4 class="slams-role-title">Learn & Reflect</h4>
+            <div class="slams-role-duties">
+              <p>Document what you learned. Reflect on improvements. Share insights.</p>
+            </div>
+          </div>
+          <div class="slams-role-card">
+            <div class="slams-role-icon">📈</div>
+            <h4 class="slams-role-title">Grow Your Impact</h4>
+            <div class="slams-role-duties">
+              <p>As you grow, your work improves. As your work improves, your impact grows.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="slams-features">
+        <p class="slams-section-label">Examples in Action</p>
+        <div class="slams-feature-grid">
+          <div class="slams-feature-card"><div class="slams-feature-icon">💬</div><h4>Chinmaya Gita ChatBot</h4><p>Not an assigned task. Built through initiative, curiosity, and a desire to create something meaningful.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">⚙️</div><h4>Task Automation</h4><p>Took repetitive work and asked: Can we do this smarter? Result: Automation systems that save hours.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">🎨</div><h4>Canva for Design</h4><p>Used a tool creatively to make teaching more visual and engaging. Small initiative, big impact.</p></div>
+          <div class="slams-feature-card"><div class="slams-feature-icon">🌍</div><h4>Personal Growth Mindset</h4><p>Every project, every task, every challenge is an opportunity to become better.</p></div>
+        </div>
+      </div>
+
+      <div class="slams-security">
+        <span class="slams-security-icon">✨</span>
+        <p><strong>Legacy Line:</strong> Upskilling is not something you do for a requirement—it is something you do for yourself. When you grow, your work improves. When your work improves, your impact grows. This is how real change happens.</p>
+      </div>
+    </div>
+  </div>
+
+  
+
+  <!-- Gratitude -->
+  <div class="gratitude-section" id="gratitude">
+    <div class="gratitude-icon">🙏</div>
+    <div class="section-label" style="margin-bottom:1rem;">A Farewell Note</div>
+    <h2 style="margin-bottom:1.5rem;">With Deep Gratitude</h2>
+    <p class="gratitude-text">
+      It has been five meaningful years at Chinmaya Vidyalaya, and this journey has shaped me in more ways than I can express.
+    </p>
+    <p class="gratitude-text">
+      When I first appeared for my interview as a primary computer science teacher, I was asked if I knew artificial intelligence, robotics, and related areas. I answered confidently—perhaps more with intent than with experience at that time. But when I entered the classroom and did not find these areas in the curriculum, I felt a strong urge to go beyond it.
+    </p>
+    <p class="gratitude-text">
+      That is how the Chinmaya Computing Club was born.
+    </p>
+    <p class="gratitude-text">
+      It was not just an idea—it was a space I created to explore what I truly loved teaching and learning. And this was possible not just because I wanted it, but because I was in an environment where such initiatives were encouraged and supported.
+    </p>
+    <p class="gratitude-text">
+      Over time, I explored, experimented, built systems, and worked with students beyond the classroom. I realised that I am someone who finds it difficult to stay within fixed boundaries—I learn by trying, by building, and by stepping beyond what is expected. This school gave me the space to do exactly that.
+    </p>
+    <p class="gratitude-text">
+      Everything I have done here—every system, every initiative—has been a learning experience for me. I did many things not because they were assigned, but because I was curious, and I wanted to see how much better things could be made.
+    </p>
+    <p class="gratitude-text">
+      And that curiosity has been my greatest teacher.
+    </p>
+    <p class="gratitude-text">
+      Today, as I move on, I do so with no hesitation and no regrets. I carry only gratitude. This transition is not driven by dissatisfaction, but by a natural progression—a desire to explore further, to grow, and to contribute in new ways, particularly in the field of artificial intelligence.
+    </p>
+    <p class="gratitude-text">
+      I hope to continue this journey of learning and teaching—now with older students, and in a different space—while still holding on to the same curiosity that shaped my work here.
+    </p>
+    <p class="gratitude-text">
+      One thing I am deeply thankful for is that I never allowed myself to become stagnant. I was constantly learning, trying, and building. That is what has kept me relevant, and that is what gives me the confidence to take this next step.
+    </p>
+    <p class="gratitude-text">
+      For that, I sincerely thank the school.
+    </p>
+    <p class="gratitude-text">
+      I am grateful to the management for the opportunities given to me, for the trust placed in me, and even for the resources provided—every system I built began from that support.
+    </p>
+    <p class="gratitude-text">
+      I thank my colleagues and friends for their encouragement, patience, and support throughout my journey. Every interaction, every collaboration has contributed to what I have become today.
+    </p>
+    <p class="gratitude-text">
+      As I leave, I take with me everything this school has shaped in me, and I hope to leave behind not just systems, but a way of seeing — that every classroom, every challenge, every idea is an opportunity waiting to be explored.
+    </p>
+    <p class="gratitude-text">
+      I only hope that the work continues, evolves, and becomes even better.
+    </p>
+    <div class="signature">— Aishwarya S. Bramma<br>Computer Science Teacher</div>
+  </div>
+
+</main>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <span class="footer-name">Aishwarya Bramma</span>
+  Computer Science Teacher · Chinmaya Vidyalaya Sr. Sec. School
+  <div class="footer-line"></div>
+  Knowledge Transition Portal · Built with care, left with love
+</footer>
+
+<script>
+const searchIndex = [
+  { name: 'SLAMS', cat: 'Apps & Systems', id: 'slams-detail' },
+  { name: 'Smart Late Arrival Management', cat: 'Apps & Systems', id: 'slams-detail' },
+  { name: 'Late arrival', cat: 'Apps & Systems', id: 'slams-detail' },
+  { name: 'Substitution System', cat: 'Apps & Systems', id: 'substitution-detail' },
+  { name: 'Teacher Timetable Viewer', cat: 'Apps & Systems', id: 'timetable-detail' },
+  { name: 'Timetable lookup', cat: 'Apps & Systems', id: 'timetable-detail' },
+  { name: 'Live Assembly', cat: 'Apps & Systems', id: 'assembly-detail' },
+  { name: 'Assembly display', cat: 'Apps & Systems', id: 'assembly-detail' },
+  { name: 'Mannin Marangal', cat: 'Apps & Systems', id: 'mannin' },
+  { name: 'Our Native Trees', cat: 'Apps & Systems', id: 'mannin' },
+  { name: 'Native trees', cat: 'Apps & Systems', id: 'mannin' },
+  { name: 'Tree identification', cat: 'Apps & Systems', id: 'mannin' },
+  { name: 'Leaf scanning', cat: 'Apps & Systems', id: 'mannin' },
+  { name: 'AI environment', cat: 'Apps & Systems', id: 'mannin' },
+  { name: 'Chinmaya Gita', cat: 'Apps & Systems', id: 'gita' },
+  { name: 'Ask Gita', cat: 'Apps & Systems', id: 'gita' },
+  { name: 'Gita chatbot', cat: 'Apps & Systems', id: 'gita' },
+  { name: 'Spiritual AI', cat: 'Apps & Systems', id: 'gita' },
+  { name: 'Bhagavad Gita', cat: 'Apps & Systems', id: 'gita' },
+  { name: 'Gurudev commentary', cat: 'Apps & Systems', id: 'gita' },
+  { name: 'Valluvam', cat: 'Apps & Systems', id: 'valluvam' },
+  { name: 'KEE', cat: 'Apps & Systems', id: 'kee' },
+  { name: 'Certificate Generator', cat: 'Apps & Systems', id: 'certificate-detail' },
+  { name: 'Bulk certificates', cat: 'Apps & Systems', id: 'certificate-detail' },
+  { name: 'Certificate automation', cat: 'Apps & Systems', id: 'certificate-detail' },
+  { name: 'Dhwani Design', cat: 'Events', id: 'dhwani' },
+  { name: 'Annual Day', cat: 'Events', id: 'annual' },
+  { name: 'Digital Elections System', cat: 'Systems', id: 'elections-detail' },
+  { name: 'SPL Digital Elections', cat: 'Systems', id: 'elections-detail' },
+  { name: 'Live Assembly', cat: 'Events', id: 'assembly' },
+  { name: 'Static Websites', cat: 'Tech Projects', id: 'static' },
+  { name: 'Physical Computing', cat: 'Tech Projects', id: 'physical' },
+  { name: 'Arduino', cat: 'Tech Projects', id: 'physical' },
+  { name: 'Cyber Security', cat: 'Training', id: 'cyber' },
+  { name: 'Bebras Challenge', cat: 'Training', id: 'bebras' },
+  { name: 'Computational Thinking', cat: 'Training', id: 'bebras' },
+  { name: 'Bebras Competition', cat: 'Training', id: 'bebras' },
+  { name: 'Informatics Challenge', cat: 'Training', id: 'bebras' },
+  { name: 'Sonia Garcha', cat: 'Training', id: 'bebras' },
+  { name: 'Bebras India', cat: 'Training', id: 'bebras' },
+  { name: 'Puzzle Challenge', cat: 'Training', id: 'bebras' },
+  { name: 'Purnotsav', cat: 'Training', id: 'poorna' },
+  { name: 'Purna Utsav', cat: 'Training', id: 'poorna' },
+  { name: 'Recognition Culture', cat: 'Training', id: 'poorna' },
+  { name: 'Valedictory', cat: 'Training', id: 'poorna' },
+  { name: 'Certificate Templates', cat: 'Training', id: 'poorna' },
+  { name: 'Canva Templates', cat: 'Training', id: 'poorna' },
+  { name: 'Club Valedictory', cat: 'Training', id: 'poorna' },
+  { name: 'Robotics Workshop', cat: 'Training', id: 'robotics' },
+  { name: 'Electronics Workshop', cat: 'Training', id: 'robotics' },
+  { name: 'Circuit Design', cat: 'Training', id: 'robotics' },
+  { name: 'Hands-on Engineering', cat: 'Training', id: 'robotics' },
+  { name: 'Dr. Madhan', cat: 'Training', id: 'robotics' },
+  { name: 'Easwari Engineering College', cat: 'Training', id: 'robotics' },
+  { name: 'Soldering', cat: 'Training', id: 'robotics' },
+  { name: 'Breadboard', cat: 'Training', id: 'robotics' },
+  { name: 'Motor Control', cat: 'Training', id: 'robotics' },
+  { name: 'Scratch + AI', cat: 'Training', id: 'scratch' },
+  { name: 'Website Building', cat: 'Resources', id: 'website-building' },
+  { name: 'GitHub Pages', cat: 'Resources', id: 'website-building' },
+  { name: 'Static Website', cat: 'Resources', id: 'website-building' },
+  { name: 'Personal Website', cat: 'Resources', id: 'website-building' },
+  { name: 'Mrs. Vanita', cat: 'Resources', id: 'website-building' },
+  { name: 'Task Automation', cat: 'Resources', id: 'task-automation' },
+  { name: 'Excel Automation', cat: 'Resources', id: 'task-automation' },
+  { name: 'Python Automation', cat: 'Resources', id: 'task-automation' },
+  { name: 'Google Apps Script', cat: 'Resources', id: 'task-automation' },
+  { name: 'ChatGPT', cat: 'Resources', id: 'task-automation' },
+  { name: 'GenAI', cat: 'Resources', id: 'task-automation' },
+  { name: 'Workflow Automation', cat: 'Resources', id: 'task-automation' },
+  { name: 'Mrs. A.V. Nandhini', cat: 'Resources', id: 'task-automation' },
+  { name: 'Canva Designing', cat: 'Resources', id: 'canva-designing' },
+  { name: 'Canva for Teachers', cat: 'Resources', id: 'canva-designing' },
+  { name: 'Design Templates', cat: 'Resources', id: 'canva-designing' },
+  { name: 'Poster Design', cat: 'Resources', id: 'canva-designing' },
+  { name: 'Presentation Design', cat: 'Resources', id: 'canva-designing' },
+  { name: 'Mind Map', cat: 'Resources', id: 'canva-designing' },
+  { name: 'Certificate Template', cat: 'Resources', id: 'canva-designing' },
+  { name: 'Visual Content', cat: 'Resources', id: 'canva-designing' },
+  { name: 'Canva Education', cat: 'Resources', id: 'canva-designing' },
+  { name: 'Upskill Yourself', cat: 'Resources', id: 'upskill' },
+  { name: 'Continuous Learning', cat: 'Resources', id: 'upskill' },
+  { name: 'Growth Mindset', cat: 'Resources', id: 'upskill' },
+  { name: 'Professional Development', cat: 'Resources', id: 'upskill' },
+  { name: 'Skill Development', cat: 'Resources', id: 'upskill' },
+  { name: 'Learning Through Work', cat: 'Resources', id: 'upskill' },
+  { name: 'Innovation', cat: 'Resources', id: 'upskill' },
+  { name: 'Self-Reflection', cat: 'Resources', id: 'upskill' },
+  { name: 'Curiosity', cat: 'Resources', id: 'upskill' },
+  { name: 'Club Documents', cat: 'Resources', id: 'clubs' },
+  { name: 'Tips & Techniques', cat: 'Resources', id: 'tips' },
+  { name: 'FAQ', cat: 'Resources', id: 'faq' },
+  { name: 'Gratitude', cat: 'Personal', id: 'gratitude' },
+  { name: 'Farewell note', cat: 'Personal', id: 'gratitude' },
+];
+
+function openSearch() {
+  document.getElementById('search-overlay').classList.add('active');
+  setTimeout(() => document.getElementById('search-input').focus(), 50);
+}
+function closeSearch() {
+  document.getElementById('search-overlay').classList.remove('active');
+  document.getElementById('search-input').value = '';
+  document.getElementById('search-results').innerHTML = '';
+}
+
+document.getElementById('search-input').addEventListener('input', function() {
+  const q = this.value.toLowerCase().trim();
+  const el = document.getElementById('search-results');
+  if (!q) { el.innerHTML = ''; return; }
+  const seen = new Set();
+  const matches = searchIndex.filter(item => {
+    const key = item.id;
+    if (seen.has(key)) return false;
+    if (item.name.toLowerCase().includes(q) || item.cat.toLowerCase().includes(q)) {
+      seen.add(key);
+      return true;
+    }
+    return false;
+  });
+  if (!matches.length) {
+    el.innerHTML = '<p class="search-no-results">No results found. Try a different keyword.</p>';
+    return;
+  }
+  el.innerHTML = matches.map(item => `
+    <a class="search-result-item" href="#${item.id}" onclick="closeSearch()">
+      <span class="search-result-name">${item.name}</span>
+      <span class="search-result-cat">${item.cat}</span>
+    </a>`).join('');
+});
+
+document.getElementById('search-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeSearch();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeSearch();
+  if ((e.metaKey || e.ctrlKey) && e.key === 'k') { e.preventDefault(); openSearch(); }
+});
+
+// Back-to-Top Button Functionality
+const backToTopBtn = document.getElementById('back-to-top-btn');
+
+window.addEventListener('scroll', function() {
+  if (window.pageYOffset > 300) {
+    backToTopBtn.classList.add('show');
+  } else {
+    backToTopBtn.classList.remove('show');
+  }
+});
+
+function scrollToTop() {
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  });
+}
+
+function handlePhoto(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e) {
+    const img = document.getElementById('teacher-img');
+    img.src = e.target.result;
+    img.style.display = 'block';
+    document.getElementById('photo-placeholder').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+</script>
+</body>
+</html>
