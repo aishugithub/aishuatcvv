@@ -46,8 +46,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 #search-overlay.active { display: flex; }
 .search-box { width: 100%; max-width: 600px; padding: 0 1.5rem; }
 .search-input-wrap { display: flex; align-items: center; background: var(--white); border-radius: 4px; overflow: hidden; margin-bottom: 1rem; }
-#search-input { flex: 1; border: none; outline: none; padding: 1rem 1.25rem; font-family: 'DM Sans', sans-serif; font-size: 1.1rem; color: var(--ink); background: transparent; }
-.search-close-btn { background: none; border: none; padding: 1rem 1.25rem; cursor: pointer; font-size: 1.2rem; color: var(--muted); }
+#search-input { flex: 1; border: none; outline: none; padding: 1rem 1.25rem; font-family: 'DM Sans', sans-serif; font-size: 1.1rem; color: var(--ink); background: transparent; min-width: 0; }
+.search-close-btn { background: none; border: none; padding: 1rem 1.25rem; cursor: pointer; font-size: 1.2rem; color: var(--muted); flex-shrink: 0; }
 #search-results { display: flex; flex-direction: column; gap: 0.5rem; max-height: 50vh; overflow-y: auto; }
 .search-result-item { background: rgba(255,255,255,0.07); border: 1px solid rgba(201,151,58,0.2); border-radius: 4px; padding: 0.85rem 1.25rem; cursor: pointer; display: flex; flex-direction: column; gap: 0.15rem; transition: background 0.15s; text-decoration: none; }
 .search-result-item:hover { background: rgba(232,103,10,0.2); border-color: var(--saffron); }
@@ -64,7 +64,7 @@ header { position: relative; background: var(--burgundy-dark); overflow: hidden;
 nav { position: relative; z-index: 200; padding: 1.25rem 3rem; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid rgba(201,151,58,0.2); flex-shrink: 0; }
 .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 300; color: var(--gold-light); letter-spacing: 0.15em; text-transform: uppercase; text-decoration: none; }
 .nav-right { display: flex; align-items: center; gap: 0.5rem; }
-.nav-search-btn { background: rgba(255,255,255,0.06); border: 1px solid rgba(201,151,58,0.25); color: rgba(232,191,106,0.7); padding: 0.45rem 0.9rem; border-radius: 3px; font-size: 0.75rem; letter-spacing: 0.08em; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; transition: all 0.2s; font-family: 'DM Sans', sans-serif; }
+.nav-search-btn { background: rgba(255,255,255,0.06); border: 1px solid rgba(201,151,58,0.25); color: rgba(232,191,106,0.7); padding: 0.45rem 0.9rem; border-radius: 3px; font-size: 0.75rem; letter-spacing: 0.08em; cursor: pointer; display: flex; align-items: center; gap: 0.4rem; transition: all 0.2s; font-family: 'DM Sans', sans-serif; white-space: nowrap; }
 .nav-search-btn:hover { background: rgba(255,255,255,0.1); color: var(--gold-light); border-color: rgba(201,151,58,0.5); }
 nav ul { list-style: none; display: flex; gap: 0.25rem; align-items: center; }
 .nav-item { position: relative; display: flex; align-items: center; }
@@ -83,7 +83,7 @@ nav ul { list-style: none; display: flex; gap: 0.25rem; align-items: center; }
 .header-hero { position: relative; z-index: 5; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 5rem 2rem 4rem; }
 .hero-ornament { width: 60px; height: 2px; background: linear-gradient(90deg, transparent, var(--gold), transparent); margin: 0 auto 2rem; }
 .hero-eyebrow { font-size: 0.75rem; font-weight: 400; letter-spacing: 0.25em; text-transform: uppercase; color: var(--saffron-light); margin-bottom: 1.5rem; }
-h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 7vw, 5.5rem); font-weight: 300; line-height: 1.1; color: var(--cream); margin-bottom: 0.5rem; letter-spacing: -0.01em; }
+h1 { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.2rem, 7vw, 5.5rem); font-weight: 300; line-height: 1.1; color: var(--cream); margin-bottom: 0.5rem; letter-spacing: -0.01em; }
 h1 em { font-style: italic; color: var(--gold-light); }
 .hero-subtitle { font-family: 'Cormorant Garamond', serif; font-size: clamp(1rem, 2.5vw, 1.4rem); font-weight: 300; font-style: italic; color: rgba(240,232,216,0.6); margin-top: 0.75rem; margin-bottom: 3rem; }
 .hero-desc { max-width: 580px; font-size: 0.95rem; font-weight: 300; color: rgba(240,232,216,0.75); line-height: 1.9; margin-bottom: 3.5rem; }
@@ -102,7 +102,7 @@ h1 em { font-style: italic; color: var(--gold-light); }
 .gratitude-strip cite { display: block; margin-top: 1rem; font-family: 'DM Sans', sans-serif; font-style: normal; font-size: 0.8rem; font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.65); }
 
 /* ─── MAIN ─── */
-main { max-width: 1200px; margin: 0 auto; padding: 5rem 2rem; }
+main { max-width: 1200px; margin: 0 auto; padding: 5rem 2rem; overflow-x: hidden; }
 
 /* ─── TEACHER PROFILE ─── */
 .teacher-profile { display: grid; grid-template-columns: auto 1fr; gap: 2.5rem; align-items: center; background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; padding: 2.5rem; margin-bottom: 3rem; }
@@ -122,7 +122,7 @@ main { max-width: 1200px; margin: 0 auto; padding: 5rem 2rem; }
 .section-number { font-family: 'Cormorant Garamond', serif; font-size: 3rem; font-weight: 300; color: var(--cream-dark); line-height: 1; }
 .section-title-group { flex: 1; }
 .section-label { font-size: 0.7rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--saffron); margin-bottom: 0.25rem; }
-h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 400; color: var(--burgundy-dark); line-height: 1.2; }
+h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.5rem, 3vw, 2.4rem); font-weight: 400; color: var(--burgundy-dark); line-height: 1.2; }
 .divider { width: 100%; height: 1px; background: linear-gradient(90deg, var(--gold-light), transparent); margin-bottom: 3rem; }
 
 /* ─── CATEGORY GRID ─── */
@@ -168,37 +168,27 @@ h2 { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.8rem, 3vw, 2.4
 .gratitude-section h2 { margin-bottom: 1rem; font-size: clamp(2rem, 2.5vw, 2.6rem); line-height: 1.05; }
 .gratitude-text { max-width: 840px; margin: 0 0 1.5rem; font-size: 1.05rem; color: var(--ink-soft); line-height: 1.9; }
 .signature { margin-top: 2.5rem; font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 400; font-style: italic; color: var(--burgundy); text-align: right; }
-@media (max-width: 900px) {
-  .gratitude-section { padding: 3rem 2rem; }
-  .gratitude-section::before { font-size: 5rem; }
-  .gratitude-text { max-width: 100%; }
-}
-@media (max-width: 768px) {
-  .gratitude-section { text-align: left; }
-  .gratitude-icon { margin-left: 0; }
-}
-
 
 /* ─── SLAMS DETAIL ─── */
-.slams-detail-block { background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; padding: 2.5rem; margin-bottom: 5rem; }
+.slams-detail-block { background: var(--white); border: 1px solid var(--cream-dark); border-radius: 6px; padding: 2.5rem; margin-bottom: 5rem; overflow: hidden; }
 .slams-hero { display: grid; grid-template-columns: 1fr auto; gap: 3rem; margin-bottom: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--cream-dark); }
-.slams-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 600; color: var(--burgundy-dark); line-height: 1; margin-bottom: 0.25rem; }
+.slams-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem, 5vw, 4rem); font-weight: 600; color: var(--burgundy-dark); line-height: 1; margin-bottom: 0.25rem; word-break: break-word; }
 .slams-fullname { font-size: 0.9rem; font-weight: 500; color: var(--saffron); letter-spacing: 0.05em; margin-bottom: 0.15rem; }
 .slams-school { font-size: 0.8rem; color: var(--muted); letter-spacing: 0.05em; margin-bottom: 1rem; }
 .slams-tagline { font-size: 0.95rem; color: var(--ink-soft); line-height: 1.7; max-width: 480px; margin-bottom: 1.5rem; }
-.slams-access-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--burgundy-dark); color: var(--gold-light); padding: 0.75rem 1.5rem; border-radius: 3px; font-size: 0.85rem; font-weight: 500; text-decoration: none; letter-spacing: 0.03em; transition: background 0.2s; margin-bottom: 0.5rem; }
+.slams-access-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--burgundy-dark); color: var(--gold-light); padding: 0.75rem 1.5rem; border-radius: 3px; font-size: 0.85rem; font-weight: 500; text-decoration: none; letter-spacing: 0.03em; transition: background 0.2s; margin-bottom: 0.5rem; word-break: break-all; }
 .slams-access-btn:hover { background: var(--burgundy); }
-.slams-btn-icon { font-size: 0.9rem; }
-.slams-btn-arrow { font-size: 0.75rem; opacity: 0.7; }
+.slams-btn-icon { font-size: 0.9rem; flex-shrink: 0; }
+.slams-btn-arrow { font-size: 0.75rem; opacity: 0.7; flex-shrink: 0; }
 .slams-access-note { font-size: 0.75rem; color: var(--muted); letter-spacing: 0.03em; }
 .slams-stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; align-content: start; }
-.slams-stat { background: var(--cream); border: 1px solid var(--cream-dark); border-radius: 4px; padding: 1rem 1.25rem; text-align: center; min-width: 100px; }
+.slams-stat { background: var(--cream); border: 1px solid var(--cream-dark); border-radius: 4px; padding: 1rem 1.25rem; text-align: center; min-width: 0; }
 .slams-stat-num { display: block; font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 600; color: var(--burgundy); line-height: 1; margin-bottom: 0.25rem; }
 .slams-stat-label { font-size: 0.7rem; font-weight: 400; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
-.slams-flow { background: var(--burgundy-dark); border-radius: 4px; padding: 1.75rem 2rem; margin-bottom: 2.5rem; }
+.slams-flow { background: var(--burgundy-dark); border-radius: 4px; padding: 1.75rem 2rem; margin-bottom: 2.5rem; overflow: hidden; }
 .slams-flow-label { font-size: 0.65rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--saffron-light); margin-bottom: 1.25rem; }
 .slams-flow-steps { display: flex; align-items: center; flex-wrap: wrap; gap: 0.75rem; }
-.slams-flow-step { display: flex; align-items: center; gap: 0.75rem; flex: 1; min-width: 160px; }
+.slams-flow-step { display: flex; align-items: center; gap: 0.75rem; flex: 1; min-width: 140px; }
 .slams-flow-num { width: 32px; height: 32px; border-radius: 50%; background: var(--saffron); color: white; font-size: 0.85rem; font-weight: 500; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 .slams-flow-text { font-size: 0.8rem; color: rgba(240,232,216,0.75); line-height: 1.4; }
 .slams-flow-arrow { color: var(--gold); font-size: 1.2rem; opacity: 0.5; flex-shrink: 0; }
@@ -257,46 +247,10 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
 .delay-3 { animation-delay: 0.4s; }
 .delay-4 { animation-delay: 0.55s; }
 
-/* ─── RESPONSIVE ─── */
-@media (max-width: 768px) {
-  nav { padding: 1rem 1.5rem; }
-  nav ul { display: none; }
-  .header-hero { padding: 3rem 1.5rem; }
-  main { padding: 3rem 1.5rem; }
-  .gratitude-strip { padding: 2rem 1.5rem; }
-  .quick-access { padding: 2rem 1.5rem; }
-  .gratitude-section { padding: 3rem 1.5rem; }
-  .section-header { flex-direction: column; gap: 0.5rem; }
-  .section-number { font-size: 2rem; }
-  .teacher-profile { grid-template-columns: 1fr; text-align: center; }
-  .teacher-photo-wrap { display: flex; justify-content: center; }
-  .slams-hero { grid-template-columns: 1fr; gap: 1.5rem; }
-  .slams-stat-grid { grid-template-columns: repeat(4, 1fr); }
-  .slams-bottom-row { grid-template-columns: 1fr; }
-  .slams-detail-block { padding: 1.5rem; }
-  .slams-setting-row { grid-template-columns: 1fr; gap: 0.25rem; }
-}
-
-/* Floating Back-to-Top Button */
-@keyframes pulse-glow {
-  0% {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-  50% {
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25), 0 0 0 8px rgba(var(--color-accent-rgb), 0.1);
-  }
-  100% {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-}
-
+/* ─── BACK TO TOP ─── */
 @keyframes float-pulse {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
 }
 
 .back-to-top-btn {
@@ -335,7 +289,6 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
   animation: float-pulse 2s ease-in-out;
 }
 
-/* Tooltip */
 .back-to-top-btn::after {
   content: 'Back to Top';
   position: absolute;
@@ -374,23 +327,141 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
   opacity: 1;
 }
 
+/* ═══════════════════════════════════════════════
+   MOBILE RESPONSIVE — ALL FIXES
+   ═══════════════════════════════════════════════ */
+
+/* Large tablets */
+@media (max-width: 900px) {
+  .gratitude-section { padding: 3rem 2rem; }
+  .gratitude-section::before { font-size: 5rem; }
+  .gratitude-text { max-width: 100%; }
+
+  .slams-hero { grid-template-columns: 1fr; gap: 1.5rem; }
+  .slams-stat-grid { grid-template-columns: repeat(4, 1fr); }
+
+  .slams-bottom-row { grid-template-columns: 1fr; }
+  .slams-roles-grid { grid-template-columns: 1fr; }
+}
+
+/* Tablets and small laptops */
 @media (max-width: 768px) {
-  .back-to-top-btn {
-    width: 50px;
-    height: 50px;
-    bottom: 20px;
-    right: 20px;
-    font-size: 20px;
-  }
-  
-  .back-to-top-btn::after {
-    font-size: 11px;
-    bottom: 65px;
-  }
-  
-  .back-to-top-btn::before {
-    bottom: 60px;
-  }
+  /* Nav */
+  nav { padding: 1rem 1.25rem; }
+  nav ul { display: none; }
+
+  /* Hero */
+  .header-hero { padding: 3rem 1.25rem 2.5rem; }
+  .hero-cta-row { flex-direction: column; align-items: center; }
+  .btn-primary, .btn-ghost { width: 100%; max-width: 280px; text-align: center; }
+
+  /* Main */
+  main { padding: 3rem 1.25rem; }
+  .gratitude-strip { padding: 2rem 1.25rem; }
+  .quick-access { padding: 2rem 1.25rem; }
+
+  /* Section header */
+  .section-header { flex-direction: column; gap: 0.5rem; }
+  .section-number { font-size: 2rem; }
+
+  /* Teacher profile */
+  .teacher-profile { grid-template-columns: 1fr; text-align: center; padding: 1.5rem; }
+  .teacher-photo-wrap { display: flex; justify-content: center; }
+
+  /* Category grid: force single column on narrow screens */
+  .category-grid { grid-template-columns: 1fr; }
+
+  /* SLAMS detail blocks */
+  .slams-detail-block { padding: 1.25rem; }
+
+  /* SLAMS hero: single column */
+  .slams-hero { grid-template-columns: 1fr; gap: 1.5rem; }
+
+  /* Stats: 2x2 on mobile */
+  .slams-stat-grid { grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+  .slams-stat-num { font-size: 1.8rem; }
+
+  /* Flow steps: stack vertically */
+  .slams-flow { padding: 1.25rem; }
+  .slams-flow-steps { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
+  .slams-flow-arrow { transform: rotate(90deg); align-self: center; }
+  .slams-flow-step { min-width: unset; width: 100%; }
+
+  /* Feature grid: single column */
+  .slams-feature-grid { grid-template-columns: 1fr; }
+
+  /* Settings rows: stack label above value */
+  .slams-setting-row { grid-template-columns: 1fr; gap: 0.3rem; padding: 0.75rem 1rem; }
+  .slams-setting-header { display: none; }
+
+  /* Bottom row: single column */
+  .slams-bottom-row { grid-template-columns: 1fr; gap: 1.5rem; }
+
+  /* Trouble items: stack */
+  .slams-trouble-item { grid-template-columns: 1fr; gap: 0.3rem; }
+  .slams-trouble-issue { white-space: normal; }
+
+  /* Roles grid: single column */
+  .slams-roles-grid { grid-template-columns: 1fr; }
+
+  /* Access buttons: full width */
+  .slams-access-btn { width: 100%; justify-content: center; word-break: break-word; }
+
+  /* Gratitude section */
+  .gratitude-section { padding: 2rem 1.25rem; text-align: left; border-radius: 10px; }
+  .gratitude-section::before { display: none; }
+  .gratitude-icon { margin-left: 0; }
+  .gratitude-text { font-size: 0.95rem; }
+  .signature { font-size: 1.1rem; }
+
+  /* Apps list */
+  .apps-list { grid-template-columns: 1fr; }
+
+  /* Quick access */
+  .quick-access h3 { font-size: 1.4rem; }
+  .quick-links { gap: 0.5rem; }
+  .quick-link { font-size: 0.75rem; padding: 0.5rem 0.9rem; }
+
+  /* Back to top */
+  .back-to-top-btn { width: 50px; height: 50px; bottom: 20px; right: 20px; font-size: 20px; }
+  .back-to-top-btn::after { font-size: 11px; bottom: 65px; }
+  .back-to-top-btn::before { bottom: 60px; }
+}
+
+/* Very small phones */
+@media (max-width: 480px) {
+  nav { padding: 0.85rem 1rem; }
+  .nav-logo { font-size: 0.9rem; letter-spacing: 0.08em; }
+  .nav-search-btn { padding: 0.4rem 0.6rem; font-size: 0.7rem; }
+
+  h1 { font-size: clamp(1.8rem, 8vw, 2.8rem); }
+  .header-hero { padding: 2.5rem 1rem 2rem; }
+  main { padding: 2rem 1rem; }
+  .slams-detail-block { padding: 1rem; }
+
+  .slams-title { font-size: clamp(1.6rem, 7vw, 2.5rem); }
+  .slams-stat-grid { grid-template-columns: 1fr 1fr; gap: 0.5rem; }
+  .slams-stat { padding: 0.75rem 0.5rem; }
+  .slams-stat-num { font-size: 1.5rem; }
+  .slams-stat-label { font-size: 0.6rem; }
+
+  .slams-flow { padding: 1rem; }
+  .slams-role-card { padding: 1.1rem; }
+  .slams-feature-card { padding: 1rem; }
+
+  .section-number { font-size: 1.75rem; }
+  h2 { font-size: clamp(1.3rem, 5vw, 1.9rem); }
+
+  .category-card { padding: 1.5rem 1.25rem; }
+  .gratitude-section { padding: 1.5rem 1rem; }
+  .gratitude-text { font-size: 0.9rem; line-height: 1.8; }
+
+  .slams-bottom-row { gap: 1rem; }
+  .slams-sheet { padding: 0.75rem; }
+  .slams-trouble-item { padding: 0.65rem 0.75rem; }
+  .slams-security { padding: 0.85rem 1rem; font-size: 0.8rem; }
+
+  footer { padding: 2rem 1rem; font-size: 0.75rem; }
 }
 </style>
 </head>
@@ -906,8 +977,7 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
           <span class="slams-sheet-icon">📋</span>
           <div>
             <div class="slams-sheet-name">Shared Data Source</div>
-            <div class="slams-sheet-desc">This app and the Substitution System use the same data but from different sheets
-            Updates are to be made in both the google sheets. The google sheets are shared with both the principal and the teacher incharge - Ms. Angala Parameshwari, Mrs. Meera and Mrs. Indira.</div>
+            <div class="slams-sheet-desc">This app and the Substitution System use the same data but from different sheets. Updates are to be made in both the google sheets. The google sheets are shared with both the principal and the teacher incharge - Ms. Angala Parameshwari, Mrs. Meera and Mrs. Indira.</div>
           </div>
         </div>
       </div>
@@ -927,8 +997,7 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
           <h4 class="slams-role-title">Timetable Custodian</h4>
           <div class="slams-role-duties">
             <p><strong>Name:</strong> Ms. Angala Parameshwari</p>
-            <p>Ms. Angala Parameshwari is responsible for keeping the underlying Google Sheet accurate.  She must review and update the sheet at the start of every year, and whenever the timetable changes at all.</p>
-           
+            <p>Ms. Angala Parameshwari is responsible for keeping the underlying Google Sheet accurate. She must review and update the sheet at the start of every year, and whenever the timetable changes at all.</p>
           </div>
         </div>
       </div>
@@ -951,10 +1020,10 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
       </div>
       <div class="slams-hero-right">
         <div class="slams-stat-grid">
-          <div class="slams-stat"><span class="slams-stat-num">3</span><span class="slams-stat-label\">Components</span></div>
-          <div class="slams-stat"><span class="slams-stat-num">1</span><span class="slams-stat-label\">Login Required</span></div>
-          <div class="slams-stat"><span class="slams-stat-num">Daily</span><span class="slams-stat-label\">Usage</span></div>
-          <div class="slams-stat"><span class="slams-stat-num">∞</span><span class="slams-stat-label\">Students</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">3</span><span class="slams-stat-label">Components</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">1</span><span class="slams-stat-label">Login Required</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">Daily</span><span class="slams-stat-label">Usage</span></div>
+          <div class="slams-stat"><span class="slams-stat-num">∞</span><span class="slams-stat-label">Students</span></div>
         </div>
       </div>
     </div>
@@ -1016,8 +1085,6 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
     </div>
   </div>
 
-  
-
   <!-- Digital Elections System Detail -->
   <div class="section-block slams-detail-block" id="elections-detail">
     <div class="slams-hero">
@@ -1059,8 +1126,8 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
         <div class="slams-feature-card"><div class="slams-feature-icon">🔐</div><h4>Controlled Access</h4><p>Admin panel controls which student can vote at any time. Only one student can vote at a time to prevent multiple simultaneous access.</p></div>
         <div class="slams-feature-card"><div class="slams-feature-icon">📊</div><h4>Dual Categories</h4><p>Separate voting for Boys SPL and Girls SPL categories. Students can vote in both categories if enabled by admin.</p></div>
         <div class="slams-feature-card"><div class="slams-feature-icon">🛡️</div><h4>Vote Integrity</h4><p>Once a vote is cast in a category, the student's status changes to 'cast' preventing duplicate votes in that category.</p></div>
-        <div class="slams-feature-card"><div class="slams-feature-icon">�️</div><h4>Voter Anonymity</h4><p>Votes are counted without storing the student's choice. The database tracks candidate vote totals, not who voted for whom.</p></div>
-        <div class="slams-feature-card"><div class="slams-feature-icon">�📈</div><h4>Live Results</h4><p>Password-protected results page shows real-time vote counts for all candidates in both Boys and Girls categories.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">🗳️</div><h4>Voter Anonymity</h4><p>Votes are counted without storing the student's choice. The database tracks candidate vote totals, not who voted for whom.</p></div>
+        <div class="slams-feature-card"><div class="slams-feature-icon">📈</div><h4>Live Results</h4><p>Password-protected results page shows real-time vote counts for all candidates in both Boys and Girls categories.</p></div>
         <div class="slams-feature-card"><div class="slams-feature-icon">👁️</div><h4>Admin Monitoring</h4><p>Dedicated monitor page shows all registered voters and their current voting status for both categories.</p></div>
         <div class="slams-feature-card"><div class="slams-feature-icon">⏱️</div><h4>Timestamp Tracking</h4><p>All votes are timestamped when cast, providing an audit trail of voting activity.</p></div>
       </div>
@@ -1095,7 +1162,7 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
       <p class="slams-section-label">Election Administration</p>
       <div class="slams-roles-grid">
         <div class="slams-role-card">
-          <div class="slams-role-icon">�‍💼</div>
+          <div class="slams-role-icon">👩‍💼</div>
           <h4 class="slams-role-title">Election Administrator</h4>
           <div class="slams-role-duties">
             <p><strong>Administrator:</strong> Mrs. Indira</p>
@@ -1422,9 +1489,6 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
         </div>
       </div>
     </div>
-
-    
-
     <div class="slams-flow">
       <p class="slams-flow-label">The Vision & Mission</p>
       <div class="slams-flow-steps">
@@ -1491,8 +1555,8 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
         <div class="slams-sheet-list">
           <div class="slams-sheet"><span class="slams-sheet-icon">🕉️</span><div><span class="slams-sheet-name">75 Years</span><span class="slams-sheet-desc">Celebrating Chinmaya Mission's glorious anniversary</span></div></div>
           <div class="slams-sheet"><span class="slams-sheet-icon">🌍</span><div><span class="slams-sheet-name">Global Reach</span><span class="slams-sheet-desc">Timeless Gita message to millions of seekers worldwide</span></div></div>
-          <div class="slams-sheet"><span class="slams-sheet-name">Digital Bridge</span><span class="slams-sheet-desc">Connecting ancient wisdom with modern digital generation</span></div>
-          <div class="slams-sheet"><span class="slams-sheet-name">Youth Gift</span><span class="slams-sheet-desc">Revolutionary offering for today's spiritual seekers</span></div>
+          <div class="slams-sheet"><span class="slams-sheet-icon">🌉</span><div><span class="slams-sheet-name">Digital Bridge</span><span class="slams-sheet-desc">Connecting ancient wisdom with modern digital generation</span></div></div>
+          <div class="slams-sheet"><span class="slams-sheet-icon">🎁</span><div><span class="slams-sheet-name">Youth Gift</span><span class="slams-sheet-desc">Revolutionary offering for today's spiritual seekers</span></div></div>
         </div>
       </div>
       <div class="slams-troubleshoot">
@@ -1514,11 +1578,8 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
   <!-- Bebras Section -->
   <div class="slams-detail-block" id="bebras">
     <div class="slams-detail-header">
-      
       <div class="slams-detail-title">
-                <h2 class="slams-title">Bebras Computational Thinking Challenge</h2>
-
-      
+        <h2 class="slams-title">Bebras Computational Thinking Challenge</h2>
         <p class="slams-detail-subtitle">International Informatics Competition for Young Minds</p>
       </div>
     </div>
@@ -1582,8 +1643,7 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
           <div class="slams-sheet-list">
             <div class="slams-sheet"><span class="slams-sheet-icon">⏰</span><div><span class="slams-sheet-name">45 Minutes</span><span class="slams-sheet-desc">Time allocated for completing all tasks</span></div></div>
             <div class="slams-sheet"><span class="slams-sheet-icon">📝</span><div><span class="slams-sheet-name">15 Tasks</span><span class="slams-sheet-desc">Carefully designed computational thinking challenges</span></div></div>
-            <div class="slams-sheet"><span class="slams-sheet-name">🎯</span><span class="slams-sheet-desc">Multiple choice questions with varying difficulty levels</span></div>
-            
+            <div class="slams-sheet"><span class="slams-sheet-icon">🎯</span><div><span class="slams-sheet-name">Multiple Choice</span><span class="slams-sheet-desc">Questions with varying difficulty levels</span></div></div>
           </div>
         </div>
         <div class="slams-troubleshoot">
@@ -1602,10 +1662,8 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
   <!-- Robotics Workshops Section -->
   <div class="slams-detail-block" id="robotics">
     <div class="slams-detail-header">
-      
       <div class="slams-detail-title">
        <h2 class="slams-title">Electronics & Robotics Workshops</h2>
-        
         <p class="slams-tagline">Hands-on Engineering Skills for Modern Innovators</p>
       </div>
     </div>
@@ -1615,7 +1673,7 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
           <p class="slams-hero-desc">Electronics and Robotics Workshops provide students with hands-on experience in building circuits, understanding real-world systems, and developing engineering thinking. These collaborations with external institutions like engineering colleges create pathways for deep STEM learning beyond the classroom.<br><br></p>
           <div class="slams-access">
             <a href="https://srmeaswari.ac.in/robotics-and-automation-engineering/faculty/" target="_blank" class="slams-access-btn">
-              <span class="slams-btn-icon"></span> Visit Robotics Department of EEC <span class="slams-btn-arrow">↗</span>
+              <span class="slams-btn-icon">🔗</span> Visit Robotics Department of EEC <span class="slams-btn-arrow">↗</span>
             </a>
             <p class="slams-access-note">Reach out to Dr. Madhan at Easwari Engineering College to organize future workshops.</p>
           </div>
@@ -1639,8 +1697,6 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
           <div class="slams-feature-card"><div class="slams-feature-icon">💡</div><h4>Confidence Building</h4><p>Move from theory to creation—students experience the power of hands-on learning and independent experimentation.</p></div>
         </div>
       </div>
-
-      
 
       <div class="slams-roles">
         <p class="slams-section-label">How to Conduct Future Workshops</p>
@@ -1720,10 +1776,8 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
   <!-- Purna Utsav Section -->
   <div class="slams-detail-block" id="poorna">
     <div class="slams-detail-header">
-      
       <div class="slams-detail-title">
         <h2 class="slams-title">Purna Utsav — Chinmaya Computing Club Valedictory</h2>
-        
         <p class="slams-tagline">Celebrating student effort, achievement, and the culture of recognition</p>
       </div>
     </div>
@@ -1908,7 +1962,6 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
   <!-- Website Building Section -->
   <div class="slams-detail-block" id="website-building">
     <div class="slams-detail-header">
-      
       <div class="slams-detail-title">
         <h2 class="slams-title">Building Your Own Website</h2>
         <p class="slams-tagline">Empowering teachers to become creators, not just users</p>
@@ -1951,8 +2004,8 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
           <div class="slams-sheet-list">
             <div class="slams-sheet"><span class="slams-sheet-icon">🧩</span><div><span class="slams-sheet-name">Simple HTML</span><span class="slams-sheet-desc">A website built with basic HTML pages and no backend.</span></div></div>
             <div class="slams-sheet"><span class="slams-sheet-icon">⚡</span><div><span class="slams-sheet-name">Fast & Lightweight</span><span class="slams-sheet-desc">Quick to load and easy to maintain.</span></div></div>
-            <div class="slams-sheet"><span class="slams-sheet-name">No Database</span><span class="slams-sheet-desc">No server-side coding or database management required.</span></div>
-            <div class="slams-sheet"><span class="slams-sheet-name">Free Hosting</span><span class="slams-sheet-desc">Host the site using GitHub Pages at no cost.</span></div>
+            <div class="slams-sheet"><span class="slams-sheet-icon">🆓</span><div><span class="slams-sheet-name">No Database</span><span class="slams-sheet-desc">No server-side coding or database management required.</span></div></div>
+            <div class="slams-sheet"><span class="slams-sheet-icon">🌐</span><div><span class="slams-sheet-name">Free Hosting</span><span class="slams-sheet-desc">Host the site using GitHub Pages at no cost.</span></div></div>
           </div>
         </div>
         <div class="slams-troubleshoot">
@@ -2034,7 +2087,6 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
   <!-- Task Automation Section -->
   <div class="slams-detail-block" id="task-automation">
     <div class="slams-detail-header">
-      
       <div class="slams-detail-title">
         <h2 class="slams-title">Task Automation</h2>
         <p class="slams-tagline">Working smarter, not harder with technology</p>
@@ -2077,8 +2129,8 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
           <div class="slams-sheet-list">
             <div class="slams-sheet"><span class="slams-sheet-icon">📊</span><div><span class="slams-sheet-name">Level 1: Excel</span><span class="slams-sheet-desc">Formulas and functions. Start here. No prior knowledge needed.</span></div></div>
             <div class="slams-sheet"><span class="slams-sheet-icon">🤖</span><div><span class="slams-sheet-name">Level 2: GenAI + Excel</span><span class="slams-sheet-desc">Upload files to ChatGPT for data modification and cleaning.</span></div></div>
-            <div class="slams-sheet"><span class="slams-sheet-name">Level 3: Python</span><span class="slams-sheet-desc">For large or complex data tasks. You don't write it—ChatGPT does.</span></div>
-            <div class="slams-sheet"><span class="slams-sheet-name">Level 4: Google Apps Script</span><span class="slams-sheet-desc">Automate workflows like sending emails or processing Google Sheets data.</span></div>
+            <div class="slams-sheet"><span class="slams-sheet-icon">🐍</span><div><span class="slams-sheet-name">Level 3: Python</span><span class="slams-sheet-desc">For large or complex data tasks. You don't write it—ChatGPT does.</span></div></div>
+            <div class="slams-sheet"><span class="slams-sheet-icon">⚙️</span><div><span class="slams-sheet-name">Level 4: Google Apps Script</span><span class="slams-sheet-desc">Automate workflows like sending emails or processing Google Sheets data.</span></div></div>
           </div>
         </div>
         <div class="slams-troubleshoot">
@@ -2166,7 +2218,6 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
   <!-- Canva Designing Section -->
   <div class="slams-detail-block" id="canva-designing">
     <div class="slams-detail-header">
-      
       <div class="slams-detail-title">
         <h2 class="slams-title">Canva - Design & Creativity</h2>
         <p class="slams-tagline">Making teaching more expressive, engaging, and visually impactful</p>
@@ -2209,8 +2260,8 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
           <div class="slams-sheet-list">
             <div class="slams-sheet"><span class="slams-sheet-icon">📑</span><div><span class="slams-sheet-name">Classroom Presentations</span><span class="slams-sheet-desc">Lesson slides, visual explanations, interactive teaching materials.</span></div></div>
             <div class="slams-sheet"><span class="slams-sheet-icon">📹</span><div><span class="slams-sheet-name">Video Content</span><span class="slams-sheet-desc">Educational videos, announcements, event highlights.</span></div></div>
-            <div class="slams-sheet"><span class="slams-sheet-name">Worksheets & Resources</span><span class="slams-sheet-desc">Flashcards, visual notes, infographics, study guides.</span></div>
-            <div class="slams-sheet"><span class="slams-sheet-name">Event Materials</span><span class="slams-sheet-desc">Posters, invitations, certificates, social media graphics.</span></div>
+            <div class="slams-sheet"><span class="slams-sheet-icon">📋</span><div><span class="slams-sheet-name">Worksheets & Resources</span><span class="slams-sheet-desc">Flashcards, visual notes, infographics, study guides.</span></div></div>
+            <div class="slams-sheet"><span class="slams-sheet-icon">🎊</span><div><span class="slams-sheet-name">Event Materials</span><span class="slams-sheet-desc">Posters, invitations, certificates, social media graphics.</span></div></div>
           </div>
         </div>
         <div class="slams-troubleshoot">
@@ -2285,11 +2336,10 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
   <!-- Upskill Yourself Section -->
   <div class="slams-detail-block" id="upskill">
     <div class="slams-detail-header">
-      
       <div class="slams-detail-title">
         <h2 class="slams-title">Upskill Yourself</h2>
-         <p class="slams-section-label">Word of Wisdom for my friends</p>
-        <p class="slams-tagline"><h3>A mindset shift from "doing work" to "growing through work"</h3></p>
+        <p class="slams-section-label">Word of Wisdom for my friends</p>
+        <p class="slams-tagline"><h3 style="font-family: 'Cormorant Garamond', serif; font-weight: 400; font-size: clamp(1.1rem, 2.5vw, 1.4rem); color: var(--ink-soft);">A mindset shift from "doing work" to "growing through work"</h3></p>
       </div>
     </div>
     <div class="slams-detail-content">
@@ -2399,8 +2449,6 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
     </div>
   </div>
 
-  
-
   <!-- Gratitude -->
   <div class="gratitude-section" id="gratitude">
     <div class="gratitude-icon">🙏</div>
@@ -2486,20 +2534,14 @@ const searchIndex = [
   { name: 'Spiritual AI', cat: 'Apps & Systems', id: 'gita' },
   { name: 'Bhagavad Gita', cat: 'Apps & Systems', id: 'gita' },
   { name: 'Gurudev commentary', cat: 'Apps & Systems', id: 'gita' },
-  { name: 'Valluvam', cat: 'Apps & Systems', id: 'valluvam' },
   { name: 'KEE', cat: 'Apps & Systems', id: 'kee' },
   { name: 'Certificate Generator', cat: 'Apps & Systems', id: 'certificate-detail' },
   { name: 'Bulk certificates', cat: 'Apps & Systems', id: 'certificate-detail' },
   { name: 'Certificate automation', cat: 'Apps & Systems', id: 'certificate-detail' },
-  { name: 'Dhwani Design', cat: 'Events', id: 'dhwani' },
-  { name: 'Annual Day', cat: 'Events', id: 'annual' },
   { name: 'Digital Elections System', cat: 'Systems', id: 'elections-detail' },
   { name: 'SPL Digital Elections', cat: 'Systems', id: 'elections-detail' },
   { name: 'Live Assembly', cat: 'Events', id: 'assembly' },
-  { name: 'Static Websites', cat: 'Tech Projects', id: 'static' },
-  { name: 'Physical Computing', cat: 'Tech Projects', id: 'physical' },
   { name: 'Arduino', cat: 'Tech Projects', id: 'physical' },
-  { name: 'Cyber Security', cat: 'Training', id: 'cyber' },
   { name: 'Bebras Challenge', cat: 'Training', id: 'bebras' },
   { name: 'Computational Thinking', cat: 'Training', id: 'bebras' },
   { name: 'Bebras Competition', cat: 'Training', id: 'bebras' },
@@ -2507,7 +2549,6 @@ const searchIndex = [
   { name: 'Sonia Garcha', cat: 'Training', id: 'bebras' },
   { name: 'Bebras India', cat: 'Training', id: 'bebras' },
   { name: 'Puzzle Challenge', cat: 'Training', id: 'bebras' },
-  { name: 'Purna Utsav', cat: 'Training', id: 'poorna' },
   { name: 'Purna Utsav', cat: 'Training', id: 'poorna' },
   { name: 'Recognition Culture', cat: 'Training', id: 'poorna' },
   { name: 'Valedictory', cat: 'Training', id: 'poorna' },
@@ -2523,7 +2564,6 @@ const searchIndex = [
   { name: 'Soldering', cat: 'Training', id: 'robotics' },
   { name: 'Breadboard', cat: 'Training', id: 'robotics' },
   { name: 'Motor Control', cat: 'Training', id: 'robotics' },
-  { name: 'Scratch + AI', cat: 'Training', id: 'scratch' },
   { name: 'Website Building', cat: 'Resources', id: 'website-building' },
   { name: 'GitHub Pages', cat: 'Resources', id: 'website-building' },
   { name: 'Static Website', cat: 'Resources', id: 'website-building' },
@@ -2553,11 +2593,6 @@ const searchIndex = [
   { name: 'Skill Development', cat: 'Resources', id: 'upskill' },
   { name: 'Learning Through Work', cat: 'Resources', id: 'upskill' },
   { name: 'Innovation', cat: 'Resources', id: 'upskill' },
-  { name: 'Self-Reflection', cat: 'Resources', id: 'upskill' },
-  { name: 'Curiosity', cat: 'Resources', id: 'upskill' },
-  { name: 'Club Documents', cat: 'Resources', id: 'clubs' },
-  { name: 'Tips & Techniques', cat: 'Resources', id: 'tips' },
-  { name: 'FAQ', cat: 'Resources', id: 'faq' },
   { name: 'Gratitude', cat: 'Personal', id: 'gratitude' },
   { name: 'Farewell note', cat: 'Personal', id: 'gratitude' },
 ];
