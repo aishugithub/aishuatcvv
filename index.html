@@ -2699,17 +2699,19 @@ function handlePhoto(event) {
   reader.readAsDataURL(file);
 }
 
- function toggleMobileMenu() {
+function toggleMobileMenu() {
   const menu = document.getElementById('nav-mobile-menu');
   const btn = document.getElementById('hamburger-btn');
-  const isOpen = menu.style.display !== 'none';
+  const isOpen = menu.style.display === 'flex';
   menu.style.display = isOpen ? 'none' : 'flex';
   btn.textContent = isOpen ? '☰' : '✕';
 }
 function closeMobileMenu() {
-  document.getElementById('nav-mobile-menu').style.display = 'none';
-  document.getElementById('hamburger-btn').textContent = '☰';
-} 
+  setTimeout(function() {
+    document.getElementById('nav-mobile-menu').style.display = 'none';
+    document.getElementById('hamburger-btn').textContent = '☰';
+  }, 50);
+}
 </script>
 </body>
 </html>
