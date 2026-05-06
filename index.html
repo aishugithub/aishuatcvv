@@ -348,7 +348,12 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
 @media (max-width: 768px) {
   /* Nav */
   nav { padding: 1rem 1.25rem; }
-  nav ul { display: none; }
+ nav ul { display: none; }
+.nav-mobile-menu { display: flex; flex-direction: column; background: #2a0c15; border-top: 1px solid rgba(201,151,58,0.2); padding: 0.5rem 0; }
+.nav-mobile-menu a { display: block; padding: 0.75rem 1.5rem; font-size: 0.85rem; color: rgba(232,191,106,0.75); text-decoration: none; letter-spacing: 0.05em; border-bottom: 1px solid rgba(201,151,58,0.08); }
+.nav-mobile-menu a:hover { background: rgba(232,103,10,0.12); color: var(--gold-light); }
+.nav-mobile-menu .mobile-section-title { padding: 0.6rem 1.5rem 0.3rem; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--saffron-light); border-bottom: none; cursor: default; }
+.hamburger-btn { background: rgba(255,255,255,0.06); border: 1px solid rgba(201,151,58,0.25); color: rgba(232,191,106,0.7); padding: 0.45rem 0.7rem; border-radius: 3px; font-size: 1.1rem; cursor: pointer; line-height: 1; }
 
   /* Hero */
   .header-hero { padding: 3rem 1.25rem 2.5rem; }
@@ -526,8 +531,31 @@ footer .footer-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem;
 
     <div class="nav-right">
       <button class="nav-search-btn" onclick="openSearch()">🔍 Search</button>
+      <button class="hamburger-btn" onclick="toggleMobileMenu()" id="hamburger-btn">☰</button>
     </div>
   </nav>
+  <div class="nav-mobile-menu" id="nav-mobile-menu" style="display:none;">
+  <span class="mobile-section-title">Systems</span>
+  <a href="#slams-detail" onclick="closeMobileMenu()">SLAMS — Late Arrival</a>
+  <a href="#substitution-detail" onclick="closeMobileMenu()">Substitution System</a>
+  <a href="#timetable-detail" onclick="closeMobileMenu()">Teacher Timetable Viewer</a>
+  <a href="#assembly-detail" onclick="closeMobileMenu()">Live Assembly</a>
+  <a href="#elections-detail" onclick="closeMobileMenu()">Digital Elections System</a>
+  <a href="#certificate-detail" onclick="closeMobileMenu()">Certificate Generator</a>
+  <a href="#kee" onclick="closeMobileMenu()">KEE</a>
+  <span class="mobile-section-title">Chinmaya Computing Club</span>
+  <a href="#mannin" onclick="closeMobileMenu()">Mannin Marangal</a>
+  <a href="#gita" onclick="closeMobileMenu()">Chinmaya Gita</a>
+  <a href="#bebras" onclick="closeMobileMenu()">Bebras</a>
+  <a href="#robotics" onclick="closeMobileMenu()">Robotics Workshop</a>
+  <a href="#poorna" onclick="closeMobileMenu()">Poorna Utsav</a>
+  <span class="mobile-section-title">For My Teacher Friends</span>
+  <a href="#website-building" onclick="closeMobileMenu()">Website Building</a>
+  <a href="#task-automation" onclick="closeMobileMenu()">Task Automation</a>
+  <a href="#canva-designing" onclick="closeMobileMenu()">Canva Designing</a>
+  <a href="#upskill" onclick="closeMobileMenu()">Upskill Yourself</a>
+  <a href="#gratitude" onclick="closeMobileMenu()">Farewell Note</a>
+</div>
 
   <div class="header-hero">
     <div class="hero-ornament"></div>
@@ -2670,6 +2698,18 @@ function handlePhoto(event) {
   };
   reader.readAsDataURL(file);
 }
+
+ function toggleMobileMenu() {
+  const menu = document.getElementById('nav-mobile-menu');
+  const btn = document.getElementById('hamburger-btn');
+  const isOpen = menu.style.display !== 'none';
+  menu.style.display = isOpen ? 'none' : 'flex';
+  btn.textContent = isOpen ? '☰' : '✕';
+}
+function closeMobileMenu() {
+  document.getElementById('nav-mobile-menu').style.display = 'none';
+  document.getElementById('hamburger-btn').textContent = '☰';
+} 
 </script>
 </body>
 </html>
