@@ -56,8 +56,9 @@ body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(
 .search-no-results { color: rgba(232,191,106,0.4); font-size: 0.9rem; padding: 0.5rem 0; }
 
 /* ─── HEADER ─── */
-header { position: relative; background: var(--burgundy-dark); overflow: hidden; min-height: 100vh; display: flex; flex-direction: column; }
-.header-pattern { position: absolute; inset: 0; opacity: 0.06; background-image: repeating-linear-gradient(45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%), repeating-linear-gradient(-45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%); background-size: 30px 30px; }
+header { position: relative; background: var(--burgundy-dark); overflow: visible; min-height: 100vh; display: flex; flex-direction: column; }
+.header-pattern { position: absolute; inset: 0; opacity: 0.06; background-image: repeating-linear-gradient(45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%), repeating-linear-gradient(-45deg, var(--gold) 0, var(--gold) 1px, transparent 0, transparent 50%); background-size: 30px 30px;pointer-events: none;
+  overflow: hidden; }
 .header-border-top { height: 5px; background: linear-gradient(90deg, var(--saffron), var(--gold), var(--saffron-light), var(--gold), var(--saffron)); flex-shrink: 0; }
 
 /* ─── NAV ─── */
@@ -2701,11 +2702,11 @@ function handlePhoto(event) {
 
 function toggleMobileMenu() {
   const menu = document.getElementById('nav-mobile-menu');
-  const btn = document.getElementById('hamburger-btn');
-  const isOpen = menu.style.display === 'flex';
-  menu.style.display = isOpen ? 'none' : 'flex';
-  btn.textContent = isOpen ? '☰' : '✕';
+  const isHidden = menu.style.display === 'none' || menu.style.display === '';
+  menu.style.display = isHidden ? 'flex' : 'none';
+  document.getElementById('hamburger-btn').textContent = isHidden ? '✕' : '☰';
 }
+  
 function closeMobileMenu() {
   setTimeout(function() {
     document.getElementById('nav-mobile-menu').style.display = 'none';
